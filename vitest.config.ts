@@ -19,6 +19,23 @@ export default defineConfig({
     */
     pool: 'threads',
 
+    /*
+      One worker, reused across files.
+
+      Booting jsdom costs seconds, and the pool gives each new worker a fixed window to
+      report in. Spinning up several in parallel on a loaded machine pushes some past it and
+      they fail with "Timeout waiting for worker to respond" — the file never runs at all,
+      which looks like a broken test but is a cold start. It was intermittent, which is worse
+      than consistently broken: a green run proved nothing.
+
+      A single reused worker pays the jsdom cost once instead of racing several starts. The
+      suite is a few seconds slower and no longer flaky, which is the right trade for
+      something whose job is to tell you the truth about the code.
+    */
+    poolOptions: {
+      threads: { singleThread: true },
+    },
+
     // Headroom for the same cold start, so a slow machine reports a real result rather
     // than a timeout.
     testTimeout: 30_000,
