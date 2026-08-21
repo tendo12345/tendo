@@ -1,0 +1,112 @@
+.wrap {
+  display: grid;
+  gap: var(--app-space-sm);
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 2px 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--app-text-sm);
+  font-weight: 600;
+  color: var(--app-accent, currentColor);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.trigger:hover {
+  opacity: 0.8;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--app-accent, currentColor);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.triggerIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-size: 11px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.panel {
+  display: grid;
+  gap: var(--app-space-sm);
+  padding: var(--app-space-md);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm, 4px);
+  background: var(--app-surface-2, transparent);
+}
+
+.why {
+  margin: 0;
+  font-size: var(--app-text-sm);
+  line-height: 1.6;
+  color: var(--app-ink);
+  max-width: 66ch;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: var(--app-space-md);
+  align-items: start;
+  padding-top: var(--app-space-sm);
+  border-top: 1px solid var(--app-border);
+}
+
+.key {
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--app-ink-faint);
+}
+
+.val {
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.mono {
+  font-family: var(--app-font-mono, ui-monospace, monospace);
+  font-size: var(--app-text-xs);
+}
+
+.basis {
+  margin: 4px 0 0;
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+  max-width: 62ch;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* Touch targets: the trigger is a compact inline control on desktop, but must reach the
+   44px minimum where a finger is doing the pointing. */
+@media (pointer: coarse), (max-width: 720px) {
+  .trigger {
+    min-height: 44px;
+    padding-block: 10px;
+  }
+}

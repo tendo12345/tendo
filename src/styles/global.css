@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+body {
+  background: var(--app-paper);
+  color: var(--app-ink);
+  font-family: var(--app-font-body);
+  font-size: var(--app-text-base);
+  line-height: var(--app-leading-normal);
+}
+
+/*
+  Ink-wash ground for the dark theme.
+
+  Three very low-opacity radial washes: a moon high on the right, a magenta bloom low on
+  the left, and a cold grey drift between them. Deliberately faint — the reference is a
+  poster, this is a workspace, and a background that competes with the content would
+  contradict the advice this tool hands out. Fixed attachment, so it never scrolls and
+  never needs animating.
+*/
+/*
+  The ground is defined once, in tokens.css, as --app-ground. Both dark selectors (the
+  explicit toggle and the prefers-color-scheme default) point at the same value, so the two
+  cannot drift apart — which they already did once when the opacities were tuned in only one
+  of two duplicated copies.
+*/
+body {
+  background-image: var(--app-ground, none);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--app-font-display);
+  font-weight: 500;
+  line-height: var(--app-leading-tight);
+  letter-spacing: -0.01em;
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--app-font-mono);
+}
+
+::selection {
+  background: var(--app-accent-soft);
+  color: var(--app-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--app-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--app-radius-sm);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--app-container);
+  margin-inline: auto;
+  padding-inline: var(--app-space-md);
+}
+
+.container--narrow {
+  max-width: var(--app-container-narrow);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: var(--app-space-sm);
+  z-index: 200;
+  background: var(--app-ink);
+  color: var(--app-paper);
+  padding: var(--app-space-2xs) var(--app-space-sm);
+  border-radius: var(--app-radius-sm);
+  transition: top var(--app-duration-base) var(--app-ease);
+}
+
+.skip-link:focus {
+  top: var(--app-space-sm);
+}
+
+.hscroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding-inline: var(--app-space-sm);
+  }
+}

@@ -1,0 +1,82 @@
+{
+ "app": {
+  "python": "Neumorphism (Mobile)",
+  "ts": "Accessible & Ethical",
+  "why": "\"Healthcare App\" prioritises Neumorphism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "design": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Accessible & Ethical",
+  "why": "\"Design System/Component Library\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "mobile": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Accessible & Ethical",
+  "why": "\"Banking/Traditional Finance\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "crypto": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Accessible & Ethical",
+  "why": "\"Fintech/Crypto\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "emoji 🚀 startup": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Micro-interactions",
+  "why": "\"Chat & Messaging App\" prioritises Minimalism + Micro-interactions, and \"Micro-interactions\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "24/7 support portal": {
+  "python": "Claymorphism (Mobile)",
+  "ts": "Vibrant & Block-based",
+  "why": "\"Childcare/Daycare\" prioritises Claymorphism + Vibrant & Block-based, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "don't panic app": {
+  "python": "Neumorphism (Mobile)",
+  "ts": "Accessible & Ethical",
+  "why": "\"Healthcare App\" prioritises Neumorphism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "fintech mobile trustworthy": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Accessible & Ethical",
+  "why": "\"Fintech/Crypto\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "crypto wallet emerging market": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Accessible & Ethical",
+  "why": "\"Fintech/Crypto\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "education kids playful": {
+  "python": "Claymorphism (Mobile)",
+  "ts": "Claymorphism",
+  "why": "\"Kids Learning (ABC & Math)\" prioritises Claymorphism + Vibrant & Block-based, and \"Claymorphism\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "crypto nft marketplace bold": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Accessible & Ethical",
+  "why": "\"Fintech/Crypto\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "logistics tracking operational": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Flat Design",
+  "why": "\"Logistics/Delivery\" prioritises Minimalism + Flat Design, and \"Flat Design\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "banking mobile secure nigeria": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Accessible & Ethical",
+  "why": "\"Banking/Traditional Finance\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "news editorial serif": {
+  "python": "Exaggerated Minimalism",
+  "ts": "Minimalism & Swiss Style",
+  "why": "\"News/Media Platform\" prioritises Minimalism + Flat Design, and \"Minimalism & Swiss Style\" is that style by name (the reasoning data writes it as \"Minimalism\", which is not a style in the dataset; it is corrected to \"Minimalism & Swiss Style\"). It was taken ahead of the raw search ranking."
+ },
+ "agency portfolio brutalist": {
+  "python": "Neo Brutalism (Mobile)",
+  "ts": "Motion-Driven",
+  "why": "\"Marketing Agency\" prioritises Brutalism + Motion-Driven, and \"Motion-Driven\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "kids learning colorful": {
+  "python": "Claymorphism (Mobile)",
+  "ts": "Vibrant & Block-based",
+  "why": "\"Kids Learning (ABC & Math)\" prioritises Claymorphism + Vibrant & Block-based, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking."
+ }
+}

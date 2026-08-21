@@ -1,0 +1,64 @@
+.directions { display: flex; flex-wrap: wrap; gap: var(--app-space-sm); margin-bottom: var(--app-space-lg); }
+.directionButton { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: 999px; background: none; color: var(--app-ink); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.directionButton:hover:not(:disabled) { border-color: var(--app-ink-muted); }
+.directionButton:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
+.directionButton:disabled { opacity: 0.55; cursor: default; }
+.done { color: var(--app-positive-ink, #15803D); font-weight: 700; }
+
+.variations { list-style: none; margin: 0 0 var(--app-space-xl); padding: 0; display: grid; gap: var(--app-space-md); }
+.variation { border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); padding: var(--app-space-md); display: grid; gap: var(--app-space-sm); }
+.variationHead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--app-space-md); }
+.variationLabel { margin: 0; font-weight: 600; }
+.variationStyle { margin: 2px 0 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); }
+.variationActions { display: flex; flex-wrap: wrap; gap: var(--app-space-sm); }
+
+.smallButton { font: inherit; font-size: var(--app-text-xs); font-weight: 600; min-height: 36px; padding: 6px 12px; border: 1px solid var(--app-border); border-radius: 4px; background: none; color: var(--app-ink); cursor: pointer; }
+.smallButton:hover:not(:disabled) { border-color: var(--app-ink-muted); }
+.smallButton:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
+.smallButton:disabled { opacity: 0.5; cursor: default; }
+.primaryButton { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); }
+
+.outcome { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; max-width: 74ch; }
+.outcomeFlat { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; max-width: 74ch; padding: var(--app-space-sm) var(--app-space-md); border: 1px dashed var(--app-border); border-radius: var(--app-radius-sm, 4px); }
+
+.changes { list-style: none; margin: 0; padding: var(--app-space-sm) 0 0; display: grid; gap: 4px; border-top: 1px solid var(--app-border); }
+.change { display: grid; grid-template-columns: 130px 1fr auto 1fr; gap: var(--app-space-sm); align-items: baseline; font-size: var(--app-text-xs); }
+.changeField { color: var(--app-ink-faint); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; }
+.changeBefore { color: var(--app-ink-muted); text-decoration: line-through; overflow-wrap: anywhere; }
+.changeAfter { font-weight: 600; overflow-wrap: anywhere; }
+.arrow { color: var(--app-ink-faint); }
+
+.subTitle { font-size: var(--app-text-lg); margin: var(--app-space-xl) 0 var(--app-space-sm); }
+.historyNote { margin: 0 0 var(--app-space-md); font-size: var(--app-text-sm); color: var(--app-ink-muted); }
+
+.tableWrap { overflow-x: auto; border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); margin-bottom: var(--app-space-md); }
+.table { width: 100%; border-collapse: collapse; font-size: var(--app-text-sm); min-width: 560px; }
+.table th, .table td { text-align: left; padding: 8px var(--app-space-md); border-bottom: 1px solid var(--app-border); overflow-wrap: anywhere; }
+.table thead th { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); font-weight: 700; }
+.rowSame td, .rowSame th { color: var(--app-ink-faint); }
+.rowDiff { background: var(--app-surface-2, rgba(127,127,127,0.06)); }
+.rowDiff td:last-child { font-weight: 600; }
+
+.saveRow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }
+.saveLabel { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); font-weight: 700; }
+.saveInput { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 12px; border: 1px solid var(--app-border); border-radius: 4px; background: none; color: var(--app-ink); flex: 1 1 200px; }
+.saveInput:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 1px; }
+
+.snapshots { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); overflow: hidden; }
+.snapshot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--app-space-md); padding: var(--app-space-md); border-bottom: 1px solid var(--app-border); }
+.snapshots li:last-child { border-bottom: none; }
+.snapshotLabel { margin: 0; font-weight: 600; font-size: var(--app-text-sm); }
+.snapshotMeta { margin: 2px 0 0; font-size: var(--app-text-xs); color: var(--app-ink-muted); }
+.empty { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-faint); }
+
+@media (max-width: 720px) {
+  .change { grid-template-columns: 1fr; gap: 2px; }
+  .arrow { display: none; }
+}
+
+/* Compact row actions on desktop, full touch targets where a finger is pointing. */
+@media (pointer: coarse), (max-width: 720px) {
+  .smallButton { min-height: 44px; padding: 10px 14px; }
+}
+
+.drift { color: var(--app-warning-ink, #B45309); }

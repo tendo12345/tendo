@@ -1,0 +1,64 @@
+.card {
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  overflow: hidden;
+  background: var(--app-surface);
+}
+
+.swatch {
+  height: 5.5rem;
+}
+
+.body {
+  padding: var(--app-space-sm);
+}
+
+.name {
+  font-weight: 700;
+  font-size: var(--app-text-sm);
+}
+
+.hex {
+  font-family: var(--app-font-mono);
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-muted);
+  margin-bottom: 0.4rem;
+}
+
+.usage {
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-muted);
+  margin-bottom: var(--app-space-xs);
+}
+
+.values {
+  font-family: var(--app-font-mono);
+  font-size: 0.7rem;
+  color: var(--app-ink-faint);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-bottom: var(--app-space-xs);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.contrast {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-muted);
+  margin-top: var(--app-space-2xs);
+}
+
+.contrastBadge {
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-sunken);
+}

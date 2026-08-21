@@ -1,0 +1,36 @@
+.page {
+  padding-block: var(--app-space-2xl) var(--app-space-3xl);
+}
+
+.header {
+  margin-bottom: var(--app-space-xl);
+  max-width: 46ch;
+}
+
+.eyebrow {
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--app-accent);
+  margin-bottom: var(--app-space-2xs);
+}
+
+.title {
+  font-size: var(--app-text-2xl);
+  margin-bottom: var(--app-space-2xs);
+}
+
+.subtitle {
+  color: var(--app-ink-muted);
+}
+
+.form {
+  max-width: 640px;
+}
+
+.submitRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--app-space-lg);
+}

@@ -1,0 +1,22 @@
+.tabs { display: flex; flex-wrap: wrap; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }
+.tab { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: 999px; background: none; color: var(--app-ink-muted); cursor: pointer; }
+.tab:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
+.tabActive { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); font-weight: 600; }
+
+.blurb { margin: 0 0 var(--app-space-md); font-size: var(--app-text-sm); color: var(--app-ink-muted); max-width: 74ch; }
+
+.targetRow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }
+.targetLabel { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--app-ink-faint); }
+.select, .customInput { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 12px; border: 1px solid var(--app-border); border-radius: 4px; background: var(--app-bg); color: var(--app-ink); }
+.customInput { flex: 1 1 240px; }
+.select:focus-visible, .customInput:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 1px; }
+
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }
+.button { font: inherit; font-size: var(--app-text-sm); font-weight: 600; min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: 4px; background: none; color: var(--app-ink); cursor: pointer; }
+.button:hover { border-color: var(--app-ink-muted); }
+.button:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
+.primary { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); }
+.size { font-size: var(--app-text-xs); color: var(--app-ink-faint); font-variant-numeric: tabular-nums; }
+
+.output { margin: 0; padding: var(--app-space-md); border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); overflow-x: auto; max-height: 560px; overflow-y: auto; background: var(--app-surface-2, transparent); }
+.output code { font-family: var(--app-font-mono, ui-monospace, monospace); font-size: var(--app-text-xs); line-height: 1.6; white-space: pre; }

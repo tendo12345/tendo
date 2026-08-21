@@ -1,0 +1,79 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--app-space-2xs);
+  font-family: var(--app-font-body);
+  font-weight: 600;
+  font-size: var(--app-text-sm);
+  line-height: 1;
+  white-space: nowrap;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid transparent;
+  transition: background-color var(--app-duration-base) var(--app-ease),
+    border-color var(--app-duration-base) var(--app-ease),
+    color var(--app-duration-base) var(--app-ease),
+    transform var(--app-duration-fast) var(--app-ease);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.sm {
+  padding: 0.5rem 0.875rem;
+  font-size: var(--app-text-xs);
+}
+
+.primary {
+  background: var(--app-ink);
+  color: var(--app-paper);
+  border-color: var(--app-ink);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+}
+
+.secondary {
+  background: var(--app-surface);
+  color: var(--app-ink);
+  border-color: var(--app-border-strong);
+}
+
+.secondary:hover:not(:disabled) {
+  border-color: var(--app-ink);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--app-ink-muted);
+  border-color: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--app-ink);
+  background: var(--app-surface-sunken);
+}
+
+.accent {
+  background: var(--app-accent);
+  color: var(--app-accent-ink);
+  border-color: var(--app-accent);
+}
+
+.accent:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.fullWidth {
+  width: 100%;
+}

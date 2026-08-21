@@ -1,0 +1,120 @@
+.wrap {
+  display: grid;
+  gap: var(--app-space-lg);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--app-space-sm);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--app-text-lg);
+}
+
+.count {
+  margin: 0;
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm, 4px);
+  overflow: hidden;
+}
+
+.item {
+  display: grid;
+  gap: var(--app-space-sm);
+  padding: var(--app-space-md);
+  border-bottom: 1px solid var(--app-border);
+}
+
+.item:last-child { border-bottom: none; }
+
+.itemHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--app-space-md);
+}
+
+.itemMain { display: grid; gap: 2px; min-width: 0; }
+
+.label {
+  margin: 0;
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--app-ink-faint);
+}
+
+.value {
+  margin: 0;
+  font-size: var(--app-text-lg);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.tokenRow {
+  display: grid;
+  gap: var(--app-space-sm);
+  padding-top: var(--app-space-md);
+  border-top: 1px solid var(--app-border);
+}
+
+.tokenTitle {
+  margin: 0;
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--app-ink-faint);
+}
+
+.tokenList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--app-space-sm);
+}
+
+.tokenItem {
+  display: grid;
+  grid-template-columns: 80px auto 1fr;
+  gap: var(--app-space-md);
+  align-items: center;
+  font-size: var(--app-text-sm);
+}
+
+.tokenLabel {
+  font-family: var(--app-font-mono, ui-monospace, monospace);
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-faint);
+  text-transform: capitalize;
+}
+
+.tokenBasis {
+  color: var(--app-ink-muted);
+  font-size: var(--app-text-xs);
+}
+
+@media (max-width: 720px) {
+  .tokenItem {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

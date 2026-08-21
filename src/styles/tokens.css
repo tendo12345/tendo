@@ -1,0 +1,175 @@
+/*
+  The application's OWN design system. Namespaced --app-* so it can never collide with the
+  --ds-* custom properties the Result workspace sets locally from a generated system (see
+  src/components/result — those are scoped to their own wrapper elements only).
+*/
+
+:root {
+  /* ---- color: light (default) ---- */
+  --app-paper: #fbfaf8;
+  --app-surface: #ffffff;
+  --app-surface-sunken: #f3f1ec;
+  --app-ink: #14130f;
+  --app-ink-muted: #5b584e;
+  /* Was #8c887a, which failed at 3.40:1 even on flat paper and dropped to 2.84:1 over the
+     gradient's darkest point. #63604f clears 4.5:1 against both. */
+  --app-ink-faint: #63604f;
+  --app-border: #e4e0d6;
+  --app-border-strong: #cdc8ba;
+  --app-accent: #b1450c;
+  --app-accent-ink: #ffffff;
+  --app-accent-soft: #f6e3d5;
+  --app-success: #1e6b46;
+  --app-success-soft: #dcefe3;
+  --app-error: #a3271f;
+  --app-error-soft: #f6dedb;
+  --app-focus-ring: #b1450c;
+
+  --app-shadow-color: 20 15 8;
+
+  /* ---- the dark ground, defined once and referenced by both dark selectors ----
+     Opacities are at their measured ceiling, not chosen by eye: the layers were
+     rasterised and the brightest resulting pixel read as #40253f, which leaves the
+     faintest ink (--app-ink-faint) at 4.86:1, still AA. Raising the moon wash to 0.40
+     brightens it to #4e2b4b and drops that ink to 4.26:1, which fails. Re-measure
+     before changing these. */
+  --app-ground-dark:
+    radial-gradient(42rem 42rem at 84% -8%, rgba(255, 138, 232, 0.32), transparent 60%),
+    radial-gradient(50rem 38rem at 6% 106%, rgba(255, 77, 210, 0.26), transparent 62%),
+    radial-gradient(38rem 30rem at 96% 78%, rgba(122, 92, 255, 0.2), transparent 66%),
+    radial-gradient(64rem 44rem at 44% 40%, rgba(150, 148, 175, 0.1), transparent 70%),
+    linear-gradient(176deg, #07070b 0%, #170f20 46%, #110b19 72%, #0b0712 100%);
+
+  /* ---- light grounds ----
+     Unlike the dark ground, the risk here is the DARKEST composite point: these washes
+     tint warm and ramp down to #f3f1ec, which LOWERS contrast for dark ink rather than
+     raising it. Both were rasterised and measured at their darkest pixel.
+
+     "Paper Haze" needed correcting. At the original cream 0.55 / orange 0.10 its darkest
+     point was #d2cdc8 and it broke three roles — accent 3.57:1, success 4.10:1, faint
+     2.25:1. The cause is that rgba(246,227,213) reads as cream but sits at luminance
+     0.793 against paper's 0.957, so at 55% it drags the ground down hard. Stepping the
+     cream down to 0.15 and the orange to 0.06 lifts the darkest point to #eae7e2, where
+     every role passes. */
+  --app-ground-light-a:
+    radial-gradient(40rem 34rem at 88% -10%, rgba(177, 69, 12, 0.06), transparent 60%),
+    radial-gradient(46rem 34rem at 4% 108%, rgba(246, 227, 213, 0.15), transparent 62%),
+    linear-gradient(180deg, #ffffff 0%, #fbfaf8 55%, #f3f1ec 100%);
+
+  /* "Sunlit Paper" — more presence, and the safer of the two as written.
+     Darkest point #efe4dc: ink 14.87:1, muted 5.69:1, accent 4.51:1, error 5.86:1,
+     success 5.17:1. Used as the default. */
+  --app-ground-light-b:
+    radial-gradient(50rem 40rem at 82% -6%, rgba(177, 69, 12, 0.14), transparent 58%),
+    linear-gradient(172deg, #fffefc 0%, #fbfaf8 60%, #f3f1ec 100%);
+
+  --app-ground: var(--app-ground-light-b);
+
+  /* ---- typography ---- */
+  --app-font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --app-font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --app-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --app-text-xs: 0.75rem;
+  --app-text-sm: 0.875rem;
+  --app-text-base: 1rem;
+  --app-text-md: 1.125rem;
+  --app-text-lg: 1.375rem;
+  --app-text-xl: 1.75rem;
+  --app-text-2xl: 2.25rem;
+  --app-text-3xl: 3rem;
+  --app-text-4xl: 3.75rem;
+
+  --app-leading-tight: 1.1;
+  --app-leading-snug: 1.3;
+  --app-leading-normal: 1.55;
+
+  /* ---- spacing (app chrome only — not the generated scale) ---- */
+  --app-space-3xs: 0.25rem;
+  --app-space-2xs: 0.5rem;
+  --app-space-xs: 0.75rem;
+  --app-space-sm: 1rem;
+  --app-space-md: 1.5rem;
+  --app-space-lg: 2rem;
+  --app-space-xl: 3rem;
+  --app-space-2xl: 4.5rem;
+  --app-space-3xl: 6.5rem;
+
+  --app-container: 1180px;
+  --app-container-narrow: 760px;
+  --app-nav-height: 4.5rem;
+  --app-subnav-height: 3.25rem;
+
+  /* ---- radius ---- */
+  --app-radius-sm: 4px;
+  --app-radius-md: 8px;
+  --app-radius-lg: 14px;
+  --app-radius-pill: 999px;
+
+  /* ---- shadow: restrained, no glow, no color blur ---- */
+  --app-shadow-sm: 0 1px 2px rgba(var(--app-shadow-color) / 0.06);
+  --app-shadow-md: 0 4px 10px rgba(var(--app-shadow-color) / 0.08);
+  --app-shadow-lg: 0 12px 28px rgba(var(--app-shadow-color) / 0.12);
+
+  /* ---- motion ---- */
+  --app-duration-fast: 120ms;
+  --app-duration-base: 200ms;
+  --app-duration-slow: 360ms;
+  --app-ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+
+  /* ---- breakpoints (referenced in comments; media queries use literal px) ---- */
+  --app-bp-sm: 390px;
+  --app-bp-md: 768px;
+  --app-bp-lg: 1024px;
+  --app-bp-xl: 1280px;
+}
+
+:root[data-theme='dark'] {
+  /* Sumi-e: ink-wash ground, cool grey inks, one magenta accent used sparingly.
+     Contrast checked against --app-paper: ink 17.4:1, muted 8.2:1, faint 6.3:1,
+     accent 6.9:1, control borders 3.1:1. */
+  --app-paper: #0a090c;
+  --app-surface: #121016;
+  --app-surface-sunken: #060508;
+  --app-ink: #f2eff5;
+  --app-ink-muted: #a9a4b4;
+  --app-ink-faint: #9e98ad;
+  --app-border: #262230;
+  --app-border-strong: #615a78;
+  --app-accent: #ff4dd2;
+  --app-accent-ink: #170315;
+  --app-accent-soft: #2a0c24;
+  --app-success: #5fd3a0;
+  --app-success-soft: #102c22;
+  --app-error: #ff6b84;
+  --app-error-soft: #33101a;
+  --app-focus-ring: #ff4dd2;
+  --app-shadow-color: 0 0 0;
+  --app-ground: var(--app-ground-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    /* Sumi-e: ink-wash ground, cool grey inks, one magenta accent used sparingly.
+       Contrast checked against --app-paper: ink 17.4:1, muted 8.2:1, faint 6.3:1,
+       accent 6.9:1, control borders 3.1:1. */
+    --app-paper: #0a090c;
+    --app-surface: #121016;
+    --app-surface-sunken: #060508;
+    --app-ink: #f2eff5;
+    --app-ink-muted: #a9a4b4;
+    --app-ink-faint: #9e98ad;
+    --app-border: #262230;
+    --app-border-strong: #615a78;
+    --app-accent: #ff4dd2;
+    --app-accent-ink: #170315;
+    --app-accent-soft: #2a0c24;
+    --app-success: #5fd3a0;
+    --app-success-soft: #102c22;
+    --app-error: #ff6b84;
+    --app-error-soft: #33101a;
+    --app-focus-ring: #ff4dd2;
+    --app-shadow-color: 0 0 0;
+  --app-ground: var(--app-ground-dark);
+  }
+}

@@ -1,0 +1,45 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--app-space-3xs);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--app-radius-pill);
+  border: 1px solid var(--app-border-strong);
+  background: var(--app-surface);
+  font-size: var(--app-text-xs);
+  font-weight: 500;
+  color: var(--app-ink);
+  line-height: 1;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: border-color var(--app-duration-base) var(--app-ease), background var(--app-duration-base) var(--app-ease);
+}
+
+.clickable:hover {
+  border-color: var(--app-ink);
+  background: var(--app-surface-sunken);
+}
+
+.selected {
+  background: var(--app-ink);
+  color: var(--app-paper);
+  border-color: var(--app-ink);
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: inherit;
+  opacity: 0.7;
+}
+
+.remove:hover {
+  opacity: 1;
+}

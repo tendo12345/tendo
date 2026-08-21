@@ -1,0 +1,20 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--app-space-sm);
+  padding: var(--app-space-2xl) var(--app-space-md);
+  border: 1px dashed var(--app-border-strong);
+  border-radius: var(--app-radius-lg);
+  background: var(--app-surface);
+}
+
+.title {
+  font-size: var(--app-text-lg);
+}
+
+.description {
+  color: var(--app-ink-muted);
+  max-width: 32ch;
+}

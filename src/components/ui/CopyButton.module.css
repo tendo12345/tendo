@@ -1,0 +1,18 @@
+.copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  font-size: var(--app-text-xs);
+  font-weight: 600;
+  color: var(--app-ink-muted);
+  border: 1px solid var(--app-border-strong);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  transition: color var(--app-duration-base) var(--app-ease), border-color var(--app-duration-base) var(--app-ease);
+}
+
+.copy:hover {
+  color: var(--app-ink);
+  border-color: var(--app-ink);
+}

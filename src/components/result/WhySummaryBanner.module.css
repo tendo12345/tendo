@@ -1,0 +1,46 @@
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--app-space-lg);
+  padding: var(--app-space-lg);
+  border-radius: var(--app-radius-lg);
+  background: var(--app-surface-sunken);
+  border: 1px solid var(--app-border);
+}
+
+.sentence {
+  max-width: 56ch;
+  font-family: var(--app-font-display);
+  font-size: var(--app-text-md);
+  line-height: var(--app-leading-snug);
+}
+
+.principles {
+  display: flex;
+  gap: var(--app-space-md);
+  flex-wrap: wrap;
+}
+
+.principle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 5.5rem;
+}
+
+.principleDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--app-accent);
+}
+
+.principleLabel {
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: capitalize;
+  text-align: center;
+}

@@ -1,0 +1,62 @@
+.section {
+  padding-block: var(--app-space-2xl);
+  border-bottom: 1px solid var(--app-border);
+  scroll-margin-top: calc(var(--app-nav-height) + var(--app-subnav-height));
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--app-space-md);
+  margin-bottom: var(--app-space-lg);
+}
+
+.sectionTitle {
+  font-size: var(--app-text-xl);
+}
+
+.sectionTitleSpaced {
+  font-size: var(--app-text-xl);
+  margin-bottom: var(--app-space-lg);
+}
+
+.sectionIntro {
+  color: var(--app-ink-muted);
+  max-width: 60ch;
+  margin-bottom: var(--app-space-lg);
+}
+
+.subheading {
+  font-size: var(--app-text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--app-ink-faint);
+  margin-bottom: var(--app-space-sm);
+}
+
+.subheadingFlush {
+  font-size: var(--app-text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--app-ink-faint);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--app-space-md);
+}
+
+.panel {
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  background: var(--app-surface);
+  padding: var(--app-space-lg);
+}

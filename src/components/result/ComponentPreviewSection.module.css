@@ -1,0 +1,66 @@
+.stateBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--app-space-md);
+  margin-bottom: var(--app-space-md);
+  flex-wrap: wrap;
+}
+
+.stateDemo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-md);
+  align-items: flex-start;
+  padding: var(--app-space-lg);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  margin-bottom: var(--app-space-2xl);
+}
+
+.stateItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 10rem;
+}
+
+.stateItemLabel {
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-faint);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--app-space-lg);
+}
+
+.tile {
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  padding: var(--app-space-lg);
+  background: var(--app-surface);
+}
+
+.tileLabel {
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--app-ink-faint);
+  margin-bottom: var(--app-space-sm);
+}
+
+.tileBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-sm);
+}
+
+.row {
+  display: flex;
+  gap: var(--app-space-2xs);
+  flex-wrap: wrap;
+  align-items: center;
+}

@@ -1,0 +1,1553 @@
+{
+ "zzzz": {
+  "project_name": "ZZZZ",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "a": {
+  "project_name": "A",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "ui": {
+  "project_name": "UI",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "the and but": {
+  "project_name": "THE AND BUT",
+  "category": "Translator App",
+  "pattern": {
+   "name": "Marketplace / Directory",
+   "sections": "1. Hero (Search focused), 2. Categories, 3. Featured Listings, 4. Trust/Safety, 5. CTA (Become a host/seller)",
+   "cta_placement": "Hero Search Bar + Navbar 'List your item'",
+   "color_strategy": "Search: High contrast. Categories: Visual icons. Trust: Blue/Green.",
+   "conversion": "Search bar is the CTA. Reduce friction to search. Popular searches suggestions."
+  },
+  "style": {
+   "name": "Sketch Hand-Drawn (Mobile)",
+   "type": "Mobile",
+   "effects": "Wobbly borderRadius (unique per corner: 15/25/20/10), borderWidth 2–3 solid/dashed, hard offset shadow via rear View (4px,4px) #2D2D2D, Kalam Bold headings, PatrickHand Regular body, slight rotation (-1deg/1deg) on cards, absolute SVG scribble overlays (arrows/tape/tacks), jiggle -2deg↔2deg on error, LayoutAnimation spring on layout changes, Haptics on press, paper texture repeating background",
+   "keywords": "sketch, hand-drawn, handwriting, wobbly, imperfect, paper, kalam, organic, collage, post-it, tape, offset shadow, scribble",
+   "best_for": "Low-fidelity prototyping, creative brands, children/picturebook apps, education tools, journaling apps, gamified puzzles",
+   "performance": "✓ Lightweight",
+   "accessibility": "⚠ Moderate (small/muted text risk)",
+   "light_mode": "✓ Light",
+   "dark_mode": "⚠ Dark (requires texture inversion)"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Space Grotesk",
+   "body": "Inter",
+   "mood": "web3, bitcoin, defi, digital gold, fintech, crypto, trustless, luminescent, precision, dark",
+   "best_for": "DeFi protocols and wallets, NFT platforms, metaverse social apps, high-tech brand landing pages",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Inter:wght@400;500;600;700|JetBrains+Mono:wght@400;500|Space+Grotesk:wght@500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap');"
+  },
+  "key_effects": "Wobbly borderRadius (unique per corner: 15/25/20/10), borderWidth 2–3 solid/dashed, hard offset shadow via rear View (4px,4px) #2D2D2D, Kalam Bold headings, PatrickHand Regular body, slight rotation (-1deg/1deg) on cards, absolute SVG scribble overlays (arrows/tape/tacks), jiggle -2deg↔2deg on error, LayoutAnimation spring on layout changes, Haptics on press, paper texture repeating background",
+  "anti_patterns": "Complex shadows + 3D effects",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-clarity",
+   "if_mobile": "optimize-touch-targets"
+  },
+  "severity": "HIGH"
+ },
+ "e-commerce b2b": {
+  "project_name": "E-COMMERCE B2B",
+  "category": "E-commerce",
+  "pattern": {
+   "name": "Feature-Rich Showcase",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Vibrant & Block-based",
+   "type": "General",
+   "effects": "Large sections (48px+ gaps), animated patterns, bold hover (color shift), scroll-snap, large type (32px+), 200-300ms",
+   "keywords": "Bold, energetic, playful, block layout, geometric shapes, high color contrast, duotone, modern, energetic",
+   "best_for": "Startups, creative agencies, gaming, social media, youth-focused, entertainment, consumer",
+   "performance": "⚡ Good",
+   "accessibility": "◐ Ensure WCAG",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#0F172A",
+   "on_primary": "#FFFFFF",
+   "secondary": "#334155",
+   "accent": "#0369A1",
+   "background": "#F8FAFC",
+   "foreground": "#020617",
+   "muted": "#E8ECF1",
+   "border": "#E2E8F0",
+   "destructive": "#DC2626",
+   "ring": "#0F172A",
+   "notes": "Professional navy + blue CTA",
+   "cta": "#0369A1",
+   "text": "#020617"
+  },
+  "typography": {
+   "heading": "Rubik",
+   "body": "Nunito Sans",
+   "mood": "ecommerce, clean, shopping, product, retail, conversion",
+   "best_for": "E-commerce, online stores, product pages, retail, shopping",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Nunito+Sans:wght@300;400;500;600;700|Rubik:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "Large sections (48px+ gaps), animated patterns, bold hover (color shift), scroll-snap, large type (32px+), 200-300ms",
+  "anti_patterns": "Flat design without depth + Text-heavy pages",
+  "decision_rules": {
+   "if_luxury": "switch-to-liquid-glass",
+   "if_conversion_focused": "add-urgency-colors"
+  },
+  "severity": "HIGH"
+ },
+ "co-working space": {
+  "project_name": "CO-WORKING SPACE",
+  "category": "Coworking Space",
+  "pattern": {
+   "name": "Hero-Centric + Feature-Rich",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Vibrant & Block-based",
+   "type": "General",
+   "effects": "Large sections (48px+ gaps), animated patterns, bold hover (color shift), scroll-snap, large type (32px+), 200-300ms",
+   "keywords": "Bold, energetic, playful, block layout, geometric shapes, high color contrast, duotone, modern, energetic",
+   "best_for": "Startups, creative agencies, gaming, social media, youth-focused, entertainment, consumer",
+   "performance": "⚡ Good",
+   "accessibility": "◐ Ensure WCAG",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#F59E0B",
+   "on_primary": "#0F172A",
+   "secondary": "#FBBF24",
+   "accent": "#2563EB",
+   "background": "#FFFBEB",
+   "foreground": "#78350F",
+   "muted": "#F1F2EF",
+   "border": "#FDE68A",
+   "destructive": "#DC2626",
+   "ring": "#F59E0B",
+   "notes": "Energetic amber + booking blue",
+   "cta": "#2563EB",
+   "text": "#78350F"
+  },
+  "typography": {
+   "heading": "Space Mono",
+   "body": "Space Mono",
+   "mood": "brutalist, raw, technical, monospace, minimal, stark",
+   "best_for": "Brutalist designs, developer portfolios, experimental, tech art",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Space+Mono:wght@400;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');"
+  },
+  "key_effects": "Large sections (48px+ gaps), animated patterns, bold hover (color shift), scroll-snap, large type (32px+), 200-300ms",
+  "anti_patterns": "Outdated photos + Confusing layout",
+  "decision_rules": {
+   "must_have": "booking-system"
+  },
+  "severity": "MEDIUM"
+ },
+ "fin-tech": {
+  "project_name": "FIN-TECH",
+  "category": "Space Tech / Aerospace",
+  "pattern": {
+   "name": "Bento Grid Showcase",
+   "sections": "1. Hero, 2. Bento Grid (Key Features), 3. Detail Cards, 4. Tech Specs, 5. CTA",
+   "cta_placement": "Floating Action Button or Bottom of Grid",
+   "color_strategy": "Card backgrounds: #F5F5F7 or Glass. Icons: Vibrant brand colors. Text: Dark.",
+   "conversion": "Scannable value props. High information density without clutter. Mobile stack."
+  },
+  "style": {
+   "name": "Dark Mode (OLED)",
+   "type": "General",
+   "effects": "Minimal glow (text-shadow: 0 0 10px), dark-to-light transitions, low white emission, high readability, visible focus",
+   "keywords": "Dark theme, low light, high contrast, deep black, midnight blue, eye-friendly, OLED, night mode, power efficient",
+   "best_for": "Night-mode apps, coding platforms, entertainment, eye-strain prevention, OLED devices, low-light",
+   "performance": "⚡ Excellent",
+   "accessibility": "✓ WCAG AAA",
+   "light_mode": "✗ No",
+   "dark_mode": "✓ Only"
+  },
+  "colors": {
+   "primary": "#F59E0B",
+   "on_primary": "#0F172A",
+   "secondary": "#FBBF24",
+   "accent": "#8B5CF6",
+   "background": "#0F172A",
+   "foreground": "#F8FAFC",
+   "muted": "#272F42",
+   "border": "#334155",
+   "destructive": "#EF4444",
+   "ring": "#F59E0B",
+   "notes": "Gold trust + purple tech",
+   "cta": "#8B5CF6",
+   "text": "#F8FAFC"
+  },
+  "typography": {
+   "heading": "Space Grotesk",
+   "body": "DM Sans",
+   "mood": "tech, startup, modern, innovative, bold, futuristic",
+   "best_for": "Tech companies, startups, SaaS, developer tools, AI products",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=DM+Sans:wght@400;500;700|Space+Grotesk:wght@400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');"
+  },
+  "key_effects": "Minimal glow (text-shadow: 0 0 10px), dark-to-light transitions, low white emission, high readability, visible focus",
+  "anti_patterns": "Generic design + No immersion",
+  "decision_rules": {
+   "must_have": "precision-data"
+  },
+  "severity": "HIGH"
+ },
+ "SaaS DASHBOARD": {
+  "project_name": "SAAS DASHBOARD",
+  "category": "Micro SaaS",
+  "pattern": {
+   "name": "Real-Time / Operations Landing",
+   "sections": "1. Hero (product + live preview or status), 2. Key metrics/indicators, 3. How it works, 4. CTA (Start trial / Contact)",
+   "cta_placement": "Primary CTA in nav + After metrics",
+   "color_strategy": "Dark or neutral. Status colors (green/amber/red). Data-dense but scannable.",
+   "conversion": "For ops/security/iot products. Demo or sandbox link. Trust signals."
+  },
+  "style": {
+   "name": "Motion-Driven",
+   "type": "General",
+   "effects": "Scroll anim (Intersection Observer), hover (300-400ms), entrance, parallax (3-5 layers), page transitions",
+   "keywords": "Animation-heavy, microinteractions, smooth transitions, scroll effects, parallax, entrance anim, page transitions",
+   "best_for": "Portfolio sites, storytelling platforms, interactive experiences, entertainment apps, creative, SaaS",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Prefers-reduced-motion",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#0F172A",
+   "on_primary": "#FFFFFF",
+   "secondary": "#1E293B",
+   "accent": "#22C55E",
+   "background": "#020617",
+   "foreground": "#F8FAFC",
+   "muted": "#1A1E2F",
+   "border": "#334155",
+   "destructive": "#EF4444",
+   "ring": "#0F172A",
+   "notes": "Dark bg + green positive indicators",
+   "cta": "#22C55E",
+   "text": "#F8FAFC"
+  },
+  "typography": {
+   "heading": "Fira Code",
+   "body": "Fira Sans",
+   "mood": "dashboard, data, analytics, code, technical, precise",
+   "best_for": "Dashboards, analytics, data visualization, admin panels",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Fira+Code:wght@400;500;600;700|Fira+Sans:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "Scroll anim (Intersection Observer), hover (300-400ms), entrance, parallax (3-5 layers), page transitions",
+  "anti_patterns": "Static design + No video + Poor mobile",
+  "decision_rules": {
+   "if_pre_launch": "use-waitlist-pattern",
+   "if_video_ready": "add-hero-video"
+  },
+  "severity": "HIGH"
+ },
+ "app": {
+  "project_name": "APP",
+  "category": "Healthcare App",
+  "pattern": {
+   "name": "App Store Style Landing",
+   "sections": "1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs",
+   "cta_placement": "Download buttons prominent (App Store + Play Store) throughout",
+   "color_strategy": "Dark/light matching app store feel. Star ratings in gold. Screenshots with device frames.",
+   "conversion": "Show real screenshots. Include ratings (4.5+ stars). QR code for mobile. Platform-specific CTAs."
+  },
+  "style": {
+   "name": "Neumorphism (Mobile)",
+   "type": "Mobile",
+   "effects": "Full-screen #E0E5EC base, dual-layer shadow via nested View (light top-left + dark bottom-right), extruded convex resting state, inset concave pressed/input state, Reanimated scale 0.97 on press, shadow opacity interpolates 1→0.4 on press, Haptics Light on every interaction, 8pt grid, no blur shadows (no shadowRadius blend), nested depth (extruded card contains inset icon slot)",
+   "keywords": "neumorphism, soft ui, dual shadow, extruded, inset, clay surface, monochromatic, cool grey, haptic, ceramic, physical, depth",
+   "best_for": "Minimal hardware controls, smart home apps, aesthetic utility tools, health monitors, brand showcase pages",
+   "performance": "✓ Lightweight",
+   "accessibility": "⚠ Moderate (low-contrast risk)",
+   "light_mode": "✓ Light-only",
+   "dark_mode": "✗ Dark (breaks material metaphor)"
+  },
+  "colors": {
+   "primary": "#0891B2",
+   "on_primary": "#FFFFFF",
+   "secondary": "#22D3EE",
+   "accent": "#059669",
+   "background": "#ECFEFF",
+   "foreground": "#164E63",
+   "muted": "#E8F1F6",
+   "border": "#A5F3FC",
+   "destructive": "#DC2626",
+   "ring": "#0891B2",
+   "notes": "Calm cyan + health green",
+   "cta": "#059669",
+   "text": "#164E63"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Readable + Large type (16px+)",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Full-screen #E0E5EC base, dual-layer shadow via nested View (light top-left + dark bottom-right), extruded convex resting state, inset concave pressed/input state, Reanimated scale 0.97 on press, shadow opacity interpolates 1→0.4 on press, Haptics Light on every interaction, 8pt grid, no blur shadows (no shadowRadius blend), nested depth (extruded card contains inset icon slot)",
+  "anti_patterns": "Bright neon colors + Motion-heavy animations + AI purple/pink gradients",
+  "decision_rules": {
+   "must_have": "wcag-aaa-compliance",
+   "if_medication": "red-alert-colors"
+  },
+  "severity": "HIGH"
+ },
+ "design": {
+  "project_name": "DESIGN",
+  "category": "Design System/Component Library",
+  "pattern": {
+   "name": "Hero-Centric Design",
+   "sections": "1. Full-bleed Hero (headline + visual), 2. Single value prop strip, 3. Key benefit or proof, 4. Primary CTA",
+   "cta_placement": "Hero dominant (center/bottom) + Sticky nav CTA",
+   "color_strategy": "Hero: High-impact visual. Minimal text. CTA 7:1 contrast.",
+   "conversion": "One primary CTA. Hero is 60-80% above fold. Mobile: same hierarchy."
+  },
+  "style": {
+   "name": "Exaggerated Minimalism",
+   "type": "General",
+   "effects": "font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace",
+   "keywords": "Bold minimalism, oversized typography, high contrast, negative space, loud minimal, statement design",
+   "best_for": "Fashion, architecture, portfolios, agency landing pages, luxury brands, editorial",
+   "performance": "⚡ Excellent",
+   "accessibility": "✓ WCAG AA",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#78716C",
+   "on_primary": "#FFFFFF",
+   "secondary": "#A8A29E",
+   "accent": "#D97706",
+   "background": "#FAF5F2",
+   "foreground": "#0F172A",
+   "muted": "#F6F6F6",
+   "border": "#EEEDED",
+   "destructive": "#DC2626",
+   "ring": "#78716C",
+   "notes": "Interior warm grey + gold accent",
+   "cta": "#D97706",
+   "text": "#0F172A"
+  },
+  "typography": {
+   "heading": "Archivo",
+   "body": "Space Grotesk",
+   "mood": "minimal, portfolio, designer, creative, clean, artistic",
+   "best_for": "Design portfolios, creative professionals, minimalist brands",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Archivo:wght@300;400;500;600;700|Space+Grotesk:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace",
+  "anti_patterns": "Poor documentation + No live preview",
+  "decision_rules": {
+   "must_have": "code-examples"
+  },
+  "severity": "HIGH"
+ },
+ "xyzzy qwerty flurb": {
+  "project_name": "XYZZY QWERTY FLURB",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "mobile": {
+  "project_name": "MOBILE",
+  "category": "Banking/Traditional Finance",
+  "pattern": {
+   "name": "App Store Style Landing",
+   "sections": "1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs",
+   "cta_placement": "Download buttons prominent (App Store + Play Store) throughout",
+   "color_strategy": "Dark/light matching app store feel. Star ratings in gold. Screenshots with device frames.",
+   "conversion": "Show real screenshots. Include ratings (4.5+ stars). QR code for mobile. Platform-specific CTAs."
+  },
+  "style": {
+   "name": "Exaggerated Minimalism",
+   "type": "General",
+   "effects": "font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace",
+   "keywords": "Bold minimalism, oversized typography, high contrast, negative space, loud minimal, statement design",
+   "best_for": "Fashion, architecture, portfolios, agency landing pages, luxury brands, editorial",
+   "performance": "⚡ Excellent",
+   "accessibility": "✓ WCAG AA",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Calistoga",
+   "body": "Inter",
+   "mood": "saas, boutique, electric, warm, editorial, bold, premium, fintech, business, dual font, human warmth",
+   "best_for": "B2B SaaS mobile, fintech apps, analytics dashboards, marketing tools, operations platforms",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Calistoga:ital@0;1|Inter:wght@300;400;500;600;700|JetBrains+Mono:wght@400;500",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Calistoga:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');"
+  },
+  "key_effects": "font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace",
+  "anti_patterns": "Playful design + Poor security UX + AI purple/pink gradients",
+  "decision_rules": {
+   "must_have": "accessibility"
+  },
+  "severity": "HIGH"
+ },
+ "dark": {
+  "project_name": "DARK",
+  "category": "Cybersecurity Platform",
+  "pattern": {
+   "name": "Trust & Authority + Real-Time",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Cyberpunk UI",
+   "type": "General",
+   "effects": "Neon glow (text-shadow), glitch animations (skew/offset), scanlines (::before overlay), terminal fonts",
+   "keywords": "Neon, dark mode, terminal, HUD, sci-fi, glitch, dystopian, futuristic, matrix, tech noir",
+   "best_for": "Gaming platforms, tech products, crypto apps, sci-fi applications, developer tools, entertainment",
+   "performance": "⚠ Moderate",
+   "accessibility": "⚠ Limited (dark+neon)",
+   "light_mode": "✗ No",
+   "dark_mode": "✓ Only"
+  },
+  "colors": {
+   "primary": "#0F172A",
+   "on_primary": "#FFFFFF",
+   "secondary": "#1E293B",
+   "accent": "#22C55E",
+   "background": "#020617",
+   "foreground": "#F8FAFC",
+   "muted": "#1A1E2F",
+   "border": "#334155",
+   "destructive": "#EF4444",
+   "ring": "#0F172A",
+   "notes": "Dark bg + green positive indicators",
+   "cta": "#22C55E",
+   "text": "#F8FAFC"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "dark, cinematic, technical, precision, clean, premium, developer, professional, high-end utility",
+   "best_for": "Developer tools, fintech/trading, AI dashboards, streaming platforms, high-end productivity apps",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Inter:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "Neon glow (text-shadow), glitch animations (skew/offset), scanlines (::before overlay), terminal fonts",
+  "anti_patterns": "Light mode + Poor data viz",
+  "decision_rules": {
+   "must_have": "threat-display"
+  },
+  "severity": "HIGH"
+ },
+ "crypto": {
+  "project_name": "CRYPTO",
+  "category": "Fintech/Crypto",
+  "pattern": {
+   "name": "Trust & Authority",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Exaggerated Minimalism",
+   "type": "General",
+   "effects": "font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace",
+   "keywords": "Bold minimalism, oversized typography, high contrast, negative space, loud minimal, statement design",
+   "best_for": "Fashion, architecture, portfolios, agency landing pages, luxury brands, editorial",
+   "performance": "⚡ Excellent",
+   "accessibility": "✓ WCAG AA",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#F59E0B",
+   "on_primary": "#0F172A",
+   "secondary": "#FBBF24",
+   "accent": "#8B5CF6",
+   "background": "#0F172A",
+   "foreground": "#F8FAFC",
+   "muted": "#272F42",
+   "border": "#334155",
+   "destructive": "#EF4444",
+   "ring": "#F59E0B",
+   "notes": "Gold trust + purple tech",
+   "cta": "#8B5CF6",
+   "text": "#F8FAFC"
+  },
+  "typography": {
+   "heading": "Orbitron",
+   "body": "Exo 2",
+   "mood": "crypto, web3, futuristic, tech, blockchain, digital",
+   "best_for": "Crypto platforms, NFT, blockchain, web3, futuristic tech",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Exo+2:wght@300;400;500;600;700|Orbitron:wght@400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap');"
+  },
+  "key_effects": "font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace",
+  "anti_patterns": "Playful design + Unclear fees + AI purple/pink gradients",
+  "decision_rules": {
+   "must_have": "security-first",
+   "if_dashboard": "use-dark-mode"
+  },
+  "severity": "HIGH"
+ },
+ "portfolio": {
+  "project_name": "PORTFOLIO",
+  "category": "Portfolio/Personal",
+  "pattern": {
+   "name": "Portfolio Grid",
+   "sections": "1. Hero (Name/Role), 2. Project Grid (Masonry), 3. About/Philosophy, 4. Contact",
+   "cta_placement": "Project Card Hover + Footer Contact",
+   "color_strategy": "Neutral background (let work shine). Text: Black/White. Accent: Minimal.",
+   "conversion": "Visuals first. Filter by category. Fast loading essential."
+  },
+  "style": {
+   "name": "Motion-Driven",
+   "type": "General",
+   "effects": "Scroll anim (Intersection Observer), hover (300-400ms), entrance, parallax (3-5 layers), page transitions",
+   "keywords": "Animation-heavy, microinteractions, smooth transitions, scroll effects, parallax, entrance anim, page transitions",
+   "best_for": "Portfolio sites, storytelling platforms, interactive experiences, entertainment apps, creative, SaaS",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Prefers-reduced-motion",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#18181B",
+   "on_primary": "#FFFFFF",
+   "secondary": "#3F3F46",
+   "accent": "#2563EB",
+   "background": "#FAFAFA",
+   "foreground": "#09090B",
+   "muted": "#E8ECF0",
+   "border": "#E4E4E7",
+   "destructive": "#DC2626",
+   "ring": "#18181B",
+   "notes": "Monochrome + blue accent",
+   "cta": "#2563EB",
+   "text": "#09090B"
+  },
+  "typography": {
+   "heading": "Archivo",
+   "body": "Space Grotesk",
+   "mood": "minimal, portfolio, designer, creative, clean, artistic",
+   "best_for": "Design portfolios, creative professionals, minimalist brands",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Archivo:wght@300;400;500;600;700|Space+Grotesk:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "Scroll anim (Intersection Observer), hover (300-400ms), entrance, parallax (3-5 layers), page transitions",
+  "anti_patterns": "Corporate templates + Generic layouts",
+  "decision_rules": {
+   "if_creative_field": "add-brutalism",
+   "if_minimal_portfolio": "reduce-motion"
+  },
+  "severity": "MEDIUM"
+ },
+ "health": {
+  "project_name": "HEALTH",
+  "category": "Mental Health App",
+  "pattern": {
+   "name": "Social Proof-Focused",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Neumorphism",
+   "type": "General",
+   "effects": "Soft box-shadow (multiple: -5px -5px 15px, 5px 5px 15px), smooth press (150ms), inner subtle shadow",
+   "keywords": "Soft UI, embossed, debossed, convex, concave, light source, subtle depth, rounded (12-16px), monochromatic",
+   "best_for": "Health/wellness apps, meditation platforms, fitness trackers, minimal interaction UIs",
+   "performance": "⚡ Good",
+   "accessibility": "⚠ Low contrast",
+   "light_mode": "✓ Full",
+   "dark_mode": "◐ Partial"
+  },
+  "colors": {
+   "primary": "#0891B2",
+   "on_primary": "#FFFFFF",
+   "secondary": "#22D3EE",
+   "accent": "#059669",
+   "background": "#ECFEFF",
+   "foreground": "#164E63",
+   "muted": "#E8F1F6",
+   "border": "#A5F3FC",
+   "destructive": "#DC2626",
+   "ring": "#0891B2",
+   "notes": "Calm cyan + health green",
+   "cta": "#059669",
+   "text": "#164E63"
+  },
+  "typography": {
+   "heading": "Lora",
+   "body": "Raleway",
+   "mood": "calm, wellness, health, relaxing, natural, organic",
+   "best_for": "Health apps, wellness, spa, meditation, yoga, organic brands",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Lora:wght@400;500;600;700|Raleway:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "Soft box-shadow (multiple: -5px -5px 15px, 5px 5px 15px), smooth press (150ms), inner subtle shadow",
+  "anti_patterns": "Bright neon + Motion overload",
+  "decision_rules": {
+   "must_have": "privacy-first",
+   "if_meditation": "add-breathing-animation"
+  },
+  "severity": "HIGH"
+ },
+ "naïve café brand": {
+  "project_name": "NAÏVE CAFÉ BRAND",
+  "category": "Luxury/Premium Brand",
+  "pattern": {
+   "name": "Storytelling + Feature-Rich",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Liquid Glass",
+   "type": "General",
+   "effects": "Morphing elements (SVG/CSS), fluid animations (400-600ms curves), dynamic blur (backdrop-filter), color transitions",
+   "keywords": "Flowing glass, morphing, smooth transitions, fluid effects, translucent, animated blur, iridescent, chromatic aberration",
+   "best_for": "Premium SaaS, high-end e-commerce, creative platforms, branding experiences, luxury portfolios",
+   "performance": "⚠ Moderate-Poor",
+   "accessibility": "⚠ Text contrast",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "#FFFFFF",
+   "secondary": "#7C3AED",
+   "accent": "#EC4899",
+   "background": "#FFFFFF",
+   "foreground": "#0F172A",
+   "muted": "#F1F5FD",
+   "border": "#E4ECFC",
+   "destructive": "#DC2626",
+   "ring": "#2563EB",
+   "notes": "Brand blue + creator purple",
+   "cta": "#EC4899",
+   "text": "#0F172A"
+  },
+  "typography": {
+   "heading": "Orbitron",
+   "body": "JetBrains Mono",
+   "mood": "cyberpunk, neon, glitch, hud, sci-fi, dark, matrix green, magenta, chamfered, tactical",
+   "best_for": "Gaming companion apps, fintech/crypto, data visualization, dark brand apps, cyberpunk narrative games",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=JetBrains+Mono:wght@400;500|Orbitron:wght@700;900",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@700;900&display=swap');"
+  },
+  "key_effects": "Morphing elements (SVG/CSS), fluid animations (400-600ms curves), dynamic blur (backdrop-filter), color transitions",
+  "anti_patterns": "Cheap visuals + Fast animations",
+  "decision_rules": {
+   "must_have": "storytelling"
+  },
+  "severity": "HIGH"
+ },
+ "日本語 アプリ": {
+  "project_name": "日本語 アプリ",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "emoji 🚀 startup": {
+  "project_name": "EMOJI 🚀 STARTUP",
+  "category": "Chat & Messaging App",
+  "pattern": {
+   "name": "Feature-Rich Showcase + Demo",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Exaggerated Minimalism",
+   "type": "General",
+   "effects": "font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace",
+   "keywords": "Bold minimalism, oversized typography, high contrast, negative space, loud minimal, statement design",
+   "best_for": "Fashion, architecture, portfolios, agency landing pages, luxury brands, editorial",
+   "performance": "⚡ Excellent",
+   "accessibility": "✓ WCAG AA",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Space Grotesk",
+   "body": "DM Sans",
+   "mood": "tech, startup, modern, innovative, bold, futuristic",
+   "best_for": "Tech companies, startups, SaaS, developer tools, AI products",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=DM+Sans:wght@400;500;700|Space+Grotesk:wght@400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');"
+  },
+  "key_effects": "font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace",
+  "anti_patterns": "Excessive decoration",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-clarity",
+   "if_mobile": "optimize-touch-targets"
+  },
+  "severity": "HIGH"
+ },
+ "re:invent 2025": {
+  "project_name": "RE:INVENT 2025",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "c++ tooling": {
+  "project_name": "C++ TOOLING",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "node.js api docs": {
+  "project_name": "NODE.JS API DOCS",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "a b c d e f g": {
+  "project_name": "A B C D E F G",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "very long query about a fintech mobile banking application for first time users of digital money in emerging markets like nigeria": {
+  "project_name": "VERY LONG QUERY ABOUT A FINTECH MOBILE BANKING APPLICATION FOR FIRST TIME USERS OF DIGITAL MONEY IN EMERGING MARKETS LIKE NIGERIA",
+  "category": "Fintech/Crypto",
+  "pattern": {
+   "name": "Real-Time / Operations Landing",
+   "sections": "1. Hero (product + live preview or status), 2. Key metrics/indicators, 3. How it works, 4. CTA (Start trial / Contact)",
+   "cta_placement": "Primary CTA in nav + After metrics",
+   "color_strategy": "Dark or neutral. Status colors (green/amber/red). Data-dense but scannable.",
+   "conversion": "For ops/security/iot products. Demo or sandbox link. Trust signals."
+  },
+  "style": {
+   "name": "Bitcoin DeFi (Mobile)",
+   "type": "Mobile",
+   "effects": "Deep void + dark matter surfaces, Bitcoin orange/gold gradients for CTAs, pill buttons with glowing shadows, glassmorphic BlurView nav, monospace data rows, gradient text balances + masked orange-gold, pulsing status indicators and vertical ledger timelines, ultra-thin borders, high-precision typography",
+   "keywords": "web3, bitcoin, defi, digital gold, fintech, wallet, orange, glassmorphism, gradient, blur, holographic, trust, precision",
+   "best_for": "DeFi dashboards, wallets, NFT marketplaces, Web3 social, metaverse utilities, high-tech fintech brands",
+   "performance": "⚠ Moderate (gradients+blur)",
+   "accessibility": "✓ WCAG AA with care",
+   "light_mode": "✗ Light",
+   "dark_mode": "✓ Dark-only"
+  },
+  "colors": {
+   "primary": "#6366F1",
+   "on_primary": "#FFFFFF",
+   "secondary": "#818CF8",
+   "accent": "#16A34A",
+   "background": "#EEF2FF",
+   "foreground": "#312E81",
+   "muted": "#EBEFF9",
+   "border": "#C7D2FE",
+   "destructive": "#DC2626",
+   "ring": "#6366F1",
+   "notes": "Digital indigo + buy green [Accent adjusted from #22C55E for WCAG 3:1]",
+   "cta": "#16A34A",
+   "text": "#312E81"
+  },
+  "typography": {
+   "heading": "IBM Plex Sans",
+   "body": "IBM Plex Sans",
+   "mood": "financial, trustworthy, professional, corporate, banking, serious",
+   "best_for": "Banks, finance, insurance, investment, fintech, enterprise",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=IBM+Plex+Sans:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "Deep void + dark matter surfaces, Bitcoin orange/gold gradients for CTAs, pill buttons with glowing shadows, glassmorphic BlurView nav, monospace data rows, gradient text balances + masked orange-gold, pulsing status indicators and vertical ledger timelines, ultra-thin borders, high-precision typography",
+  "anti_patterns": "Playful design + Unclear fees + AI purple/pink gradients",
+  "decision_rules": {
+   "must_have": "security-first",
+   "if_dashboard": "use-dark-mode"
+  },
+  "severity": "HIGH"
+ },
+ "AI/ML platform": {
+  "project_name": "AI/ML PLATFORM",
+  "category": "Cybersecurity Platform",
+  "pattern": {
+   "name": "App Store Style Landing",
+   "sections": "1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs",
+   "cta_placement": "Download buttons prominent (App Store + Play Store) throughout",
+   "color_strategy": "Dark/light matching app store feel. Star ratings in gold. Screenshots with device frames.",
+   "conversion": "Show real screenshots. Include ratings (4.5+ stars). QR code for mobile. Platform-specific CTAs."
+  },
+  "style": {
+   "name": "Cyberpunk UI",
+   "type": "General",
+   "effects": "Neon glow (text-shadow), glitch animations (skew/offset), scanlines (::before overlay), terminal fonts",
+   "keywords": "Neon, dark mode, terminal, HUD, sci-fi, glitch, dystopian, futuristic, matrix, tech noir",
+   "best_for": "Gaming platforms, tech products, crypto apps, sci-fi applications, developer tools, entertainment",
+   "performance": "⚠ Moderate",
+   "accessibility": "⚠ Limited (dark+neon)",
+   "light_mode": "✗ No",
+   "dark_mode": "✓ Only"
+  },
+  "colors": {
+   "primary": "#1E1B4B",
+   "on_primary": "#FFFFFF",
+   "secondary": "#312E81",
+   "accent": "#F97316",
+   "background": "#0F0F23",
+   "foreground": "#F8FAFC",
+   "muted": "#27273B",
+   "border": "#4338CA",
+   "destructive": "#EF4444",
+   "ring": "#1E1B4B",
+   "notes": "Dark audio + warm accent",
+   "cta": "#F97316",
+   "text": "#F8FAFC"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "flat, clean, system, bold, geometric, cross-platform, icon, poster, minimal, functional, responsive",
+   "best_for": "Cross-platform apps, dashboards, system UI, onboarding, marketing pages, informational apps, icon-heavy interfaces",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Inter:wght@400;600;700;800",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');"
+  },
+  "key_effects": "Neon glow (text-shadow), glitch animations (skew/offset), scanlines (::before overlay), terminal fonts",
+  "anti_patterns": "Light mode + Poor data viz",
+  "decision_rules": {
+   "must_have": "threat-display"
+  },
+  "severity": "HIGH"
+ },
+ "non-profit": {
+  "project_name": "NON-PROFIT",
+  "category": "Non-profit/Charity",
+  "pattern": {
+   "name": "Storytelling + Trust",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Accessible & Ethical",
+   "type": "General",
+   "effects": "Clear focus rings (3-4px), ARIA labels, skip links, responsive design, reduced motion, 44x44px touch targets",
+   "keywords": "High contrast, large text (16px+), keyboard navigation, screen reader friendly, WCAG compliant, focus state, semantic",
+   "best_for": "Government, healthcare, education, inclusive products, large audience, legal compliance, public",
+   "performance": "⚡ Excellent",
+   "accessibility": "✓ WCAG AAA",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#0891B2",
+   "on_primary": "#FFFFFF",
+   "secondary": "#22D3EE",
+   "accent": "#EA580C",
+   "background": "#ECFEFF",
+   "foreground": "#164E63",
+   "muted": "#E8F1F6",
+   "border": "#A5F3FC",
+   "destructive": "#DC2626",
+   "ring": "#0891B2",
+   "notes": "Compassion blue + action orange [Accent adjusted from #F97316 for WCAG 3:1]",
+   "cta": "#EA580C",
+   "text": "#164E63"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Heartfelt + Readable typography",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Clear focus rings (3-4px), ARIA labels, skip links, responsive design, reduced motion, 44x44px touch targets",
+  "anti_patterns": "No impact data + Hidden financials",
+  "decision_rules": {
+   "must_have": "donation-transparency"
+  },
+  "severity": "HIGH"
+ },
+ "24/7 support portal": {
+  "project_name": "24/7 SUPPORT PORTAL",
+  "category": "Childcare/Daycare",
+  "pattern": {
+   "name": "FAQ/Documentation Landing",
+   "sections": "1. Hero with search bar, 2. Popular categories, 3. FAQ accordion, 4. Contact/support CTA",
+   "cta_placement": "Search bar prominent + Contact CTA for unresolved questions",
+   "color_strategy": "Clean, high readability. Minimal color. Category icons in brand color. Success green for resolved.",
+   "conversion": "Reduce support tickets. Track search analytics. Show related articles. Contact escalation path."
+  },
+  "style": {
+   "name": "Claymorphism (Mobile)",
+   "type": "Mobile",
+   "effects": "Multi-layer shadow stacks (nested View) to simulate clay depth, LinearGradient #A78BFA→#7C3AED buttons, borderRadius 40–50 outer / 32 cards / 20 buttons, Reanimated spring squish (scale 0.92 on press), BlurView glass-clay hybrid cards, floating blobs with slow ±20px drift, Haptics Light on every press",
+   "keywords": "claymorphism, clay, 3d, soft, bubbly, candy, playful, rounded, squish, tactile, inflate, silicone, haptic, spring",
+   "best_for": "Children education apps, teen social products, crypto gamification, creative tools, brand mascot-led apps",
+   "performance": "⚠ Moderate–Heavy (shadows+blur)",
+   "accessibility": "✓ WCAG AA (careful)",
+   "light_mode": "✓ Light",
+   "dark_mode": "⚠ Dark (adjusted)"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Friendly + Playful typography",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Multi-layer shadow stacks (nested View) to simulate clay depth, LinearGradient #A78BFA→#7C3AED buttons, borderRadius 40–50 outer / 32 cards / 20 buttons, Reanimated spring squish (scale 0.92 on press), BlurView glass-clay hybrid cards, floating blobs with slow ±20px drift, Haptics Light on every press",
+  "anti_patterns": "Generic design + Hidden safety info",
+  "decision_rules": {
+   "must_have": "safety-certifications"
+  },
+  "severity": "HIGH"
+ },
+ "x": {
+  "project_name": "X",
+  "category": "General",
+  "pattern": {
+   "name": "Hero + Features + CTA",
+   "sections": "Hero > Features > CTA",
+   "cta_placement": "Above fold",
+   "color_strategy": "",
+   "conversion": ""
+  },
+  "style": {
+   "name": "Glassmorphism",
+   "type": "General",
+   "effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+   "keywords": "Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer",
+   "best_for": "Modern SaaS, financial dashboards, high-end corporate, lifestyle apps, modal overlays, navigation",
+   "performance": "⚠ Good",
+   "accessibility": "⚠ Ensure 4.5:1",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#2563EB",
+   "on_primary": "",
+   "secondary": "#3B82F6",
+   "accent": "#F97316",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "",
+   "border": "",
+   "destructive": "",
+   "ring": "",
+   "notes": "",
+   "cta": "#F97316",
+   "text": "#1E293B"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Professional + Hierarchy",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH"
+ },
+ "user's dashboard": {
+  "project_name": "USER'S DASHBOARD",
+  "category": "Analytics Dashboard",
+  "pattern": {
+   "name": "Product Review/Ratings Focused",
+   "sections": "1. Hero (product + aggregate rating), 2. Rating breakdown, 3. Individual reviews, 4. Buy/CTA",
+   "cta_placement": "After reviews summary + Buy button alongside reviews",
+   "color_strategy": "Trust colors. Star ratings gold. Verified badge green. Review sentiment colors.",
+   "conversion": "User-generated content builds trust. Show verified purchases. Filter by rating. Respond to negative reviews."
+  },
+  "style": {
+   "name": "Data-Dense Dashboard",
+   "type": "BI/Analytics",
+   "effects": "Hover tooltips, chart zoom on click, row highlighting on hover, smooth filter animations, data loading spinners",
+   "keywords": "Multiple charts/widgets, data tables, KPI cards, minimal padding, grid layout, space-efficient, maximum data visibility",
+   "best_for": "Business intelligence dashboards, financial analytics, enterprise reporting, operational dashboards, data warehousing",
+   "performance": "⚡ Excellent",
+   "accessibility": "✓ WCAG AA",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#0F172A",
+   "on_primary": "#FFFFFF",
+   "secondary": "#1E293B",
+   "accent": "#22C55E",
+   "background": "#020617",
+   "foreground": "#F8FAFC",
+   "muted": "#1A1E2F",
+   "border": "#334155",
+   "destructive": "#EF4444",
+   "ring": "#0F172A",
+   "notes": "Dark bg + green positive indicators",
+   "cta": "#22C55E",
+   "text": "#F8FAFC"
+  },
+  "typography": {
+   "heading": "Fira Code",
+   "body": "Fira Sans",
+   "mood": "dashboard, data, analytics, code, technical, precise",
+   "best_for": "Dashboards, analytics, data visualization, admin panels",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=Fira+Code:wght@400;500;600;700|Fira+Sans:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "Hover tooltips, chart zoom on click, row highlighting on hover, smooth filter animations, data loading spinners",
+  "anti_patterns": "Ornate design + No filtering",
+  "decision_rules": {
+   "must_have": "data-export",
+   "if_large_dataset": "virtualize-lists"
+  },
+  "severity": "HIGH"
+ },
+ "don't panic app": {
+  "project_name": "DON'T PANIC APP",
+  "category": "Healthcare App",
+  "pattern": {
+   "name": "App Store Style Landing",
+   "sections": "1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs",
+   "cta_placement": "Download buttons prominent (App Store + Play Store) throughout",
+   "color_strategy": "Dark/light matching app store feel. Star ratings in gold. Screenshots with device frames.",
+   "conversion": "Show real screenshots. Include ratings (4.5+ stars). QR code for mobile. Platform-specific CTAs."
+  },
+  "style": {
+   "name": "Neumorphism (Mobile)",
+   "type": "Mobile",
+   "effects": "Full-screen #E0E5EC base, dual-layer shadow via nested View (light top-left + dark bottom-right), extruded convex resting state, inset concave pressed/input state, Reanimated scale 0.97 on press, shadow opacity interpolates 1→0.4 on press, Haptics Light on every interaction, 8pt grid, no blur shadows (no shadowRadius blend), nested depth (extruded card contains inset icon slot)",
+   "keywords": "neumorphism, soft ui, dual shadow, extruded, inset, clay surface, monochromatic, cool grey, haptic, ceramic, physical, depth",
+   "best_for": "Minimal hardware controls, smart home apps, aesthetic utility tools, health monitors, brand showcase pages",
+   "performance": "✓ Lightweight",
+   "accessibility": "⚠ Moderate (low-contrast risk)",
+   "light_mode": "✓ Light-only",
+   "dark_mode": "✗ Dark (breaks material metaphor)"
+  },
+  "colors": {
+   "primary": "#0891B2",
+   "on_primary": "#FFFFFF",
+   "secondary": "#22D3EE",
+   "accent": "#059669",
+   "background": "#ECFEFF",
+   "foreground": "#164E63",
+   "muted": "#E8F1F6",
+   "border": "#A5F3FC",
+   "destructive": "#DC2626",
+   "ring": "#0891B2",
+   "notes": "Calm cyan + health green",
+   "cta": "#059669",
+   "text": "#164E63"
+  },
+  "typography": {
+   "heading": "Inter",
+   "body": "Inter",
+   "mood": "Readable + Large type (16px+)",
+   "best_for": "",
+   "google_fonts_url": "",
+   "css_import": ""
+  },
+  "key_effects": "Full-screen #E0E5EC base, dual-layer shadow via nested View (light top-left + dark bottom-right), extruded convex resting state, inset concave pressed/input state, Reanimated scale 0.97 on press, shadow opacity interpolates 1→0.4 on press, Haptics Light on every interaction, 8pt grid, no blur shadows (no shadowRadius blend), nested depth (extruded card contains inset icon slot)",
+  "anti_patterns": "Bright neon colors + Motion-heavy animations + AI purple/pink gradients",
+  "decision_rules": {
+   "must_have": "wcag-aaa-compliance",
+   "if_medication": "red-alert-colors"
+  },
+  "severity": "HIGH"
+ }
+}

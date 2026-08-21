@@ -1,0 +1,79 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-2xs);
+  margin-bottom: var(--app-space-lg);
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-3xs);
+}
+
+.label {
+  font-size: var(--app-text-sm);
+  font-weight: 700;
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--app-ink-faint);
+}
+
+.helper {
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-faint);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 6.5rem;
+  resize: vertical;
+  padding: var(--app-space-sm);
+  border: 1px solid var(--app-border-strong);
+  border-radius: var(--app-radius-md);
+  background: var(--app-surface);
+  font-size: var(--app-text-md);
+  font-family: var(--app-font-body);
+  line-height: 1.5;
+  transition: border-color var(--app-duration-base) var(--app-ease);
+}
+
+.textarea:focus-visible {
+  border-color: var(--app-accent);
+}
+
+.input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--app-border-strong);
+  border-radius: var(--app-radius-md);
+  background: var(--app-surface);
+  font-size: var(--app-text-base);
+  transition: border-color var(--app-duration-base) var(--app-ease);
+}
+
+.input:focus-visible {
+  border-color: var(--app-accent);
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-3xs);
+  margin-top: var(--app-space-2xs);
+}
+
+.error {
+  color: var(--app-error);
+  font-size: var(--app-text-xs);
+  font-weight: 600;
+}
+
+.selectedRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-3xs);
+  min-height: 1.75rem;
+}

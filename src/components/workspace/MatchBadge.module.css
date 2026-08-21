@@ -1,0 +1,68 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-xs);
+  align-items: flex-start;
+}
+
+.badge {
+  display: inline-block;
+  font-size: var(--app-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.strong {
+  color: var(--app-positive-ink, #15803D);
+  background: var(--app-positive-wash, rgba(21, 128, 61, 0.1));
+  border-color: var(--app-positive-wash, rgba(21, 128, 61, 0.25));
+}
+
+.good {
+  color: var(--app-ink);
+  background: var(--app-surface-2, rgba(127, 127, 127, 0.12));
+  border-color: var(--app-border);
+}
+
+.weak,
+.fallback {
+  color: var(--app-warning-ink, #B45309);
+  background: var(--app-warning-wash, rgba(180, 83, 9, 0.1));
+  border-color: var(--app-warning-wash, rgba(180, 83, 9, 0.28));
+}
+
+.basis {
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+  margin: 0;
+  max-width: 62ch;
+}
+
+.fallbackNotice {
+  border: 1px solid var(--app-warning-wash, rgba(180, 83, 9, 0.3));
+  border-left-width: 3px;
+  border-radius: var(--app-radius-sm, 4px);
+  padding: var(--app-space-sm) var(--app-space-md);
+  background: var(--app-warning-wash, rgba(180, 83, 9, 0.06));
+  display: grid;
+  gap: 2px;
+}
+
+.fallbackTitle {
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--app-warning-ink, #B45309);
+}
+
+.fallbackBody {
+  margin: 0;
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+  max-width: 62ch;
+}

@@ -1,0 +1,70 @@
+.header {
+  padding-block: var(--app-space-xl) var(--app-space-lg);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--app-space-md);
+  margin-bottom: var(--app-space-md);
+}
+
+.meta {
+  max-width: 60ch;
+}
+
+.eyebrow {
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--app-accent);
+  margin-bottom: var(--app-space-2xs);
+}
+
+.title {
+  font-size: var(--app-text-2xl);
+  margin-bottom: var(--app-space-2xs);
+}
+
+.description {
+  color: var(--app-ink-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-2xs);
+}
+
+.factRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-lg);
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.factLabel {
+  font-size: var(--app-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--app-ink-faint);
+}
+
+.factValue {
+  font-size: var(--app-text-sm);
+  font-weight: 600;
+}
+
+.keywordRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}

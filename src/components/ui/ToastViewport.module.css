@@ -1,0 +1,52 @@
+.viewport {
+  position: fixed;
+  bottom: var(--app-space-md);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-2xs);
+  align-items: center;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-2xs);
+  padding: 0.65rem 1rem;
+  border-radius: var(--app-radius-md);
+  background: var(--app-ink);
+  color: var(--app-paper);
+  font-size: var(--app-text-sm);
+  font-weight: 500;
+  box-shadow: var(--app-shadow-lg);
+  animation: rise var(--app-duration-base) var(--app-ease);
+}
+
+.success {
+  background: var(--app-success);
+}
+
+.error {
+  background: var(--app-error);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}

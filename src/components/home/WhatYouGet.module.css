@@ -1,0 +1,97 @@
+.section {
+  padding-block: var(--app-space-2xl);
+  border-top: 1px solid var(--app-border);
+}
+
+.head {
+  max-width: 46ch;
+  margin-bottom: var(--app-space-xl);
+}
+
+.title {
+  font-size: var(--app-text-2xl);
+  margin-bottom: var(--app-space-2xs);
+}
+
+.subtitle {
+  color: var(--app-ink-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--app-space-md);
+}
+
+.card {
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  padding: var(--app-space-lg);
+  background: var(--app-surface);
+}
+
+.cardFeatured {
+  grid-column: span 3;
+  background: var(--app-ink);
+  color: var(--app-paper);
+  border-color: var(--app-ink);
+}
+
+.cardTitle {
+  font-family: var(--app-font-display);
+  font-size: var(--app-text-lg);
+  margin-bottom: var(--app-space-sm);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: var(--app-space-sm);
+}
+
+.tag {
+  font-size: var(--app-text-xs);
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--app-radius-pill);
+  border: 1px solid var(--app-border-strong);
+  color: var(--app-ink-muted);
+}
+
+.cardFeatured .tag {
+  border-color: color-mix(in srgb, var(--app-paper) 30%, transparent);
+  color: var(--app-paper);
+}
+
+.example {
+  font-size: var(--app-text-sm);
+  line-height: var(--app-leading-normal);
+  max-width: 70ch;
+}
+
+.exampleQuestion {
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.exampleAnswer {
+  opacity: 0.85;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .cardFeatured {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .cardFeatured {
+    grid-column: span 1;
+  }
+}

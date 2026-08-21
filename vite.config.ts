@@ -1,0 +1,30 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        /*
+          The ported dataset gets its own chunk.
+
+          It is the largest thing shipped and the least likely to change: app code churns
+          every release, the CSVs from the upstream skill almost never do. Splitting them
+          means a deploy invalidates the app chunk while returning visitors keep the data
+          from cache, rather than re-downloading ~480 kB because a button colour moved.
+
+          This does NOT reduce first load — all of it is still needed before the first
+          generation. Cutting first load means not shipping the data up front at all, which
+          needs an async boundary the engine does not currently have.
+        */
+        manualChunks(id) {
+          if (id.includes('/src/data/')) return 'design-data'
+          if (id.includes('node_modules/@supabase')) return 'supabase'
+          return undefined
+        },
+      },
+    },
+  },
+})

@@ -1,0 +1,299 @@
+/*
+  Preview styles for the LIVE generated design system. Every rule reads from --ds-* custom
+  properties (set by DesignSystemScope) with a safe fallback, never from --app-* — this file
+  must never affect the application's own chrome.
+*/
+
+.scope {
+  font-family: var(--ds-font-body, sans-serif);
+  color: var(--ds-foreground, #1e293b);
+}
+
+.heading {
+  font-family: var(--ds-font-heading, sans-serif);
+}
+
+/* ---------- Button ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: var(--ds-button-padding, 12px 24px);
+  border-radius: var(--ds-button-radius, 8px);
+  font-weight: var(--ds-button-font-weight, 600);
+  font-family: var(--ds-font-body, sans-serif);
+  border: 1px solid transparent;
+  transition: var(--ds-button-transition, all 200ms ease);
+  background: var(--ds-primary, #2563eb);
+  color: var(--ds-on-primary, #fff);
+}
+
+.button:hover,
+.button[data-state='hover'] {
+  filter: brightness(1.08);
+}
+
+.button:active,
+.button[data-state='active'] {
+  filter: brightness(0.94);
+  transform: translateY(1px);
+}
+
+.button:focus-visible,
+.button[data-state='focus'] {
+  outline: 2px solid var(--ds-ring, var(--ds-primary, #2563eb));
+  outline-offset: 2px;
+}
+
+.button:disabled,
+.button[data-state='disabled'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button[data-state='loading'] {
+  opacity: 0.8;
+  cursor: progress;
+}
+
+.buttonSecondary {
+  background: transparent;
+  color: var(--ds-primary, #2563eb);
+  border-color: var(--ds-border, var(--ds-primary, #2563eb));
+}
+
+.buttonGhost {
+  background: transparent;
+  color: var(--ds-foreground, #1e293b);
+}
+
+.spinner {
+  width: 0.85em;
+  height: 0.85em;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: ds-spin 700ms linear infinite;
+}
+
+@keyframes ds-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
+/* ---------- Card ---------- */
+
+.card {
+  padding: var(--ds-card-padding, 24px);
+  border-radius: var(--ds-card-radius, 12px);
+  box-shadow: var(--ds-card-shadow, none);
+  background: var(--ds-background, #f8fafc);
+  border: 1px solid var(--ds-border, transparent);
+  transition: var(--ds-card-transition, all 200ms ease);
+}
+
+/* ---------- Input / Select ---------- */
+
+.input,
+.select {
+  width: 100%;
+  padding: var(--ds-input-padding, 12px 16px);
+  border-radius: var(--ds-input-radius, 8px);
+  font-size: var(--ds-input-font-size, 16px);
+  border: 1px solid var(--ds-input-border-color, #e2e8f0);
+  background: var(--ds-background, #fff);
+  color: var(--ds-foreground, #1e293b);
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.input[data-state='focus'],
+.select[data-state='focus'] {
+  outline: 2px solid var(--ds-ring, var(--ds-primary, #2563eb));
+  outline-offset: 1px;
+}
+
+.input[data-state='error'],
+.select[data-state='error'] {
+  border-color: var(--ds-destructive, #dc2626);
+}
+
+.input:disabled,
+.input[data-state='disabled'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Checkbox / Radio ---------- */
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.checkbox,
+.radio {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--ds-primary, #2563eb);
+}
+
+/* ---------- Badge ---------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: var(--ds-primary, #2563eb);
+  color: var(--ds-on-primary, #fff);
+}
+
+.badgeMuted {
+  background: var(--ds-muted, #f1f5f9);
+  color: var(--ds-foreground, #1e293b);
+}
+
+/* ---------- Alert ---------- */
+
+.alert {
+  padding: 0.85rem 1rem;
+  border-radius: var(--ds-card-radius, 12px);
+  border: 1px solid var(--ds-border, #e2e8f0);
+  background: var(--ds-muted, #f1f5f9);
+  font-size: 0.9rem;
+}
+
+.alertError {
+  border-color: var(--ds-destructive, #dc2626);
+  color: var(--ds-destructive, #dc2626);
+  background: color-mix(in srgb, var(--ds-destructive, #dc2626) 10%, transparent);
+}
+
+/* ---------- Nav / Tabs ---------- */
+
+.navRow {
+  display: flex;
+  gap: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--ds-border, #e2e8f0);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.navItemActive {
+  color: var(--ds-primary, #2563eb);
+}
+
+.tabRow {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--ds-button-radius, 8px);
+  background: var(--ds-muted, #f1f5f9);
+}
+
+.tab {
+  padding: 0.4rem 0.9rem;
+  border-radius: calc(var(--ds-button-radius, 8px) - 2px);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.tabActive {
+  background: var(--ds-background, #fff);
+  color: var(--ds-primary, #2563eb);
+  box-shadow: var(--ds-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.06));
+}
+
+/* ---------- Modal ---------- */
+
+.modal {
+  max-width: var(--ds-modal-max-width, 420px);
+  padding: var(--ds-modal-padding, 24px);
+  border-radius: var(--ds-modal-radius, 16px);
+  box-shadow: var(--ds-modal-shadow, none);
+  background: var(--ds-background, #fff);
+  border: 1px solid var(--ds-border, transparent);
+}
+
+/* ---------- Table ---------- */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.table th {
+  text-align: left;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ds-foreground, #1e293b);
+  opacity: 0.6;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--ds-border, #e2e8f0);
+}
+
+.table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--ds-border, #e2e8f0);
+}
+
+/* ---------- Avatar ---------- */
+
+.avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--ds-primary, #2563eb);
+  color: var(--ds-on-primary, #fff);
+}
+
+/* ---------- Small text utilities shared by preview tiles ---------- */
+
+.tileHeading {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.tileSub {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.tileSubSpaced {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- Tooltip (static demo) ---------- */
+
+.tooltip {
+  display: inline-block;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--ds-input-radius, 8px);
+  background: var(--ds-foreground, #1e293b);
+  color: var(--ds-background, #fff);
+  font-size: 0.75rem;
+}

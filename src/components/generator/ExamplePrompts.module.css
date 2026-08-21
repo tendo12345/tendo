@@ -1,0 +1,33 @@
+.wrap {
+  margin-bottom: var(--app-space-xl);
+}
+
+.label {
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--app-ink-faint);
+  margin-bottom: var(--app-space-xs);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-2xs);
+}
+
+.prompt {
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--app-radius-pill);
+  border: 1px solid var(--app-border);
+  background: var(--app-surface);
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+  transition: border-color var(--app-duration-base) var(--app-ease), color var(--app-duration-base) var(--app-ease);
+}
+
+.prompt:hover {
+  border-color: var(--app-ink);
+  color: var(--app-ink);
+}

@@ -1,0 +1,33 @@
+.nav {
+  position: sticky;
+  top: var(--app-nav-height);
+  z-index: 50;
+  background: var(--app-paper);
+  border-bottom: 1px solid var(--app-border);
+}
+
+.inner {
+  display: flex;
+  gap: var(--app-space-2xs);
+  overflow-x: auto;
+  padding-block: var(--app-space-xs);
+}
+
+.link {
+  flex: 0 0 auto;
+  padding: 0.45rem 0.9rem;
+  font-size: var(--app-text-sm);
+  font-weight: 600;
+  color: var(--app-ink-muted);
+  border-radius: var(--app-radius-pill);
+  transition: color var(--app-duration-base) var(--app-ease), background var(--app-duration-base) var(--app-ease);
+}
+
+.link:hover {
+  color: var(--app-ink);
+}
+
+.active {
+  color: var(--app-ink);
+  background: var(--app-surface-sunken);
+}

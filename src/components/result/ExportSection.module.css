@@ -1,0 +1,30 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--app-space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--app-space-md);
+}
+
+.actions {
+  display: flex;
+  gap: var(--app-space-2xs);
+}
+
+.codeWrap {
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  background: var(--app-surface-sunken);
+  overflow: hidden;
+}
+
+.code {
+  margin: 0;
+  padding: var(--app-space-lg);
+  overflow-x: auto;
+  font-family: var(--app-font-mono);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  white-space: pre;
+}

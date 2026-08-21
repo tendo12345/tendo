@@ -1,0 +1,75 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--app-space-xl);
+}
+
+.specimenBlock {
+  margin-bottom: var(--app-space-lg);
+}
+
+.specimenLabel {
+  font-size: var(--app-text-xs);
+  font-weight: 700;
+  color: var(--app-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--app-space-2xs);
+}
+
+.headingSpecimen {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  margin-bottom: var(--app-space-2xs);
+}
+
+.bodySpecimen {
+  font-size: 1.05rem;
+  max-width: 46ch;
+}
+
+.meta {
+  display: flex;
+  gap: var(--app-space-md);
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-muted);
+  margin-top: var(--app-space-2xs);
+}
+
+.actions {
+  display: flex;
+  gap: var(--app-space-2xs);
+  margin-top: var(--app-space-sm);
+}
+
+.scaleList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-sm);
+}
+
+.scaleRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--app-space-sm);
+  border-bottom: 1px solid var(--app-border);
+  padding-bottom: var(--app-space-sm);
+}
+
+.scaleLabel {
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-faint);
+  width: 5rem;
+  flex-shrink: 0;
+}
+
+.scaleSample {
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
