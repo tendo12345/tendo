@@ -14,7 +14,8 @@
     "sweep": "tsx scripts/parity-sweep.ts",
     "data:check": "tsx scripts/strip-data-columns.ts --check",
     "data:strip": "tsx scripts/strip-data-columns.ts",
-    "data:verify": "tsx scripts/verify-data-parity.ts"
+    "data:verify": "tsx scripts/verify-data-parity.ts",
+    "build:sample": "tsx scripts/build-sample-system.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

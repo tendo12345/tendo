@@ -1,9 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from './ThemeToggle';
+import { accountsEnabled } from '../../lib/supabase';
 import styles from './NavBar.module.css';
 
 export function NavBar() {
+  // Hidden entirely when unconfigured rather than shown-and-broken: a nav item leading to
+  // "there is nothing to sign in to" is worse than no nav item.
+  const showAccount = accountsEnabled();
+
   return (
     <header className={styles.header}>
       <div className={`${styles.bar} container`}>
@@ -15,6 +20,11 @@ export function NavBar() {
           <NavLink to="/generator" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
             Generator
           </NavLink>
+          {showAccount && (
+            <NavLink to="/account" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
+              Account
+            </NavLink>
+          )}
         </nav>
 
         <div className={styles.actions}>

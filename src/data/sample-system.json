@@ -1,0 +1,350 @@
+{
+ "engineVersion": "2026.08.20",
+ "input": {
+  "productType": "fintech mobile app",
+  "keywords": [
+   "trustworthy",
+   "modern",
+   "minimal"
+  ]
+ },
+ "system": {
+  "project_name": "FINTECH MOBILE APP TRUSTWORTHY MODERN MINIMAL",
+  "category": "SaaS (General)",
+  "pattern": {
+   "name": "App Store Style Landing",
+   "sections": "1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs",
+   "cta_placement": "Download buttons prominent (App Store + Play Store) throughout",
+   "color_strategy": "Dark/light matching app store feel. Star ratings in gold. Screenshots with device frames.",
+   "conversion": "Show real screenshots. Include ratings (4.5+ stars). QR code for mobile. Platform-specific CTAs."
+  },
+  "style": {
+   "name": "Flat Design",
+   "type": "General",
+   "effects": "No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons",
+   "keywords": "2D, minimalist, bold colors, no shadows, clean lines, simple shapes, typography-focused, modern, icon-heavy",
+   "best_for": "Web apps, mobile apps, cross-platform, startup MVPs, user-friendly, SaaS, dashboards, corporate",
+   "performance": "⚡ Excellent",
+   "accessibility": "✓ WCAG AAA",
+   "light_mode": "✓ Full",
+   "dark_mode": "✓ Full"
+  },
+  "colors": {
+   "primary": "#F59E0B",
+   "on_primary": "#0F172A",
+   "secondary": "#FBBF24",
+   "accent": "#8B5CF6",
+   "background": "#0F172A",
+   "foreground": "#F8FAFC",
+   "muted": "#272F42",
+   "border": "#334155",
+   "destructive": "#EF4444",
+   "ring": "#F59E0B",
+   "notes": "Gold trust + purple tech",
+   "cta": "#8B5CF6",
+   "text": "#F8FAFC"
+  },
+  "typography": {
+   "heading": "IBM Plex Sans",
+   "body": "IBM Plex Sans",
+   "mood": "financial, trustworthy, professional, corporate, banking, serious",
+   "best_for": "Banks, finance, insurance, investment, fintech, enterprise",
+   "google_fonts_url": "https://fonts.google.com/share?selection.family=IBM+Plex+Sans:wght@300;400;500;600;700",
+   "css_import": "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons",
+  "anti_patterns": "Excessive animation + Dark mode by default",
+  "decision_rules": {
+   "if_ux_focused": "prioritize-minimalism",
+   "if_data_heavy": "add-glassmorphism"
+  },
+  "severity": "HIGH",
+  "input": {
+   "productType": "fintech mobile app",
+   "keywords": [
+    "trustworthy",
+    "modern",
+    "minimal"
+   ]
+  },
+  "query": "fintech mobile app trustworthy modern minimal",
+  "provenance": {
+   "product": {
+    "matched": true,
+    "score": 7.5250009621763265,
+    "runnerUp": 7.037209913926684
+   },
+   "colors": {
+    "matched": true,
+    "score": 5.498968259906437,
+    "runnerUp": 2.4278068330224194
+   },
+   "typography": {
+    "matched": true,
+    "score": 5.255548029459494,
+    "runnerUp": 4.393024446032063
+   },
+   "pattern": {
+    "matched": true,
+    "score": 6.81413095846278,
+    "runnerUp": 3.154226154786364
+   },
+   "style": {
+    "matched": true,
+    "score": 11.127780971433864,
+    "runnerUp": 9.239066318644966,
+    "path": "exact-match",
+    "matchedPriority": "Flat Design",
+    "priorities": [
+     "Glassmorphism",
+     "Flat Design"
+    ]
+   },
+   "reasoningRule": {
+    "category": "SaaS (General)",
+    "matchKind": "exact"
+   },
+   "tokens": {
+    "radius": "style",
+    "spacing": "default",
+    "motion": "style"
+   }
+  },
+  "ground": {
+   "css": "radial-gradient(42rem 42rem at 84% -8%, rgba(33, 22, 1, 0.85), transparent 60%),\nradial-gradient(50rem 38rem at 6% 106%, rgba(27, 18, 48, 0.68), transparent 62%),\nlinear-gradient(176deg, #0A0F1B 0%, #312920 46%, #0F172A 72%, #0D1323 100%)",
+   "ramp": [
+    {
+     "color": "#0A0F1B",
+     "position": 0
+    },
+    {
+     "color": "#312920",
+     "position": 46
+    },
+    {
+     "color": "#0F172A",
+     "position": 72
+    },
+    {
+     "color": "#0D1323",
+     "position": 100
+    }
+   ],
+   "washes": [
+    {
+     "placement": "top right",
+     "color": "#211601",
+     "alpha": 0.85,
+     "css": "radial-gradient(42rem 42rem at 84% -8%, rgba(33, 22, 1, 0.85), transparent 60%)"
+    },
+    {
+     "placement": "bottom left",
+     "color": "#1B1230",
+     "alpha": 0.68,
+     "css": "radial-gradient(50rem 38rem at 6% 106%, rgba(27, 18, 48, 0.68), transparent 62%)"
+    }
+   ],
+   "extremes": {
+    "lightest": "#312920",
+    "darkest": "#0A0F1B"
+   },
+   "worstContrast": {
+    "role": "text.muted",
+    "ratio": 5.69,
+    "against": "#231906"
+   },
+   "origin": "derived",
+   "note": "Derived from the generated palette — no new hues. The wash strength (0.85) is the strongest value at which every text role still meets its contrast target against the worst point the gradient can produce."
+  },
+  "spacing": [
+   {
+    "token": "--space-xs",
+    "px": "4px",
+    "rem": "0.25rem",
+    "usage": "Tight gaps"
+   },
+   {
+    "token": "--space-sm",
+    "px": "8px",
+    "rem": "0.5rem",
+    "usage": "Icon gaps, inline spacing"
+   },
+   {
+    "token": "--space-md",
+    "px": "16px",
+    "rem": "1rem",
+    "usage": "Standard padding"
+   },
+   {
+    "token": "--space-lg",
+    "px": "24px",
+    "rem": "1.5rem",
+    "usage": "Section padding"
+   },
+   {
+    "token": "--space-xl",
+    "px": "32px",
+    "rem": "2rem",
+    "usage": "Large gaps"
+   },
+   {
+    "token": "--space-2xl",
+    "px": "48px",
+    "rem": "3rem",
+    "usage": "Section margins"
+   },
+   {
+    "token": "--space-3xl",
+    "px": "64px",
+    "rem": "4rem",
+    "usage": "Hero padding"
+   }
+  ],
+  "radius": [
+   {
+    "token": "--radius-sm",
+    "value": "2px",
+    "usage": "Buttons, inputs"
+   },
+   {
+    "token": "--radius-md",
+    "value": "6px",
+    "usage": "Cards"
+   },
+   {
+    "token": "--radius-lg",
+    "value": "10px",
+    "usage": "Modals"
+   }
+  ],
+  "shadows": [
+   {
+    "token": "--shadow-sm",
+    "value": "0 1px 2px rgba(0,0,0,0.05)",
+    "usage": "Subtle lift"
+   },
+   {
+    "token": "--shadow-md",
+    "value": "0 4px 6px rgba(0,0,0,0.1)",
+    "usage": "Cards, buttons"
+   },
+   {
+    "token": "--shadow-lg",
+    "value": "0 10px 15px rgba(0,0,0,0.1)",
+    "usage": "Modals, dropdowns"
+   },
+   {
+    "token": "--shadow-xl",
+    "value": "0 20px 25px rgba(0,0,0,0.15)",
+    "usage": "Hero images, featured cards"
+   }
+  ],
+  "components": {
+   "button": {
+    "radius": "2px",
+    "padding": "12px 24px",
+    "fontWeight": "600",
+    "transition": "all 175ms ease"
+   },
+   "card": {
+    "radius": "6px",
+    "padding": "24px",
+    "shadow": "var(--shadow-md)",
+    "transition": "all 175ms ease"
+   },
+   "input": {
+    "radius": "2px",
+    "padding": "12px 16px",
+    "fontSize": "16px",
+    "borderColor": "#E2E8F0"
+   },
+   "modal": {
+    "radius": "10px",
+    "padding": "32px",
+    "shadow": "var(--shadow-xl)",
+    "maxWidth": "500px"
+   }
+  },
+  "motion": {
+   "duration": "175ms",
+   "source": "style"
+  },
+  "reasoning": {
+   "category": {
+    "decision": "SaaS (General)",
+    "why": "The query ranked \"SaaS (General)\" as the closest of 161 product types, and its reasoning row matched by exact on \"SaaS (General)\".",
+    "source": "products.csv + ui-reasoning.csv",
+    "evidence": {
+     "severity": "HIGH"
+    }
+   },
+   "pattern": {
+    "decision": "App Store Style Landing",
+    "why": "\"App Store Style Landing\" was the top-ranked landing pattern for this query. Its section order and CTA placement come with it.",
+    "source": "landing.csv",
+    "evidence": {
+     "sections": "1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs",
+     "cta": "Download buttons prominent (App Store + Play Store) throughout"
+    }
+   },
+   "style": {
+    "decision": "Flat Design",
+    "why": "\"SaaS (General)\" prioritises Glassmorphism + Flat Design, and \"Flat Design\" is that style by name. It was taken ahead of the raw search ranking.",
+    "source": "styles.csv + ui-reasoning.csv Style_Priority",
+    "evidence": {
+     "priority": "Glassmorphism + Flat Design",
+     "best_for": "Web apps, mobile apps, cross-platform, startup MVPs, user-friendly, SaaS, dashboards, corporate"
+    }
+   },
+   "colors": {
+    "decision": "#F59E0B",
+    "why": "The palette is the curated set for \"Fintech/Crypto\" (Gold trust + purple tech), the top match for this query. The category calls for a \"Trust blue + Accent contrast\" mood.",
+    "source": "colors.csv",
+    "evidence": {
+     "mood": "Trust blue + Accent contrast",
+     "notes": "Gold trust + purple tech"
+    }
+   },
+   "typography": {
+    "decision": "IBM Plex Sans / IBM Plex Sans",
+    "why": "\"Financial Trust\" was the top-ranked pairing, built for Banks, finance, insurance, investment, fintech, enterprise. The category calls for a \"Professional + Hierarchy\" tone.",
+    "source": "typography.csv",
+    "evidence": {
+     "mood": "Professional + Hierarchy",
+     "pairing": "Financial Trust"
+    }
+   },
+   "effects": {
+    "decision": "No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons",
+    "why": "Taken from the selected style \"Flat Design\". The style's own effects override the category's generic recommendation (\"Subtle hover (200-250ms) + Smooth transitions\").",
+    "source": "styles.csv + ui-reasoning.csv Key_Effects"
+   },
+   "spacing": {
+    "decision": "4px to 64px",
+    "why": "\"Flat Design\" declares no spacing of its own, so the default 8px-based ramp is used.",
+    "source": "default scale",
+    "evidence": {
+     "source": "default"
+    }
+   },
+   "components": {
+    "decision": "radius 2px / 6px / 10px, transition 175ms",
+    "why": "Corner radius comes from \"Flat Design\" itself (--border-radius: 2px). Transition duration also comes from the style (150-200ms).",
+    "source": "styles.csv Design System Variables",
+    "evidence": {
+     "radius": "style",
+     "motion": "style"
+    }
+   },
+   "antiPatterns": {
+    "decision": "Excessive animation + Dark mode by default",
+    "why": "Recorded against \"SaaS (General)\" as the things that break this product category.",
+    "source": "ui-reasoning.csv Anti_Patterns",
+    "evidence": {
+     "if_ux_focused": "prioritize-minimalism",
+     "if_data_heavy": "add-glassmorphism"
+    }
+   }
+  }
+ }
+}

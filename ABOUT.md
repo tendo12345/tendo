@@ -89,13 +89,23 @@ matches on exact names rather than substrings, and spacing and radius are derive
 chosen style instead of being identical for every result. Both changes are documented, with
 the reasoning and the measurements, in [PORTING-NOTES.md](PORTING-NOTES.md).
 
-Built with React, TypeScript and Vite. No UI framework, no analytics, no accounts, nothing
-sent anywhere — the engine runs entirely in your browser.
+Built with React, TypeScript and Vite. No UI framework, no analytics, no tracking.
+
+**The engine runs entirely in your browser.** Generating a system, exploring it, checking its
+contrast and exporting it all happen on your machine — nothing about what you are building is
+sent anywhere, and none of it requires an account.
+
+An optional account exists for one purpose: saving systems so they follow you between
+devices. If you sign in, two things leave your browser — your email address, and the short
+description you typed for each system you choose to save. Never the generated output, because
+Basis stores the description and rebuilds the system from it. If you never sign in, nothing
+leaves your browser at all.
 
 ## Status
 
-Working end to end: landing page, generator, result view with live preview, and all five
-export formats. 153 tests, including parity checks against the original Python engine.
+Working end to end: landing page, generator, the workspace with live preview and reasoning,
+and all five export formats. Accounts are built but not yet live. 295 tests, including
+parity checks against the original Python engine.
 
 Made by [Ajakaye Ayomide (@0xtendo\_)](https://oxtendo.com), a product designer working on
 crypto and fintech UX for first-time users of digital money in emerging markets.

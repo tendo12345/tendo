@@ -20,6 +20,10 @@ export default defineConfig({
           needs an async boundary the engine does not currently have.
         */
         manualChunks(id) {
+          // The precomputed landing-page sample lives in src/data but must NOT join the
+          // dataset chunk — the whole point of precomputing it is that the home page can
+          // render without pulling the dataset in.
+          if (id.includes('sample-system')) return undefined
           if (id.includes('/src/data/')) return 'design-data'
           if (id.includes('node_modules/@supabase')) return 'supabase'
           return undefined

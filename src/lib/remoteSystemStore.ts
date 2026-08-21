@@ -1,16 +1,23 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
+﻿import type { SupabaseClient } from '@supabase/supabase-js';
 import type { GenerateInput } from '../engine/types';
 import type { SavedSystem, SystemStore, SystemStoreInfo } from './systemStore';
 
 /**
  * Account-backed implementation of the saved-systems port.
  *
- * Same interface as `localSystemStore`, so every screen that saves is unchanged — which is
+ * Same interface as `localSystemStore`, so every screen that saves is unchanged â€” which is
  * the entire reason the port was written before the backend existed.
  *
  * `user_id` is set from the session rather than passed in by a caller. RLS would reject a
  * mismatched id anyway, but setting it in one place means a call site cannot get it wrong
  * and discover the problem as a confusing policy error.
+ *
+ * Every query also filters on `user_id` explicitly, which RLS already guarantees. That is
+ * deliberate belt-and-braces: RLS is the real protection, but it lives in a migration that
+ * can be re-run, and `schema.sql` drops and recreates its policies. A table left without
+ * `enable row level security` â€” a recreated table, a partially applied migration â€” would
+ * otherwise turn `list()` into "every user's saved systems", and nothing on the client would
+ * notice. With the filter, that failure returns nothing instead of everything.
  */
 
 export const accountStoreInfo: SystemStoreInfo = {
@@ -44,6 +51,7 @@ export function createRemoteSystemStore(client: SupabaseClient, userId: string):
       const { data, error } = await client
         .from('saved_systems')
         .select('id, name, input, engine_version, output_hash, created_at')
+        .eq('user_id', userId)
         .order('created_at', { ascending: false });
       if (error) throw new Error(error.message);
       return (data as Row[]).map(toSaved);
@@ -54,6 +62,7 @@ export function createRemoteSystemStore(client: SupabaseClient, userId: string):
         .from('saved_systems')
         .select('id, name, input, engine_version, output_hash, created_at')
         .eq('id', id)
+        .eq('user_id', userId)
         .maybeSingle();
       if (error) throw new Error(error.message);
       return data ? toSaved(data as Row) : null;
@@ -78,12 +87,14 @@ export function createRemoteSystemStore(client: SupabaseClient, userId: string):
     async rename(id, name) {
       const trimmed = name.trim();
       if (!trimmed) return;
-      const { error } = await client.from('saved_systems').update({ name: trimmed }).eq('id', id);
+      const { error } = await client.from('saved_systems').update({ name: trimmed })
+        .eq('id', id)
+        .eq('user_id', userId);
       if (error) throw new Error(error.message);
     },
 
     async remove(id) {
-      const { error } = await client.from('saved_systems').delete().eq('id', id);
+      const { error } = await client.from('saved_systems').delete().eq('id', id).eq('user_id', userId);
       if (error) throw new Error(error.message);
     },
   };

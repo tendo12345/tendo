@@ -73,20 +73,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       options: { emailRedirectTo: `${window.location.origin}/account` },
     });
 
-    if (err) {
-      setError(err.message);
-      return { sent: false, message: err.message };
-    }
-
     /*
-      Always the same wording, whether or not that address has an account.
+      Always the same wording, whether or not that address has an account — and whether or
+      not the call succeeded.
 
       Saying "no account found" would turn this form into an email-enumeration oracle:
-      anyone could test addresses for membership. The cost is a slightly vaguer message for
-      someone who typos their address, which is the right side of that trade.
+      anyone could test addresses for membership. The success path was already careful about
+      that, but returning `err.message` verbatim on failure quietly reopened it. Supabase
+      distinguishes "signups not allowed" from other failures once new signups are disabled —
+      a normal hardening step — and that message would have gone straight to the visitor.
+
+      Rate limiting is the one failure worth naming, because the visitor can act on it and it
+      reveals nothing about whether the address exists. Everything else is logged for the
+      operator and reported as the same neutral sentence.
     */
+    if (err) {
+      setError(err.message);
+      const rateLimited = /rate limit|too many/i.test(err.message);
+      if (rateLimited) {
+        return {
+          sent: false,
+          message: 'Too many sign-in attempts just now. Wait a minute and try again.',
+        };
+      }
+    }
+
     return {
-      sent: true,
+      sent: !err,
       message: `If ${email} can receive mail, a sign-in link is on its way. The link works once and expires shortly.`,
     };
   }, []);

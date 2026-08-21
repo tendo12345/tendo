@@ -1,4 +1,4 @@
-.header {
+﻿.header {
   position: sticky;
   top: 0;
   z-index: 100;
@@ -73,5 +73,21 @@
 @media (max-width: 767px) {
   .links {
     display: none;
+  }
+}
+
+/*
+  Touch targets for the chrome.
+
+  The theme toggle and the logo are real navigation controls but sat at 36px and 34px. Raised
+  only on coarse pointers so the desktop bar keeps its proportions.
+*/
+@media (pointer: coarse), (max-width: 720px) {
+  .themeToggle,
+  .logo,
+  .link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
 }

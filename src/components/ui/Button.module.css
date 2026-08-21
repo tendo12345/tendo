@@ -1,4 +1,4 @@
-.btn {
+﻿.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -76,4 +76,23 @@
 
 .fullWidth {
   width: 100%;
+}
+
+/*
+  Touch targets.
+
+  The `sm` variant is deliberately compact on a mouse-driven layout, but the header actions
+  (Regenerate, Copy, Export) use it and were landing at 30px on mobile — well under the 44px
+  minimum for a finger. Raised only where the pointer is coarse, so desktop density is
+  unaffected.
+*/
+@media (pointer: coarse), (max-width: 720px) {
+  .btn {
+    min-height: 44px;
+  }
+
+  .sm {
+    min-height: 44px;
+    padding: 0.625rem 1rem;
+  }
 }
