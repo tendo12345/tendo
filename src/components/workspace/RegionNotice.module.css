@@ -1,0 +1,32 @@
+﻿.panel {
+  display: grid;
+  gap: var(--app-space-md);
+  padding: var(--app-space-lg);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm, 4px);
+}
+
+.head { display: grid; gap: 2px; }
+.eyebrow { margin: 0; font-size: var(--app-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--app-ink-faint); }
+.title { margin: 0; font-size: var(--app-text-lg); }
+.meta { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); }
+
+.problem,
+.rtl {
+  border: 1px solid var(--app-warning-wash, rgba(180, 83, 9, 0.3));
+  border-left-width: 3px;
+  border-radius: var(--app-radius-sm, 4px);
+  padding: var(--app-space-md);
+  display: grid;
+  gap: 4px;
+}
+
+.problemTitle { margin: 0; font-size: var(--app-text-sm); font-weight: 700; color: var(--app-warning-ink, #B45309); }
+.problemBody, .problemFix { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; max-width: 72ch; }
+.problemFix { padding-top: 4px; }
+
+.ok { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); }
+
+.guidance { display: grid; gap: var(--app-space-sm); padding-top: var(--app-space-md); border-top: 1px solid var(--app-border); }
+.guidanceLabel { margin: 0; font-size: var(--app-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
+.guidanceList { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; max-width: 74ch; }

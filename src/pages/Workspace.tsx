@@ -1,4 +1,4 @@
-import { Navigate, NavLink, useParams } from 'react-router-dom';
+﻿import { Navigate, NavLink, useParams } from 'react-router-dom';
 import { ColorSystemSection } from '../components/result/ColorSystemSection';
 import { ComponentPreviewSection } from '../components/result/ComponentPreviewSection';
 import { ExportSection } from '../components/result/ExportSection';
@@ -17,6 +17,7 @@ import { ExplorePane } from '../components/workspace/ExplorePane';
 import { ImportPane } from '../components/workspace/ImportPane';
 import { ModesPane } from '../components/workspace/ModesPane';
 import { PatternsPane } from '../components/workspace/PatternsPane';
+import { RegionNotice } from '../components/workspace/RegionNotice';
 import { StatesPane } from '../components/workspace/StatesPane';
 import { SystemDnaPanel } from '../components/workspace/SystemDnaPanel';
 import { TokensPane } from '../components/workspace/TokensPane';
@@ -28,7 +29,7 @@ import styles from './Workspace.module.css';
  * The workspace shell.
  *
  * One section renders at a time, driven by the route, so switching sections does not
- * re-render the whole system. The engine is called once, in context — never here.
+ * re-render the whole system. The engine is called once, in context â€” never here.
  */
 export default function WorkspacePage() {
   const { section } = useParams<{ section: string }>();
@@ -99,6 +100,8 @@ export default function WorkspacePage() {
         {active.id === 'overview' && (
           <div className={styles.overview}>
             <SystemDnaPanel output={output} />
+            {/* Renders nothing unless a region was given. */}
+            <RegionNotice output={output} />
             <OverviewSection output={output} />
             <DecisionSummary output={output} />
           </div>

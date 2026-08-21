@@ -41,4 +41,6 @@ export { contrastRatio, wcagLevel, isDark, mix, adjustForContrast } from './colo
 export { buildGround } from './ground';
 export type { Ground, GroundStop, GroundWash } from './ground';
 export { matchLuminance, relativeLuminance } from './color';
+export { assessRegion, profileRegion } from './region';
+export type { RegionAssessment, RegionProfile, Script, TextDirection } from './region';
 export type * from './types';
