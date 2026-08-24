@@ -20,6 +20,9 @@ const GeneratorPage = lazy(() => import('./pages/Generator'));
 const WorkspacePage = lazy(() => import('./pages/Workspace'));
 const SharePage = lazy(() => import('./pages/Share'));
 const AccountPage = lazy(() => import('./pages/Account'));
+const BlogIndexPage = lazy(() => import('./pages/Blog'));
+const BlogPostPage = lazy(() => import('./pages/BlogPost'));
+const AdminCommentsPage = lazy(() => import('./pages/AdminComments'));
 
 /**
  * Deliberately minimal.
@@ -62,6 +65,30 @@ function App() {
           element={
             <Suspense fallback={<RouteFallback />}>
               <AccountPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="blog"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <BlogIndexPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="blog/:slug"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <BlogPostPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="admin/comments"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <AdminCommentsPage />
             </Suspense>
           }
         />

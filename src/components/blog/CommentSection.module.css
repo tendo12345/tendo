@@ -1,0 +1,9 @@
+.section { margin-top: var(--app-space-3xl); padding-top: var(--app-space-xl); border-top: 1px solid var(--app-border); }
+.heading { font-size: var(--app-text-lg); margin: 0 0 var(--app-space-md); }
+.notice { color: var(--app-ink-muted); }
+.empty { color: var(--app-ink-muted); margin-bottom: var(--app-space-md); }
+
+.list { list-style: none; margin: 0 0 var(--app-space-lg); padding: 0; display: grid; gap: var(--app-space-md); }
+
+.signInPrompt { color: var(--app-ink-muted); }
+.signInPrompt a { color: var(--app-accent); }

@@ -26,6 +26,9 @@ export default defineConfig({
           if (id.includes('sample-system')) return undefined
           if (id.includes('/src/data/')) return 'design-data'
           if (id.includes('node_modules/@supabase')) return 'supabase'
+          // Blog post content, same reasoning as design-data: it changes on its own schedule
+          // and should not invalidate (or bloat) the app chunk on every unrelated deploy.
+          if (id.includes('/src/content/blog/')) return 'blog-content'
           return undefined
         },
       },

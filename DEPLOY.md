@@ -55,6 +55,37 @@ visitor can read it.
 To verify the deployment before wiring accounts up, open `/account` — it should say accounts
 are unavailable rather than showing a sign-in that cannot work.
 
+## Blog comments (optional, requires Accounts)
+
+Comments are layered on top of the accounts setup above — if Supabase is not configured, the
+comment section on a blog post shows a plain notice instead of a form that could not work,
+the same way the rest of the accounts UI hides itself.
+
+1. Complete the Accounts setup above first.
+2. Re-run `supabase/schema.sql` — it is additive and safe to run again. This adds `profiles`,
+   `comments`, `comment_reports`, the moderation trigger, and the RLS policies around them.
+   **One line is not idempotent**: `alter publication supabase_realtime add table
+   public.comments;` raises "already a member of publication" on a second run. That error is
+   expected and can be ignored — it means the table is already wired for realtime, not that
+   anything failed.
+3. **Make the first admin.** There is no in-app UI for this, deliberately — an admin-granting
+   UI would itself need to be admin-gated, which is a bootstrapping problem better avoided
+   than solved. After someone signs in once (which creates their `profiles` row), promote them
+   from the SQL editor:
+   ```sql
+   update public.profiles set role = 'admin' where id = '<their auth.users uuid>';
+   ```
+   Find the uuid under **Authentication → Users**. The Moderation nav link and `/admin/comments`
+   route only appear for this account.
+4. Realtime comes from the same Supabase project — no extra environment variables. If comments
+   post successfully but never update live in a second browser window, check **Database →
+   Replication** in the dashboard and confirm `comments` is included in the `supabase_realtime`
+   publication (step 2 should have already done this).
+
+To verify: open a blog post while signed out — the comment section should prompt to sign in,
+not show a broken form. Post a comment from two signed-in accounts in two windows on the same
+post and confirm each appears in the other without a refresh.
+
 ## Other hosts
 
 Any static host works. The only requirement is the SPA fallback: serve `index.html` for any

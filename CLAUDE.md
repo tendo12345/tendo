@@ -39,6 +39,11 @@ needs one opts in per file with a `// @vitest-environment jsdom` docblock — se
 `src/hooks/useThemePreference.test.ts`. Keep it per-file: jsdom costs several seconds of
 startup, and almost nothing here needs it.
 
+`vitest.config.ts`'s `include` covers both `*.test.ts` and `*.test.tsx` — the latter exists
+for component render tests written in JSX (see `src/components/blog/CommentItem.test.tsx`,
+the first one). A `.test.ts` file with JSX in it is silently never collected; if a new
+component test isn't running, check the extension first.
+
 `vitest.config.ts` pins the pool to a single reused thread (`pool: 'threads'`,
 `singleThread: true`). On Windows, a forked worker booting jsdom can miss the pool's startup
 window and fail with "Timeout waiting for worker to respond" — the file never runs, which
@@ -188,6 +193,38 @@ Security notes that are not optional:
 params and regenerates on arrival. No backend, no stored rows, no expiry. Keep them readable
 rather than base64: an opaque blob is the wrong trade for a tool whose point is explaining
 itself.
+
+### Blog and comments
+
+The blog is content, not a feature: posts are Markdown files under `src/content/blog`
+(frontmatter parsed by a hand-rolled ~20-line parser in `src/lib/blog.ts`, on purpose — no
+`gray-matter`/YAML for a fixed four-field shape), rendered with `marked` and injected via
+`dangerouslySetInnerHTML`. That is safe there **only** because post bodies are trusted,
+repo-authored files. Comment bodies are the opposite: user input, rendered as plain text
+always (`CommentItem.tsx`, `white-space: pre-wrap`), never through `marked`, never through
+`dangerouslySetInnerHTML`. `CommentItem.test.tsx` pins this so a future edit that accidentally
+routes a comment through the Markdown path fails a test instead of shipping an XSS.
+
+Comments are gated entirely behind `accountsEnabled()`, same as `Account.tsx` — there is no
+local/offline comment store, because comments are inherently shared, multi-user data.
+
+Two `supabase/schema.sql` details worth knowing before touching this area:
+
+- **`is_admin()` and the report/moderation triggers are `security definer`, not incidentally.**
+  A `comments` RLS policy checking the caller's role against `profiles` would otherwise be
+  subject to `profiles`' own RLS as the calling user — who has no read policy on someone
+  else's row — and the check would silently see nothing. Do not "simplify" these into plain
+  `language sql` functions; that reintroduces the recursion/permission gap they exist to
+  avoid.
+- **There is no in-app way to grant the `admin` role, ever.** The first admin is a manual
+  `update public.profiles set role = 'admin' where id = '<uuid>'` in the Supabase SQL editor
+  (see `DEPLOY.md`). An admin-granting UI would need to be admin-gated itself — a
+  bootstrapping problem deliberately left unsolved rather than half-solved.
+
+The `/admin/comments` route's client-side `isAdmin` check is a UX nicety (hide the route
+rather than show-and-reject), not the security boundary — that is the RLS policies on
+`comments`. Treat any change to who can read/write a comment as a `schema.sql` change first,
+a UI change second.
 
 ### Two CSS variable namespaces that must never mix
 

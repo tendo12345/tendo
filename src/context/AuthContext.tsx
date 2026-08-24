@@ -23,9 +23,20 @@ import { accountsEnabled, supabase } from '../lib/supabase';
 
 export type AuthStatus = 'loading' | 'signed-out' | 'signed-in' | 'unavailable';
 
+/** The public-safe slice of profiles a signed-in user can read about themselves. */
+export interface Profile {
+  displayName: string;
+  role: 'user' | 'admin';
+}
+
 interface AuthContextValue {
   status: AuthStatus;
   user: User | null;
+  /** Null while loading or signed out. Fetched alongside the session, not a separate context —
+   *  it is a property of who is signed in, exactly like `user`. */
+  profile: Profile | null;
+  /** Derived from `profile`. False when signed out, unconfigured, or profile hasn't loaded yet. */
+  isAdmin: boolean;
   /** False when this deployment has no Supabase project configured. */
   enabled: boolean;
   error: string | null;
@@ -42,6 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [status, setStatus] = useState<AuthStatus>(enabled ? 'loading' : 'unavailable');
   const [error, setError] = useState<string | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
     if (!supabase) return;
@@ -63,6 +75,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       subscription.subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    if (!supabase || !session?.user) {
+      setProfile(null);
+      return;
+    }
+
+    let active = true;
+    void supabase
+      .from('profiles')
+      .select('display_name, role')
+      .eq('id', session.user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (!active || !data) return;
+        setProfile({ displayName: data.display_name as string, role: data.role as Profile['role'] });
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [session]);
 
   const signInWithEmail = useCallback(async (email: string) => {
     if (!supabase) return { sent: false, message: 'Accounts are not available here.' };
@@ -123,13 +157,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       status,
       user: session?.user ?? null,
+      profile,
+      isAdmin: profile?.role === 'admin',
       enabled,
       error,
       signInWithEmail,
       signInWithProvider,
       signOut,
     }),
-    [status, session, enabled, error, signInWithEmail, signInWithProvider, signOut],
+    [status, session, profile, enabled, error, signInWithEmail, signInWithProvider, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

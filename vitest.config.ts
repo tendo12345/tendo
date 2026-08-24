@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
 
     // Node by default: the engine suite needs no DOM and starting one for it would cost
     // seconds per file. The few tests that do need a DOM opt in per file with a

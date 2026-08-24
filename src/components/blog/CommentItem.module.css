@@ -1,0 +1,44 @@
+.item { display: flex; gap: var(--app-space-sm); }
+.body { flex: 1; min-width: 0; }
+
+.head { display: flex; align-items: baseline; gap: var(--app-space-xs); flex-wrap: wrap; margin-bottom: var(--app-space-3xs); }
+.author { font-weight: 600; font-size: var(--app-text-sm); }
+.time { font-size: var(--app-text-xs); color: var(--app-ink-faint); }
+.pendingBadge {
+  font-size: var(--app-text-xs);
+  color: var(--app-error);
+  background: var(--app-error-soft);
+  border-radius: var(--app-radius-sm);
+  padding: 2px 8px;
+}
+
+/* Plain text only — see the doc comment in CommentItem.tsx. pre-wrap preserves line breaks
+   without interpreting anything else in the string as markup. */
+.text { margin: 0 0 var(--app-space-2xs); white-space: pre-wrap; overflow-wrap: break-word; line-height: var(--app-leading-normal); }
+
+.actions { display: flex; gap: var(--app-space-sm); }
+.action {
+  font: inherit;
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  min-height: 24px;
+}
+.action:hover { color: var(--app-ink); text-decoration: underline; }
+.action:focus-visible { outline: 2px solid var(--app-focus-ring); outline-offset: 2px; }
+.action:disabled { opacity: 0.55; cursor: default; }
+
+.editForm { display: grid; gap: var(--app-space-2xs); margin-bottom: var(--app-space-2xs); }
+.textarea {
+  font: inherit;
+  padding: var(--app-space-2xs) var(--app-space-xs);
+  border: 1px solid var(--app-border-strong);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-ink);
+  resize: vertical;
+}
+.textarea:focus-visible { outline: 2px solid var(--app-focus-ring); outline-offset: 1px; }

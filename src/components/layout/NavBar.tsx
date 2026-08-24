@@ -10,7 +10,7 @@ export function NavBar() {
   // Hidden entirely when unconfigured rather than shown-and-broken: a nav item leading to
   // "there is nothing to sign in to" is worse than no nav item.
   const showAccount = accountsEnabled();
-  const { status, user } = useAuth();
+  const { status, user, isAdmin } = useAuth();
 
   return (
     <header className={styles.header}>
@@ -26,6 +26,17 @@ export function NavBar() {
           <NavLink to="/about" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
             About
           </NavLink>
+          <NavLink to="/blog" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
+            Blog
+          </NavLink>
+          {isAdmin && (
+            <NavLink
+              to="/admin/comments"
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              Moderation
+            </NavLink>
+          )}
           {showAccount && (
             <NavLink
               to="/account"
