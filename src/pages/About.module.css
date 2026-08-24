@@ -1,0 +1,15 @@
+﻿.wrap {
+  padding-block: var(--app-space-2xl) var(--app-space-3xl);
+  max-width: var(--app-container-narrow);
+}
+
+.title {
+  font-size: var(--app-text-xl);
+  margin-bottom: var(--app-space-sm);
+}
+
+.body {
+  margin: 0;
+  color: var(--app-ink-muted);
+  max-width: 68ch;
+}

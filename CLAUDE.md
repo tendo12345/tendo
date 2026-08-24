@@ -4,21 +4,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-**Basis** â€” a client-side tool that generates a design system from a one-sentence product
+**Basis** — a client-side tool that generates a design system from a one-sentence product
 description, and shows the reasoning behind every choice. Vite + React + TypeScript, no
-backend, no accounts. See `ABOUT.md` for the product framing and `PORTING-NOTES.md` for the
-engine's history and open decisions.
+backend, no accounts. See `ABOUT.md` for the product framing, `PORTING-NOTES.md` for the
+engine's history and open decisions, and `DEPLOY.md` for hosting and the optional
+Supabase-backed accounts setup.
 
 The reasoning engine is a TypeScript port of the Python `ui-ux-pro-max` skill, pinned to
 upstream commit `7538cfb` (MIT, `licenses/`). **`PORTING-NOTES.md` is required reading before
-touching `src/engine` or `src/data`** â€” it records what the port is faithful to, where it
+touching `src/engine` or `src/data`** — it records what the port is faithful to, where it
 deliberately diverges, and which judgment calls are still open.
 
 ## Commands
 
 ```bash
 npm run dev              # vite dev server on :5173
-npm run build            # tsc -b && vite build â€” run before finishing
+npm run build            # tsc -b && vite build — run before finishing
 npm test                 # vitest run (single pass)
 npm run test:watch
 npm run lint             # oxlint
@@ -34,15 +35,21 @@ npx vitest run -t "never degrades a text role"
 ```
 
 The global vitest environment is `node`, so the engine suite runs without a DOM. A test that
-needs one opts in per file with a `// @vitest-environment jsdom` docblock â€” see
+needs one opts in per file with a `// @vitest-environment jsdom` docblock — see
 `src/hooks/useThemePreference.test.ts`. Keep it per-file: jsdom costs several seconds of
 startup, and almost nothing here needs it.
+
+`vitest.config.ts` pins the pool to a single reused thread (`pool: 'threads'`,
+`singleThread: true`). On Windows, a forked worker booting jsdom can miss the pool's startup
+window and fail with "Timeout waiting for worker to respond" — the file never runs, which
+reads like a broken test but is a cold start, and it was intermittent rather than
+consistently broken. Do not "fix" this by re-enabling parallel workers.
 
 Two diagnostics that are not tests but answer "did I break the port?":
 
 ```bash
 npx tsx scripts/divergence.ts          # every deliberate difference vs the Python, classified
-npx tsx scripts/capture-divergence.ts  # REGENERATES the pinned divergence list â€” see below
+npx tsx scripts/capture-divergence.ts  # REGENERATES the pinned divergence list — see below
 ```
 
 Re-capturing Python ground truth needs the upstream skill checked out and Python installed:
@@ -64,12 +71,12 @@ src/components/workspace/   the post-generation workspace panes
 src/pages/Workspace.tsx     one section at a time, addressed by URL (/system/:section)
 ```
 
-`src/engine` must stay importable without a browser â€” the whole test suite depends on it.
+`src/engine` must stay importable without a browser — the whole test suite depends on it.
 Matching logic never goes in a component; components read `DesignSystemOutput` and render.
 
 ### How generation flows
 
-`generateDesignSystem(input)` (`engine/designSystem.ts`) is pure and deterministic â€” same
+`generateDesignSystem(input)` (`engine/designSystem.ts`) is pure and deterministic — same
 input, same output, no randomness. It:
 
 1. BM25-searches `products.json` for the product category
@@ -97,11 +104,11 @@ understand why, then re-pin.
 ### Saved systems store the input, not the output
 
 A saved system persists its `GenerateInput` (~61 bytes), never the generated output (~8.4 kB
-â€” measured, 138Ã— larger). The engine is deterministic, so the system is rebuilt on open.
+— measured, 138× larger). The engine is deterministic, so the system is rebuilt on open.
 That is why saved rows cannot go stale the way stored output did: shape drift crashed the app
 twice (`provenance`, then `ground`).
 
-The cost runs the other way â€” change selection logic and an old input regenerates into a
+The cost runs the other way — change selection logic and an old input regenerates into a
 different system. `engine/version.ts` makes that visible rather than silent. Bump
 `ENGINE_VERSION` when a change alters output for an unchanged input (not for additive
 fields), and `detectDrift` separates "the engine moved but this system did not" from "this
@@ -109,23 +116,23 @@ actually changed", so a release that touched one category does not warn every us
 
 All saving goes through the `SystemStore` port (`lib/systemStore.ts`), implemented today by
 `localSystemStore` and later by an account-backed store. **Every method is async even though
-localStorage is not** â€” that is deliberate, so swapping in a network-backed store needs no
+localStorage is not** — that is deliberate, so swapping in a network-backed store needs no
 call-site changes.
 
 `sessionStorage` still caches the *current* system in `GeneratedSystemContext`, and that one
-does hold full output â€” bump its `SCHEMA_VERSION` when the output shape changes.
+does hold full output — bump its `SCHEMA_VERSION` when the output shape changes.
 
 ### Changing what the engine outputs
 
 `src/engine/__tests__/engineVersion.test.ts` pins the fingerprint of five known queries. When
 one fails, decide which happened:
 
-- **intended** â†’ update the hash *and* bump `ENGINE_VERSION` in `engine/version.ts`
-- **accidental** â†’ fix the code
+- **intended** → update the hash *and* bump `ENGINE_VERSION` in `engine/version.ts`
+- **accidental** → fix the code
 
 Never update a pinned hash without bumping the version. Saved systems rebuild from their
 input, so an unbumped change silently regenerates everyone's saved work with no drift
-warning â€” that is precisely what this guards.
+warning — that is precisely what this guards.
 
 Derived text colours are **contrast-solved, not fixed mixes**. `fadeToward` in
 `semanticTokens.ts` backs the fade off until the result clears AA plus a margin. The old flat
@@ -137,7 +144,7 @@ wash; now 101 do).
 
 `npm run data:check` reports which columns the engine never reads; `data:strip` removes them
 and `data:verify` regenerates all 161 product types to prove nothing moved. The keep-list is
-derived from `CSV_CONFIG`, with columns read by direct property access listed in `EXTRA` â€”
+derived from `CSV_CONFIG`, with columns read by direct property access listed in `EXTRA` —
 that list is the fragile part, which is why the verify step exists. Always run it after a
 strip.
 
@@ -156,7 +163,7 @@ with `npm run build:sample`; a test fails if it drifts from live engine output.
 ### Accounts are optional, and must stay that way
 
 `lib/supabase.ts` exports `null` when `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` are
-unset, rather than throwing. Basis must generate, explore and export with no backend â€” a
+unset, rather than throwing. Basis must generate, explore and export with no backend — a
 missing key can never break the core product. The account UI hides itself when unconfigured
 instead of offering a sign-in that cannot work.
 
@@ -172,7 +179,7 @@ Security notes that are not optional:
   operation so widening one verb cannot silently widen the rest.
 - Auth is **passwordless** (magic link + OAuth). No password field, no reset flow, nothing to
   leak. Do not add password auth "for convenience".
-- The sign-in response is identical whether or not the address has an account â€” otherwise the
+- The sign-in response is identical whether or not the address has an account — otherwise the
   form becomes an email-enumeration oracle.
 
 ### Share links
@@ -184,12 +191,12 @@ itself.
 
 ### Two CSS variable namespaces that must never mix
 
-- `--app-*` â€” the application's own chrome, defined once in `src/styles/tokens.css`
-- `--ds-*` â€” the *generated* system, set as inline style on a scoped wrapper
+- `--app-*` — the application's own chrome, defined once in `src/styles/tokens.css`
+- `--ds-*` — the *generated* system, set as inline style on a scoped wrapper
   (`lib/designSystemVars.ts`, `components/result/DesignSystemScope.tsx`)
 
 A generated palette must never leak into the app's chrome or vice versa. Both dark selectors
-(`[data-theme='dark']` and the `prefers-color-scheme` default) read the same tokens â€” define
+(`[data-theme='dark']` and the `prefers-color-scheme` default) read the same tokens — define
 shared values once and reference them, rather than duplicating (they have silently drifted
 apart before).
 
@@ -199,14 +206,14 @@ apart before).
 code is held to the same standard:
 
 - No invented confidence percentages. BM25 scores are not normalised or comparable across
-  domains, so match strength is expressed as labels (`Strong / Good / Weak / Fallback`) â€”
+  domains, so match strength is expressed as labels (`Strong / Good / Weak / Fallback`) —
   see `engine/matchQuality.ts`.
 - Every token carries an `origin`: `generated` (from the dataset), `derived` (computed from a
   generated value), or `default` (a Basis constant because the dataset has no such role).
   Never present a derived or defaulted value as generated.
 - Fallbacks are surfaced, never silent.
-- Recommendations that the dataset does not contain â€” the interface patterns in
-  `productPatterns.ts` â€” are labelled as guidance, not as engine output.
+- Recommendations that the dataset does not contain — the interface patterns in
+  `productPatterns.ts` — are labelled as guidance, not as engine output.
 - Basis has no integration with Claude Code, Cursor or v0. The AI outputs are copyable text,
   and a test asserts the generated text never implies otherwise.
 - Features that cannot be built honestly are absent, not stubbed. There is no screenshot
@@ -214,7 +221,7 @@ code is held to the same standard:
 
 **Contrast is measured, not eyeballed.** Anything that changes a background or text colour
 gets checked with `engine/color.ts` (`contrastRatio`, `wcagLevel`) before it lands. For
-gradients, rasterise the layers and read the extreme pixel â€” the flat base colour is not the
+gradients, rasterise the layers and read the extreme pixel — the flat base colour is not the
 worst case. `engine/ground.ts` solves its own wash strength against this rule and holds a
 `SAFETY_MARGIN` so float noise cannot push the result under; its guarantee is re-derived
 independently in `ground.test.ts` rather than trusting the solver.

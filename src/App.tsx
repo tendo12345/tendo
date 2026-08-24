@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppLayout } from './layouts/AppLayout';
 import HomePage from './pages/Home';
+import AboutPage from './pages/About';
 import NotFoundPage from './pages/NotFound';
 
 /*
@@ -36,6 +37,9 @@ function App() {
     <Routes>
       <Route element={<AppLayout />}>
         <Route index element={<HomePage />} />
+        {/* Eager like Home and NotFound: it never touches the engine, so lazy-loading it
+            would add a chunk request without saving anything. */}
+        <Route path="about" element={<AboutPage />} />
         <Route
           path="generator"
           element={

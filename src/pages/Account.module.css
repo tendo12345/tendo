@@ -2,6 +2,9 @@
 .title { font-size: var(--app-text-2xl); margin: 0 0 var(--app-space-sm); }
 .meta { margin: 0 0 var(--app-space-lg); color: var(--app-ink-muted); line-height: 1.6; }
 
+.identity { display: flex; align-items: center; gap: var(--app-space-sm); margin-bottom: var(--app-space-lg); }
+.identity .meta { margin-bottom: 0; }
+
 .panel { border: 1px solid var(--app-border); border-radius: var(--app-radius-md, 8px); padding: var(--app-space-md); margin-bottom: var(--app-space-md); display: grid; gap: var(--app-space-sm); }
 .panelTitle { margin: 0; font-size: var(--app-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
 .panelBody { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; }

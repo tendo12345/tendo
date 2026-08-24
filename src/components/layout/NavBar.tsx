@@ -1,13 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/Button';
+import { Avatar } from '../ui/Avatar';
 import { ThemeToggle } from './ThemeToggle';
 import { accountsEnabled } from '../../lib/supabase';
+import { useAuth } from '../../context/AuthContext';
 import styles from './NavBar.module.css';
 
 export function NavBar() {
   // Hidden entirely when unconfigured rather than shown-and-broken: a nav item leading to
   // "there is nothing to sign in to" is worse than no nav item.
   const showAccount = accountsEnabled();
+  const { status, user } = useAuth();
 
   return (
     <header className={styles.header}>
@@ -20,8 +23,15 @@ export function NavBar() {
           <NavLink to="/generator" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
             Generator
           </NavLink>
+          <NavLink to="/about" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
+            About
+          </NavLink>
           {showAccount && (
-            <NavLink to="/account" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
+            <NavLink
+              to="/account"
+              className={({ isActive }) => `${styles.link} ${styles.accountLink} ${isActive ? styles.linkActive : ''}`}
+            >
+              {status === 'signed-in' && user && <Avatar email={user.email ?? ''} size="sm" />}
               Account
             </NavLink>
           )}

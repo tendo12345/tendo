@@ -46,6 +46,12 @@
   color: var(--app-ink);
 }
 
+.accountLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--app-space-3xs);
+}
+
 .actions {
   display: flex;
   align-items: center;

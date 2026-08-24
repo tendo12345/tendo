@@ -6,6 +6,7 @@ import { localSystemStore } from '../lib/localSystemStore';
 import { createRemoteSystemStore, uploadLocalSystems } from '../lib/remoteSystemStore';
 import { supabase } from '../lib/supabase';
 import { useToast } from '../context/ToastContext';
+import { Avatar } from '../components/ui/Avatar';
 import styles from './Account.module.css';
 
 /**
@@ -75,9 +76,12 @@ export default function AccountPage() {
     return (
       <div className={`container ${styles.wrap}`}>
         <h1 className={styles.title}>Your account</h1>
-        <p className={styles.meta}>
-          Signed in as <strong>{user.email}</strong>
-        </p>
+        <div className={styles.identity}>
+          <Avatar email={user.email ?? ''} size="md" />
+          <p className={styles.meta}>
+            Signed in as <strong>{user.email}</strong>
+          </p>
+        </div>
 
         <div className={styles.panel}>
           <p className={styles.panelTitle}>Saved systems</p>
