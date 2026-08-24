@@ -31,3 +31,5 @@ dist-ssr
 
 # Baseline written by scripts/strip-data-columns.ts for verify-data-parity.ts
 .data-fingerprints.json
+
+.vercel
