@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { buildModes } from '../../engine/darkMode';
 import type { DesignSystemOutput } from '../../engine/types';
 import { DesignSystemScope } from './DesignSystemScope';
+import { ModeSwitcher } from './ModeSwitcher';
 import { Tabs } from '../ui/Tabs';
 import ds from './dsPreview.module.css';
 import result from './result.module.css';
@@ -25,6 +27,15 @@ export function ComponentPreviewSection({ output }: ComponentPreviewSectionProps
   const dataState = state === 'default' ? undefined : state;
   const isDisabled = state === 'disabled';
 
+  // Every generated system has both a generated mode and a derived opposite mode (see
+  // engine/darkMode.ts) — there is no "this system has no dark mode" case to gate on.
+  const modes = useMemo(() => buildModes(output), [output]);
+  const [modeIndex, setModeIndex] = useState(() => modes.findIndex((m) => m.isGenerated));
+  useEffect(() => {
+    setModeIndex(modes.findIndex((m) => m.isGenerated));
+  }, [output, modes]);
+  const activeMode = modes[modeIndex] ?? modes[0];
+
   return (
     <section id="components" className={result.section} aria-labelledby="components-heading">
       <h2 id="components-heading" className={result.sectionTitleSpaced}>
@@ -34,7 +45,9 @@ export function ComponentPreviewSection({ output }: ComponentPreviewSectionProps
         Every component below is styled entirely from this system's own tokens — nothing here is hand-tuned per query.
       </p>
 
-      <DesignSystemScope output={output}>
+      <ModeSwitcher modes={modes} activeIndex={modeIndex} onChange={setModeIndex} />
+
+      <DesignSystemScope output={output} mode={activeMode}>
         <div className={styles.stateBar}>
           <p className={result.subheadingFlush}>Interactive states</p>
           <Tabs items={STATES} activeId={state} onChange={setState} label="Component state" />

@@ -16,6 +16,10 @@
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius-lg);
   margin-bottom: var(--app-space-2xl);
+  /* The demo elements inside inherit --ds-foreground text colour, so this needs to be the
+     generated/derived --ds-background, not the app's own chrome — otherwise a light palette
+     previewed while the app itself is in dark mode renders dark text on a dark tile. */
+  background: var(--ds-background);
 }
 
 .stateItem {
@@ -27,7 +31,10 @@
 
 .stateItemLabel {
   font-size: var(--app-text-xs);
-  color: var(--app-ink-faint);
+  /* Sits on --ds-background (see .stateDemo), so this reads against the generated palette's
+     own foreground, faded — not the app's own ink, which has no relationship to that colour. */
+  color: var(--ds-foreground, var(--app-ink-faint));
+  opacity: 0.65;
 }
 
 .gallery {
@@ -40,7 +47,9 @@
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius-lg);
   padding: var(--app-space-lg);
-  background: var(--app-surface);
+  /* Same reasoning as .stateDemo above: bare ds.* content (ghost buttons, checkbox labels)
+     has no background of its own and relies on sitting atop --ds-background. */
+  background: var(--ds-background);
 }
 
 .tileLabel {
@@ -48,7 +57,10 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--app-ink-faint);
+  /* Same reasoning as .stateItemLabel: sits on --ds-background, so it reads against the
+     generated palette, not the app's own chrome ink. */
+  color: var(--ds-foreground, var(--app-ink-faint));
+  opacity: 0.65;
   margin-bottom: var(--app-space-sm);
 }
 

@@ -1,9 +1,3 @@
-.switcher { display: flex; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); flex-wrap: wrap; }
-.switchButton { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: 999px; background: none; color: var(--app-ink-muted); cursor: pointer; }
-.switchButton:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
-.switchActive { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); font-weight: 600; }
-.originTag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.75; }
-
 .provenance { margin: 0 0 var(--app-space-lg); font-size: var(--app-text-sm); color: var(--app-ink-muted); max-width: 74ch; line-height: 1.6; }
 .provenanceDerived { padding: var(--app-space-md); border: 1px dashed var(--app-border); border-radius: var(--app-radius-sm, 4px); }
 
