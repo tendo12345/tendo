@@ -102,14 +102,37 @@ drop policy if exists "read own profile" on public.profiles;
 create policy "read own profile" on public.profiles
   for select using (auth.uid() = id);
 
--- display_name alone is public to any signed-in visitor, so a comment can show its author.
--- Postgres RLS cannot restrict a policy to specific columns, so this policy technically
--- grants read of the whole row to any authenticated user; application code must select only
--- display_name (never role) when rendering another user's identity. A comments_with_author
--- view scoped to (id, display_name) is a stronger option if this ever needs hardening.
+-- There is deliberately NO broad select policy for other users' profile rows.
+--
+-- An earlier version granted `for select using (auth.uid() is not null)` so comments could
+-- show an author name. Postgres RLS cannot restrict a policy to specific columns, so that
+-- granted the whole row — including `role` — to every signed-in visitor. Application code
+-- selecting only display_name kept it honest, but that is discipline, not a boundary: the
+-- anon key is public, so anyone could issue `select *` against profiles and enumerate which
+-- accounts are admins. That is a useful list to have before phishing one.
+--
+-- Author names now come from the security-definer function below, which returns exactly two
+-- columns and nothing else. The gap is closed in the database rather than in the callers.
 drop policy if exists "read display name" on public.profiles;
-create policy "read display name" on public.profiles
-  for select using (auth.uid() is not null);
+
+-- Resolves display names for a set of user ids. security definer so it can read profiles
+-- without a broad select policy existing; it returns only (id, display_name), so `role` is
+-- unreachable through it regardless of what the caller asks for.
+create or replace function public.comment_author_names(ids uuid[])
+returns table (id uuid, display_name text)
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select p.id, p.display_name
+  from public.profiles p
+  where p.id = any(ids)
+$$;
+
+-- Signed-in visitors only: comment authorship is not public to anonymous readers.
+revoke all on function public.comment_author_names(uuid[]) from public, anon;
+grant execute on function public.comment_author_names(uuid[]) to authenticated;
 
 -- No insert/update/delete policy for ordinary users at all: profiles are populated only by
 -- the trigger below (running as the function owner, bypassing RLS) and role changes are a

@@ -1,8 +1,8 @@
-/**
- * Comments against a stubbed Supabase client — same technique as remoteSystemStore.test.ts.
+﻿/**
+ * Comments against a stubbed Supabase client â€” same technique as remoteSystemStore.test.ts.
  * No network, no live project: this tests the contract (payload shape, which id gets trusted,
  * how errors surface), not Postgres behavior. RLS, the auto-hide trigger, and realtime
- * delivery are verified against a real project — see DEPLOY.md.
+ * delivery are verified against a real project â€” see DEPLOY.md.
  */
 
 import { describe, expect, it, vi } from 'vitest';
@@ -38,6 +38,11 @@ function stubClient(overrides: {
 } = {}) {
   const captured: Record<string, unknown> = {};
 
+  /**
+   * Author names come from an RPC, not a `profiles` table read â€” the table has no broad
+   * select policy, because one would expose `role` alongside `display_name`. The builder is
+   * kept so a test can still assert that nothing reads the table directly.
+   */
   const profilesBuilder: Record<string, unknown> = {
     select: vi.fn(() => profilesBuilder),
     in: vi.fn((_col: string, vals: unknown) => {
@@ -84,9 +89,14 @@ function stubClient(overrides: {
 
   const client = {
     from: vi.fn((table: string) => {
+      captured[`from:${table}`] = true;
       if (table === 'profiles') return profilesBuilder;
       if (table === 'comment_reports') return reportsBuilder;
       return commentsBuilder;
+    }),
+    rpc: vi.fn((fn: string, args: unknown) => {
+      captured[`rpc:${fn}`] = args;
+      return Promise.resolve({ data: [PROFILE_ROW], error: null });
     }),
   } as unknown as SupabaseClient;
 
@@ -100,7 +110,7 @@ describe('listComments', () => {
     const comments = await listComments(client, 'naming-tokens');
 
     expect(captured['eq:post_slug']).toBe('naming-tokens');
-    expect(captured['profiles.in']).toEqual(['user-1']);
+    expect(captured['rpc:comment_author_names']).toEqual({ ids: ['user-1'] });
     expect(comments[0]).toEqual({
       id: 'c1',
       postSlug: 'naming-tokens',
@@ -112,6 +122,22 @@ describe('listComments', () => {
       createdAt: '2026-01-01T00:00:00.000Z',
       updatedAt: '2026-01-01T00:00:00.000Z',
     });
+  });
+
+  it('never reads the profiles table directly', async () => {
+    /*
+      `profiles` holds `role` alongside `display_name`, and Postgres RLS cannot restrict a
+      policy to specific columns. Any select policy broad enough to show an author's name
+      also exposes who the admins are to anyone holding the anon key — which is public.
+      Names therefore come from a security-definer RPC returning two columns.
+
+      Selecting only display_name from the table would pass every other test in this file
+      while reopening that hole, so the absence of the table read is what gets pinned.
+    */
+    const { client, captured } = stubClient();
+    await listComments(client, 'naming-tokens');
+    expect(captured['from:profiles']).toBeUndefined();
+    expect(captured['rpc:comment_author_names']).toBeDefined();
   });
 
   it('throws on a database error instead of returning nothing', async () => {

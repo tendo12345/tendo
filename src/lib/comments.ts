@@ -57,12 +57,19 @@ function toComment(row: Row, authorName: string): Comment {
   };
 }
 
-/** profiles.display_name is public to any signed-in visitor — see schema.sql. */
+/**
+ * Author names come from an RPC, not a table read.
+ *
+ * `profiles` has no broad select policy: granting one would expose the whole row, `role`
+ * included, because RLS cannot restrict by column. Selecting only `display_name` here would
+ * have looked identical while leaving anyone with the anon key free to `select *` and
+ * enumerate admins. The function returns two columns and nothing else — see schema.sql.
+ */
 async function resolveAuthorNames(client: SupabaseClient, userIds: string[]): Promise<Map<string, string>> {
   const unique = [...new Set(userIds)];
   if (unique.length === 0) return new Map();
 
-  const { data, error } = await client.from('profiles').select('id, display_name').in('id', unique);
+  const { data, error } = await client.rpc('comment_author_names', { ids: unique });
   if (error) throw new Error(error.message);
 
   return new Map((data as { id: string; display_name: string }[]).map((r) => [r.id, r.display_name]));
