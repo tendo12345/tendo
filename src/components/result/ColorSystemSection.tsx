@@ -1,5 +1,6 @@
 import type { DesignSystemOutput } from '../../engine/types';
 import { ColorCard } from './ColorCard';
+import { ContrastChecker } from './ContrastChecker';
 import result from './result.module.css';
 
 interface ColorSystemSectionProps {
@@ -44,6 +45,8 @@ export function ColorSystemSection({ output }: ColorSystemSectionProps) {
           <ColorCard key={entry.name} {...entry} contrastAgainst={entry.name === 'Background' ? undefined : background} />
         ))}
       </div>
+
+      <ContrastChecker output={output} />
     </section>
   );
 }

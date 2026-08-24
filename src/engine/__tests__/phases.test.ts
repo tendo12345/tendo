@@ -8,7 +8,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { auditAccessibility } from '../accessibility';
+import { assessPairLevel, auditAccessibility, computeSuggestedFix } from '../accessibility';
 import { buildAiContext, buildBasisMarkdown, buildImplementationPrompt } from '../aiContext';
 import { contrastRatio } from '../color';
 import { buildComponentStates, stateContrastReport } from '../componentStates';
@@ -76,6 +76,80 @@ describe('accessibility audit', () => {
   it('counts add up to the findings', () => {
     const a = auditAccessibility(saas);
     expect(a.counts.pass + a.counts.warning + a.counts.attention).toBe(a.findings.length);
+  });
+});
+
+describe('WCAG level per pairing', () => {
+  it('uses the normal-text ladder (7 / 4.5) when the pairing requires 4.5:1', () => {
+    expect(assessPairLevel(7, 4.5)).toBe('AAA');
+    expect(assessPairLevel(6.99, 4.5)).toBe('AA');
+    expect(assessPairLevel(4.5, 4.5)).toBe('AA');
+    expect(assessPairLevel(4.49, 4.5)).toBe('Fail');
+  });
+
+  it('uses the large-text/non-text ladder (4.5 / 3) when the pairing requires 3:1', () => {
+    expect(assessPairLevel(4.5, 3)).toBe('AAA');
+    expect(assessPairLevel(4.49, 3)).toBe('AA Large');
+    expect(assessPairLevel(3, 3)).toBe('AA Large');
+    expect(assessPairLevel(2.99, 3)).toBe('Fail');
+  });
+
+  it('never claims a level for a pair with no measurable ratio', () => {
+    expect(assessPairLevel(null, 4.5)).toBe('Fail');
+  });
+
+  it('does not credit a normal-text pair with AA at the large-text-only ratio of 3.5:1', () => {
+    // A regression guard: a flat ratio ladder blind to `required` would call this "AA Large"
+    // even though large-text is not the exemption that applies to body copy.
+    expect(assessPairLevel(3.5, 4.5)).toBe('Fail');
+  });
+});
+
+describe('contrast fix suggestions', () => {
+  it('never suggests a fix for a pairing that already passes', () => {
+    for (const output of SAMPLE) {
+      for (const p of auditAccessibility(output).contrastPairs) {
+        if (p.status === 'pass') expect(p.suggestedFix, `${output.category} ${p.label}`).toBeNull();
+      }
+    }
+  });
+
+  it('every suggested fix actually clears the required ratio when measured independently', () => {
+    let checked = 0;
+    for (const output of [fintech, saas, shop, ...SAMPLE]) {
+      for (const p of auditAccessibility(output).contrastPairs) {
+        if (p.suggestedFix === null) continue;
+        checked++;
+        const measured = contrastRatio(p.suggestedFix, p.background);
+        expect(measured, `${output.category} ${p.label}`).not.toBeNull();
+        expect(measured!, `${output.category} ${p.label} (${p.suggestedFix} on ${p.background})`).toBeGreaterThanOrEqual(
+          p.required,
+        );
+      }
+    }
+    // Guards against the whole assertion above passing vacuously because nothing ever failed.
+    expect(checked).toBeGreaterThan(0);
+  });
+
+  it('offers no fix, rather than a fake one, when the target is unreachable against this background', () => {
+    // Against a mid-grey background (#808080), the most extreme achievable ratio is
+    // max(contrast(black, bg), contrast(white, bg)) ≈ 5.32 — no shade of any starting colour
+    // can reach 7:1, since adjustForContrast only ever mixes the foreground toward pure black
+    // or pure white. This is the "give up honestly" path: a fix must not be invented.
+    expect(computeSuggestedFix('#808080', '#808080', 7)).toBeNull();
+  });
+
+  it('offers a real fix when the target is reachable, and it clears the ratio', () => {
+    // #9AAEDD on #3B5BA5 measures 2.94:1 — fails AA — but white reaches 6.51:1 against this
+    // background, so 4.5:1 is reachable by lightening.
+    expect(contrastRatio('#9AAEDD', '#3B5BA5')).toBeLessThan(4.5);
+    const fix = computeSuggestedFix('#9AAEDD', '#3B5BA5', 4.5);
+    expect(fix).not.toBeNull();
+    expect(contrastRatio(fix!, '#3B5BA5')!).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it('suggests nothing when the pairing already passes', () => {
+    expect(computeSuggestedFix('#000000', '#FFFFFF', 4.5)).toBeNull();
   });
 });
 

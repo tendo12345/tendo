@@ -1,0 +1,133 @@
+.wrap {
+  margin-top: var(--app-space-xl);
+  padding-top: var(--app-space-lg);
+  border-top: 1px solid var(--app-border);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--app-space-sm);
+  margin-bottom: var(--app-space-md);
+}
+
+.head p:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--app-space-3xs);
+}
+
+.summary {
+  margin: 0;
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--app-space-sm);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--app-space-md);
+  padding: var(--app-space-sm) var(--app-space-md);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-md);
+}
+
+.swatch {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid var(--app-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--app-text-sm);
+}
+
+.info { min-width: 0; }
+.infoHead { display: flex; align-items: center; gap: var(--app-space-2xs); flex-wrap: wrap; }
+.label { font-weight: 600; font-size: var(--app-text-sm); }
+.meta { margin: var(--app-space-3xs) 0 0; font-size: var(--app-text-xs); color: var(--app-ink-faint); font-variant-numeric: tabular-nums; }
+
+.fix {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-2xs);
+  justify-self: end;
+}
+
+.fixSwatch {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid var(--app-border);
+}
+
+.fixHex {
+  font-family: var(--app-font-mono);
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-muted);
+}
+
+.fixButton {
+  font: inherit;
+  font-size: var(--app-text-xs);
+  font-weight: 600;
+  min-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid var(--app-accent);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-accent);
+  color: var(--app-accent-ink);
+  cursor: pointer;
+}
+.fixButton:hover { opacity: 0.9; }
+.fixButton:focus-visible { outline: 2px solid var(--app-focus-ring); outline-offset: 2px; }
+
+.revertButton {
+  font: inherit;
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  justify-self: end;
+  text-decoration: underline;
+}
+.revertButton:focus-visible { outline: 2px solid var(--app-focus-ring); outline-offset: 2px; }
+
+.unfixable {
+  margin: 0;
+  font-size: var(--app-text-xs);
+  color: var(--app-ink-faint);
+  max-width: 26ch;
+  justify-self: end;
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: auto 1fr;
+  }
+  .fix,
+  .unfixable,
+  .revertButton {
+    grid-column: 1 / -1;
+    justify-self: start;
+    text-align: left;
+  }
+}
