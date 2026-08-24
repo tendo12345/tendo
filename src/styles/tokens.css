@@ -21,6 +21,8 @@
   --app-accent-soft: #f6e3d5;
   --app-success: #1e6b46;
   --app-success-soft: #dcefe3;
+  --app-warning: #b45309;
+  --app-warning-soft: #fef6ea;
   --app-error: #a3271f;
   --app-error-soft: #f6dedb;
   --app-focus-ring: #b1450c;
@@ -166,6 +168,8 @@
     --app-accent-soft: #2a0c24;
     --app-success: #5fd3a0;
     --app-success-soft: #102c22;
+    --app-warning: #ffb84d;
+    --app-warning-soft: #332008;
     --app-error: #ff6b84;
     --app-error-soft: #33101a;
     --app-focus-ring: #ff4dd2;

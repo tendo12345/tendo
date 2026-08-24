@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Avatar } from '../ui/Avatar';
+import { Badge } from '../ui/Badge';
 import type { Comment } from '../../lib/comments';
 import styles from './CommentItem.module.css';
 
@@ -40,7 +41,7 @@ export function CommentItem({ comment, canModify, onEdit, onDelete, onReport }: 
           <time className={styles.time} dateTime={comment.createdAt}>
             {new Date(comment.createdAt).toLocaleString()}
           </time>
-          {pending && <span className={styles.pendingBadge}>Under review — only visible to you</span>}
+          {pending && <Badge tone="negative">Under review — only visible to you</Badge>}
         </div>
 
         {editing ? (

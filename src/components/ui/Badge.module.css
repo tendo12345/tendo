@@ -1,0 +1,15 @@
+.badge {
+  display: inline-block;
+  font-size: var(--app-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: var(--app-radius-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.neutral { color: var(--app-ink); background: var(--app-surface-sunken); border-color: var(--app-border); }
+.positive { color: var(--app-success); background: var(--app-success-soft); border-color: var(--app-success); }
+.warning { color: var(--app-warning); background: var(--app-warning-soft); border-color: var(--app-warning); }
+.negative { color: var(--app-error); background: var(--app-error-soft); border-color: var(--app-error); }

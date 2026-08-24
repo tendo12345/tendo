@@ -6,8 +6,7 @@
 .list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--app-space-md); }
 .item { border: 1px solid var(--app-border); border-left: 3px solid var(--app-error); border-radius: var(--app-radius-md); padding: var(--app-space-md); }
 
-.itemHead { display: flex; gap: var(--app-space-sm); font-size: var(--app-text-xs); color: var(--app-ink-faint); margin-bottom: var(--app-space-2xs); }
-.status { text-transform: uppercase; letter-spacing: 0.04em; }
+.itemHead { display: flex; align-items: center; gap: var(--app-space-sm); font-size: var(--app-text-xs); color: var(--app-ink-faint); margin-bottom: var(--app-space-2xs); }
 
 .author { margin: 0 0 var(--app-space-2xs); font-weight: 600; font-size: var(--app-text-sm); }
 .text { margin: 0 0 var(--app-space-sm); white-space: pre-wrap; overflow-wrap: break-word; }

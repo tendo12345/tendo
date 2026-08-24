@@ -4,13 +4,6 @@
 .head { display: flex; align-items: baseline; gap: var(--app-space-xs); flex-wrap: wrap; margin-bottom: var(--app-space-3xs); }
 .author { font-weight: 600; font-size: var(--app-text-sm); }
 .time { font-size: var(--app-text-xs); color: var(--app-ink-faint); }
-.pendingBadge {
-  font-size: var(--app-text-xs);
-  color: var(--app-error);
-  background: var(--app-error-soft);
-  border-radius: var(--app-radius-sm);
-  padding: 2px 8px;
-}
 
 /* Plain text only — see the doc comment in CommentItem.tsx. pre-wrap preserves line breaks
    without interpreting anything else in the string as markup. */

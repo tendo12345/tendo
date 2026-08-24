@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { Badge } from '../ui/Badge';
 import { auditAccessibility, type AuditStatus } from '../../engine/accessibility';
 import { assessSystemHealth } from '../../engine/systemHealth';
 import type { DesignSystemOutput } from '../../engine/types';
@@ -9,6 +10,12 @@ const STATUS_LABEL: Record<AuditStatus, string> = {
   pass: 'Pass',
   warning: 'Warning',
   attention: 'Needs attention',
+};
+
+const TONE_BY_STATUS: Record<AuditStatus, 'positive' | 'warning' | 'negative'> = {
+  pass: 'positive',
+  warning: 'warning',
+  attention: 'negative',
 };
 
 /**
@@ -42,7 +49,7 @@ export function AccessibilityPane({ output }: { output: DesignSystemOutput }) {
                 <p className={styles.findingCategory}>{f.category}</p>
                 <p className={styles.findingTitle}>{f.title}</p>
               </div>
-              <span className={`${styles.status} ${styles[f.status]}`}>{STATUS_LABEL[f.status]}</span>
+              <Badge tone={TONE_BY_STATUS[f.status]}>{STATUS_LABEL[f.status]}</Badge>
             </div>
             <p className={styles.detail}>{f.detail}</p>
             {f.why && (

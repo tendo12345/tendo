@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { supabase } from '../lib/supabase';
 import { listModerationQueue, moderateComment, type Comment } from '../lib/comments';
+import { Badge } from '../components/ui/Badge';
 import NotFoundPage from './NotFound';
 import styles from './AdminComments.module.css';
 
@@ -66,7 +67,7 @@ export default function AdminCommentsPage() {
             <li key={comment.id} className={styles.item}>
               <div className={styles.itemHead}>
                 <span className={styles.postSlug}>{comment.postSlug}</span>
-                <span className={styles.status}>{comment.status}</span>
+                <Badge tone={comment.status === 'removed' ? 'negative' : 'warning'}>{comment.status}</Badge>
                 <span className={styles.reportCount}>{comment.reportCount} report(s)</span>
               </div>
               <p className={styles.author}>{comment.authorName}</p>

@@ -1,4 +1,5 @@
-import type { MatchAssessment } from '../../engine/matchQuality';
+import { Badge } from '../ui/Badge';
+import type { MatchAssessment, MatchLevel } from '../../engine/matchQuality';
 import styles from './MatchBadge.module.css';
 
 interface MatchBadgeProps {
@@ -6,6 +7,13 @@ interface MatchBadgeProps {
   /** Renders the supporting sentence underneath. Off inside dense rows. */
   showBasis?: boolean;
 }
+
+const TONE_BY_LEVEL: Record<MatchLevel, 'positive' | 'neutral' | 'warning'> = {
+  strong: 'positive',
+  good: 'neutral',
+  weak: 'warning',
+  fallback: 'warning',
+};
 
 /**
  * Match strength for one decision.
@@ -16,7 +24,7 @@ interface MatchBadgeProps {
 export function MatchBadge({ assessment, showBasis = false }: MatchBadgeProps) {
   return (
     <div className={styles.wrap}>
-      <span className={`${styles.badge} ${styles[assessment.level]}`}>{assessment.label}</span>
+      <Badge tone={TONE_BY_LEVEL[assessment.level]}>{assessment.label}</Badge>
       {showBasis && <p className={styles.basis}>{assessment.basis}</p>}
     </div>
   );
