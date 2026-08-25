@@ -44,6 +44,11 @@ system.reasoning.colors.why;        // why that palette, citing the source row
 
 `generateDesignSystem()` is pure — no I/O, no React, no globals. Same input, same output.
 
+An MCP server (`mcp-server/`) exposes the current generated system to AI coding agents
+(Claude Code, Cursor) — tokens, palette, typography and component rules as structured JSON or
+as CSS variables / Tailwind config / Style Dictionary. See
+[mcp-server/README.md](mcp-server/README.md).
+
 ## Layout
 
 ```
@@ -58,6 +63,8 @@ scripts/
   capture-divergence.ts   regenerate the reviewed divergence list
   parity-sweep.ts         diff the TS engine against a Python dump
   capture-ground-truth.py regenerate fixtures from the Python skill
+mcp-server/
+  src/          MCP server (get_design_system, export_tokens, list_components)
 ```
 
 Nothing in `src/data` or `src/engine` imports React or touches the DOM.
