@@ -8,7 +8,7 @@
  * because a green tick on an unchecked criterion is worse than no tick.
  */
 
-import { contrastRatio, wcagLevel } from './color';
+import { adjustForContrast, contrastRatio, type WcagLevel } from './color';
 import { buildSemanticTokens, type SemanticToken } from './semanticTokens';
 import type { DesignSystemOutput } from './types';
 
@@ -27,19 +27,58 @@ export interface AuditFinding {
   fix?: string;
 }
 
+export interface ContrastPairResult {
+  label: string;
+  foreground: string;
+  background: string;
+  ratio: number | null;
+  level: WcagLevel;
+  /** 4.5 for normal text, 3 for large text (18pt+/14pt bold) and non-text UI indicators. */
+  required: number;
+  status: AuditStatus;
+  /**
+   * Nearest shade of `foreground` that clears `required` against `background`, verified to
+   * actually pass — never a guess. Null when the pair already passes, or when no shade of
+   * this foreground (light or dark) can reach the target against this background at all.
+   */
+  suggestedFix: string | null;
+}
+
 export interface AccessibilityAudit {
   findings: AuditFinding[];
   counts: { pass: number; warning: number; attention: number };
   /** Pairs checked for contrast, for the detail table. */
-  contrastPairs: Array<{
-    label: string;
-    foreground: string;
-    background: string;
-    ratio: number | null;
-    level: string;
-    required: number;
-    status: AuditStatus;
-  }>;
+  contrastPairs: ContrastPairResult[];
+}
+
+/**
+ * WCAG level for one pairing, aware of whether its threshold is the normal-text bar (4.5:1)
+ * or the large-text/non-text bar (3:1) — a flat ladder over the raw ratio would mislabel a
+ * pair that only clears 3:1 as meeting AA even where the role actually needs normal-text
+ * contrast, or fail to credit a large-text pair with AAA at the lower bar that actually
+ * applies to it.
+ */
+export function assessPairLevel(ratio: number | null, required: number): WcagLevel {
+  if (ratio === null) return 'Fail';
+  const aaaTarget = required <= 3 ? 4.5 : 7;
+  if (ratio >= aaaTarget) return 'AAA';
+  if (ratio >= required) return required <= 3 ? 'AA Large' : 'AA';
+  return 'Fail';
+}
+
+/**
+ * The fix offered for a failing pair — or null if there isn't an honest one.
+ *
+ * `adjustForContrast` returns its best attempt even when the target is unreachable from this
+ * hue (documented on that function), so the candidate is re-measured here before it is ever
+ * called a "fix": nothing is suggested unless it actually clears `required`.
+ */
+export function computeSuggestedFix(foreground: string, background: string, required: number): string | null {
+  if (!foreground || !background) return null;
+  const candidate = adjustForContrast(foreground, background, required);
+  if (candidate.toUpperCase() === foreground.toUpperCase()) return null;
+  const ratio = contrastRatio(candidate, background);
+  return ratio !== null && ratio >= required ? candidate : null;
 }
 
 /** Text pairs that must be legible for the system to be usable at all. */
@@ -66,12 +105,13 @@ export function auditAccessibility(output: DesignSystemOutput): AccessibilityAud
   const findings: AuditFinding[] = [];
 
   /* ---- contrast ---- */
-  const contrastPairs = contrastChecks(output, tokens).map((c) => {
+  const contrastPairs: ContrastPairResult[] = contrastChecks(output, tokens).map((c) => {
     const ratio = contrastRatio(c.foreground, c.background);
     const passes = ratio !== null && ratio >= c.required;
     // A non-text pair below 3:1 is a real problem; text below 4.5 but above 3 is borderline.
     const status: AuditStatus = passes ? 'pass' : ratio !== null && ratio >= 3 ? 'warning' : 'attention';
-    return { ...c, ratio, level: wcagLevel(ratio), status };
+    const suggestedFix = passes ? null : computeSuggestedFix(c.foreground, c.background, c.required);
+    return { ...c, ratio, level: assessPairLevel(ratio, c.required), status, suggestedFix };
   });
 
   const failing = contrastPairs.filter((p) => p.status !== 'pass');

@@ -1,4 +1,6 @@
 import type { CSSProperties } from 'react';
+import type { ModePalette } from '../engine/darkMode';
+import { findToken } from '../engine/semanticTokens';
 import type { DesignSystemOutput } from '../engine/types';
 
 /**
@@ -56,4 +58,31 @@ export function designSystemStyleVars(output: DesignSystemOutput): CSSProperties
   }
 
   return vars as CSSProperties;
+}
+
+/**
+ * Same `--ds-*` shape as `designSystemStyleVars`, but with colour values swapped for a
+ * specific `ModePalette` (see engine/darkMode.ts) instead of `output.colors` directly.
+ *
+ * Only colour changes between light and dark — typography, spacing, radius, shadows and
+ * component metrics are the same object either way (`deriveOppositeMode` never touches
+ * them), so everything else is inherited from the base vars unchanged.
+ */
+export function designSystemStyleVarsForMode(output: DesignSystemOutput, mode: ModePalette): CSSProperties {
+  const base = designSystemStyleVars(output);
+  const v = (name: string, fallback: string) => findToken(mode.tokens, name)?.value ?? fallback;
+
+  return {
+    ...base,
+    '--ds-primary': v('color.action.primary', output.colors.primary),
+    '--ds-on-primary': v('color.action.on-primary', output.colors.on_primary || '#FFFFFF'),
+    '--ds-secondary': v('color.action.secondary', output.colors.secondary),
+    '--ds-accent': v('color.action.accent', output.colors.accent),
+    '--ds-background': v('color.surface.default', output.colors.background),
+    '--ds-foreground': v('color.text.primary', output.colors.foreground),
+    '--ds-muted': v('color.surface.raised', output.colors.muted || output.colors.background),
+    '--ds-border': v('color.border.default', output.colors.border || output.colors.foreground),
+    '--ds-destructive': v('color.feedback.error', output.colors.destructive || '#DC2626'),
+    '--ds-ring': v('color.border.focus', output.colors.ring || output.colors.primary),
+  } as CSSProperties;
 }

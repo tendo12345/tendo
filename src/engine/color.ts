@@ -12,14 +12,70 @@ export interface Rgb {
   b: number;
 }
 
-export function parseHex(hex: string): Rgb | null {
-  const raw = hex.trim().replace(/^#/, '');
-  const full = raw.length === 3 ? raw.split('').map((c) => c + c).join('') : raw;
-  if (!/^[0-9a-f]{6}$/i.test(full)) return null;
+/** A colour that may be translucent. `a` is 0–1; 1 for any opaque notation. */
+export interface Rgba extends Rgb {
+  a: number;
+}
+
+/**
+ * Parses hex, `rgb()` and `rgba()`.
+ *
+ * `rgba()` support is not cosmetic. `colors.json` carries 19 translucent borders, all
+ * `rgba(255,255,255,0.08)`, and a hex-only parser returned null for every one. That flowed
+ * into `contrastRatio` as null, and `assessPairLevel` renders a null ratio as **Fail** — so
+ * the accessibility audit reported a measured failure for a colour it had never measured,
+ * and the contrast checker told the user "no shade of this colour reaches the target" when
+ * white against that same background gives 17.85:1.
+ *
+ * Reporting an unparsed value as a failure is exactly the invented precision this codebase
+ * forbids. Parsing them is the fix; `contrastRatio` then composites by alpha.
+ */
+export function parseColor(input: string): Rgba | null {
+  const value = input.trim();
+  if (!value) return null;
+
+  const fn = value.match(/^rgba?\(\s*([^)]+)\)$/i);
+  if (fn) {
+    // Accepts both the comma and the modern space-separated forms.
+    const parts = fn[1].split(/[,/\s]+/).map((p) => p.trim()).filter(Boolean);
+    if (parts.length < 3) return null;
+    const [r, g, b] = parts.slice(0, 3).map(Number);
+    if (![r, g, b].every((n) => Number.isFinite(n))) return null;
+    const rawAlpha = parts[3] === undefined ? 1 : Number(parts[3].endsWith('%') ? Number(parts[3].slice(0, -1)) / 100 : parts[3]);
+    const a = Number.isFinite(rawAlpha) ? Math.min(1, Math.max(0, rawAlpha)) : 1;
+    return { r, g, b, a };
+  }
+
+  const raw = value.replace(/^#/, '');
+  const full = raw.length === 3 || raw.length === 4 ? raw.split('').map((c) => c + c).join('') : raw;
+  if (!/^[0-9a-f]{6}([0-9a-f]{2})?$/i.test(full)) return null;
   return {
     r: parseInt(full.slice(0, 2), 16),
     g: parseInt(full.slice(2, 4), 16),
     b: parseInt(full.slice(4, 6), 16),
+    a: full.length === 8 ? parseInt(full.slice(6, 8), 16) / 255 : 1,
+  };
+}
+
+/**
+ * Opaque channels only.
+ *
+ * Kept for callers that need a plain colour and have no background to composite against.
+ * A translucent input loses its alpha here, so anything measuring contrast should use
+ * `parseColor` and composite instead.
+ */
+export function parseHex(hex: string): Rgb | null {
+  const parsed = parseColor(hex);
+  return parsed ? { r: parsed.r, g: parsed.g, b: parsed.b } : null;
+}
+
+/** Lay a possibly-translucent colour over an opaque one. */
+export function flatten(color: Rgba, over: Rgb): Rgb {
+  if (color.a >= 1) return { r: color.r, g: color.g, b: color.b };
+  return {
+    r: over.r + (color.r - over.r) * color.a,
+    g: over.g + (color.g - over.g) * color.a,
+    b: over.b + (color.b - over.b) * color.a,
   };
 }
 
@@ -50,11 +106,33 @@ export function relativeLuminance(hex: string): number | null {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-/** WCAG 2.1 contrast ratio, 1–21. Null when either colour is unparsable. */
+function luminanceOf(rgb: Rgb): number {
+  const [r, g, b] = [rgb.r, rgb.g, rgb.b].map((c) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/**
+ * WCAG 2.1 contrast ratio, 1–21. Null when either colour is unparsable.
+ *
+ * Arguments are (foreground, background) and the order matters when alpha is involved: a
+ * translucent foreground is composited over the background first, because that is what the
+ * eye actually sees. Measuring `rgba(255,255,255,0.08)` as if it were opaque white would
+ * report a border as far more visible than it is.
+ *
+ * A translucent *background* has nothing behind it to composite against here, so it is
+ * flattened over white — the common page case, and stated rather than assumed.
+ */
 export function contrastRatio(a: string, b: string): number | null {
-  const la = relativeLuminance(a);
-  const lb = relativeLuminance(b);
-  if (la === null || lb === null) return null;
+  const fg = parseColor(a);
+  const bg = parseColor(b);
+  if (!fg || !bg) return null;
+
+  const solidBg = flatten(bg, { r: 255, g: 255, b: 255 });
+  const la = luminanceOf(flatten(fg, solidBg));
+  const lb = luminanceOf(solidBg);
   const [hi, lo] = la > lb ? [la, lb] : [lb, la];
   return (hi + 0.05) / (lo + 0.05);
 }

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { buildModes } from '../../engine/darkMode';
 import { contrastRatio, wcagLevel } from '../../engine/color';
 import type { DesignSystemOutput } from '../../engine/types';
+import { ModeSwitcher } from '../result/ModeSwitcher';
 import result from '../result/result.module.css';
 import styles from './ModesPane.module.css';
 
@@ -32,20 +33,7 @@ export function ModesPane({ output }: { output: DesignSystemOutput }) {
         Light and dark
       </h2>
 
-      <div className={styles.switcher} role="group" aria-label="Colour mode">
-        {modes.map((m, i) => (
-          <button
-            key={m.mode}
-            type="button"
-            className={`${styles.switchButton} ${i === active ? styles.switchActive : ''}`}
-            aria-pressed={i === active}
-            onClick={() => setActive(i)}
-          >
-            {m.mode === 'light' ? 'Light' : 'Dark'}
-            <span className={styles.originTag}>{m.isGenerated ? 'Generated' : 'Derived'}</span>
-          </button>
-        ))}
-      </div>
+      <ModeSwitcher modes={modes} activeIndex={active} onChange={setActive} />
 
       <p className={`${styles.provenance} ${mode.isGenerated ? '' : styles.provenanceDerived}`}>
         {mode.provenanceNote}
