@@ -28,7 +28,7 @@
 
 .current {
   color: var(--app-ink);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .dot {

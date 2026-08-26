@@ -13,7 +13,7 @@
   border: 1px solid var(--app-border-strong);
   color: var(--app-ink-faint);
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .trigger:hover,

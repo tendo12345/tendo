@@ -14,7 +14,7 @@
 }
 
 .name {
-  font-weight: 700;
+  font-weight: 500;
   font-size: var(--app-text-sm);
 }
 
@@ -57,7 +57,7 @@
 }
 
 .contrastBadge {
-  font-weight: 700;
+  font-weight: 500;
   padding: 0.1rem 0.4rem;
   border-radius: var(--app-radius-sm);
   background: var(--app-surface-sunken);

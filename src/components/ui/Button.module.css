@@ -4,12 +4,16 @@
   justify-content: center;
   gap: var(--app-space-2xs);
   font-family: var(--app-font-body);
-  font-weight: 600;
+  font-weight: 500;
   font-size: var(--app-text-sm);
+  letter-spacing: var(--app-tracking-label);
+  text-transform: uppercase;
   line-height: 1;
   white-space: nowrap;
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--app-radius-sm);
+  /* 16px/32px and a fully round container: the reference's button is a 100px pill, and pill
+     shapes are the container language of the whole system. */
+  padding: 1rem 2rem;
+  border-radius: var(--app-radius-pill);
   border: 1px solid transparent;
   transition: background-color var(--app-duration-base) var(--app-ease),
     border-color var(--app-duration-base) var(--app-ease),
@@ -18,7 +22,7 @@
 }
 
 .btn:active {
-  transform: translateY(1px);
+  transform: scale(0.985);
 }
 
 .btn:disabled {
@@ -28,7 +32,7 @@
 }
 
 .sm {
-  padding: 0.5rem 0.875rem;
+  padding: 0.625rem 1.25rem;
   font-size: var(--app-text-xs);
 }
 
@@ -93,6 +97,6 @@
 
   .sm {
     min-height: 44px;
-    padding: 0.625rem 1rem;
+    padding: 0.625rem 1.25rem;
   }
 }

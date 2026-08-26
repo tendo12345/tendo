@@ -13,7 +13,7 @@
 
 .label {
   font-size: var(--app-text-sm);
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .optional {
@@ -68,7 +68,7 @@
 .error {
   color: var(--app-error);
   font-size: var(--app-text-xs);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .selectedRow {

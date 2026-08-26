@@ -42,7 +42,7 @@
 
 .navLinkActive {
   color: var(--app-ink);
-  font-weight: 600;
+  font-weight: 500;
   border-bottom-color: var(--app-ink);
 }
 
@@ -74,7 +74,7 @@
 
 .crumbs li:last-child .crumbCurrent {
   color: var(--app-ink);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .overview {

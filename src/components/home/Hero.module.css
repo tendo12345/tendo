@@ -5,7 +5,7 @@
 
 .eyebrow {
   font-size: var(--app-text-xs);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--app-accent);
@@ -81,7 +81,7 @@
 
 .previewLabel {
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--app-ink-faint);

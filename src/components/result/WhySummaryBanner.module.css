@@ -40,7 +40,7 @@
 
 .principleLabel {
   font-size: var(--app-text-xs);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: capitalize;
   text-align: center;
 }

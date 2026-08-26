@@ -1,15 +1,48 @@
 .badge {
   display: inline-block;
+  font-family: var(--app-font-body);
   font-size: var(--app-text-xs);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 2px 8px;
+  font-weight: 500;
+  letter-spacing: var(--app-tracking-label);
+  text-transform: uppercase;
+  padding: 4px 12px;
   border-radius: var(--app-radius-pill);
   border: 1px solid transparent;
   white-space: nowrap;
 }
 
-.neutral { color: var(--app-ink); background: var(--app-surface-sunken); border-color: var(--app-border); }
-.positive { color: var(--app-success); background: var(--app-success-soft); border-color: var(--app-success); }
-.warning { color: var(--app-warning); background: var(--app-warning-soft); border-color: var(--app-warning); }
-.negative { color: var(--app-error); background: var(--app-error-soft); border-color: var(--app-error); }
+/*
+  Text is Off-Black on every variant, and the state is carried by the fill.
+
+  The obvious alternative — semantic-coloured text on its own soft fill — was measured and
+  does not survive this palette: warning read 4.00:1 on Gold and negative read 2.62:1 on
+  Coral, a clear fail. The pastels are light and saturated, so anything but near-black on
+  them loses.
+
+  That also happens to be how the reference uses these colours: Mint, Gold and Coral are
+  decorative fills, not functional text colours. The semantic hue stays legible as the border.
+  Colour is never the only signal here — every badge carries a text label.
+*/
+.neutral {
+  color: var(--app-ink);
+  background: var(--app-surface-sunken);
+  border-color: var(--app-border);
+}
+
+.positive {
+  color: var(--app-ink);           /* 12.90:1 on Mint */
+  background: var(--app-success-soft);
+  border-color: var(--app-success);
+}
+
+.warning {
+  color: var(--app-ink);           /* 11.12:1 on Gold */
+  background: var(--app-warning-soft);
+  border-color: var(--app-warning);
+}
+
+.negative {
+  color: var(--app-ink);           /* 7.20:1 on Coral */
+  background: var(--app-error-soft);
+  border-color: var(--app-error);
+}

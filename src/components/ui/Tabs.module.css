@@ -9,7 +9,7 @@
   flex: 0 0 auto;
   padding: 0.5rem 0.9rem;
   font-size: var(--app-text-xs);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--app-ink-muted);
   border-radius: var(--app-radius-sm);
   border: 1px solid transparent;

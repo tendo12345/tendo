@@ -18,7 +18,7 @@
 
 .groupTitle {
   font-size: var(--app-text-sm);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--app-ink-faint);
@@ -98,7 +98,7 @@
 
 .originTag {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 500;
   padding: 1px 6px;
   border-radius: 999px;
   border: 1px solid currentColor;
@@ -125,7 +125,7 @@
 
 .componentName {
   margin: 0;
-  font-weight: 600;
+  font-weight: 500;
   font-size: var(--app-text-sm);
 }
 
@@ -166,7 +166,7 @@
 .inspectorEmptyTitle {
   margin: 0;
   font-size: var(--app-text-sm);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--app-ink-faint);

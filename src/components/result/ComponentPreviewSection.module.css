@@ -54,7 +54,7 @@
 
 .tileLabel {
   font-size: var(--app-text-xs);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   /* Same reasoning as .stateItemLabel: sits on --ds-background, so it reads against the

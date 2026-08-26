@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/*
+  Two families, and only two: Instrument Serif announces, IBM Plex Mono instructs.
+
+  Instrument Serif ships a single 400 weight on purpose — the reference locks headings at 400
+  and asks the serif's stroke contrast and tight tracking to carry the hierarchy instead of
+  weight. Not loading a bold face means a stray `font-weight: 700` cannot silently render one.
+
+  The sans (Inter) and the old display serif (Fraunces) are gone. Every functional string in
+  this UI is mono now; a sans-serif body would lose the identity immediately.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 body {
   background: var(--app-paper);
@@ -6,22 +16,20 @@ body {
   font-family: var(--app-font-body);
   font-size: var(--app-text-base);
   line-height: var(--app-leading-normal);
+  letter-spacing: var(--app-tracking-ui);
 }
 
 /*
-  Ink-wash ground for the dark theme.
+  The atmospheric ground.
 
-  Three very low-opacity radial washes: a moon high on the right, a magenta bloom low on
-  the left, and a cold grey drift between them. Deliberately faint — the reference is a
-  poster, this is a workspace, and a background that competes with the content would
-  contradict the advice this tool hands out. Fixed attachment, so it never scrolls and
-  never needs animating.
-*/
-/*
-  The ground is defined once, in tokens.css, as --app-ground. Both dark selectors (the
-  explicit toggle and the prefers-color-scheme default) point at the same value, so the two
-  cannot drift apart — which they already did once when the opacities were tuned in only one
-  of two duplicated copies.
+  Soft, heavily diffused radial washes — coral, sky and gold on light; blue, coral and mint on
+  dark. Never sharp-edged. Deliberately faint: the reference is a poster, this is a workspace,
+  and a background that competes with the content would contradict the advice this tool hands
+  out. Fixed attachment, so it never scrolls and never needs animating.
+
+  The ground is defined once, in tokens.css, as --app-ground. Both dark selectors (the explicit
+  toggle and the prefers-color-scheme default) point at the same value, so the two cannot drift
+  apart — which they already did once when the opacities were tuned in only one of two copies.
 */
 body {
   background-image: var(--app-ground, none);
@@ -29,20 +37,45 @@ body {
   background-repeat: no-repeat;
 }
 
+/*
+  Headings never go bold. Weight is locked at 400 at every size; the serif's contrast and the
+  -0.02em tracking do the work. This is the editorial signature — headlines whisper through
+  typographic refinement rather than shout through weight.
+*/
 h1,
 h2,
 h3,
 h4 {
   font-family: var(--app-font-display);
-  font-weight: 500;
+  font-weight: 400;
   line-height: var(--app-leading-tight);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--app-tracking-tight);
+  /*
+    Instrument Serif ships a single 400 weight. Without this, a module class setting a heavier
+    weight on a heading makes the browser SYNTHESIZE a bold — a smeared fake that looks like
+    the one thing this typography is defined by not doing. Disabling synthesis means such a
+    rule degrades to the real 400 face instead of a forgery.
+
+    IBM Plex Mono is unaffected: it ships a genuine 500, so emphasized UI labels still render.
+  */
+  font-synthesis-weight: none;
 }
 
 code,
 pre,
 kbd {
   font-family: var(--app-font-mono);
+}
+
+/*
+  Nav labels, buttons and tags: uppercase with tighter tracking, per the reference's UI voice.
+  Applied via a class rather than element selectors so it never catches body copy.
+*/
+.ui-label {
+  font-family: var(--app-font-body);
+  font-size: var(--app-text-sm);
+  letter-spacing: var(--app-tracking-label);
+  text-transform: uppercase;
 }
 
 ::selection {
@@ -87,7 +120,7 @@ kbd {
   background: var(--app-ink);
   color: var(--app-paper);
   padding: var(--app-space-2xs) var(--app-space-sm);
-  border-radius: var(--app-radius-sm);
+  border-radius: var(--app-radius-pill);
   transition: top var(--app-duration-base) var(--app-ease);
 }
 
@@ -104,5 +137,24 @@ kbd {
 @media (max-width: 767px) {
   .container {
     padding-inline: var(--app-space-sm);
+  }
+}
+
+/*
+  Motion is calm by default and absent on request.
+
+  The durations in tokens.css are slower than a typical UI on purpose, which makes honouring
+  this preference more important rather than less: a 480ms transition is exactly the kind a
+  motion-sensitive reader does not want. Kept as a global backstop so a component that forgets
+  its own media query still cannot animate here.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -36,7 +36,7 @@
 
 .link {
   font-size: var(--app-text-sm);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--app-ink-muted);
   transition: color var(--app-duration-base) var(--app-ease);
 }
@@ -87,6 +87,10 @@
 
   The theme toggle and the logo are real navigation controls but sat at 36px and 34px. Raised
   only on coarse pointers so the desktop bar keeps its proportions.
+
+  min-width matters as much as min-height here and was missing: the toggle is square, so
+  raising only the height left it 36px wide and still under the 44px minimum in the axis a
+  thumb actually misses. Measured at 360px it was 36x44.
 */
 @media (pointer: coarse), (max-width: 720px) {
   .themeToggle,
@@ -95,5 +99,9 @@
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+  }
+
+  .themeToggle {
+    min-width: 44px;
   }
 }

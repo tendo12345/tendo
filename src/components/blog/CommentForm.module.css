@@ -1,5 +1,5 @@
 .form { display: grid; gap: var(--app-space-2xs); }
-.label { font-size: var(--app-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
+.label { font-size: var(--app-text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
 .textarea {
   font: inherit;
   padding: var(--app-space-xs);
@@ -14,7 +14,7 @@
 .submit {
   font: inherit;
   font-size: var(--app-text-sm);
-  font-weight: 600;
+  font-weight: 500;
   min-height: 44px;
   padding: 10px 18px;
   border: 1px solid var(--app-accent);

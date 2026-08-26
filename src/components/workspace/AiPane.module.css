@@ -1,18 +1,18 @@
 .tabs { display: flex; flex-wrap: wrap; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }
 .tab { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: 999px; background: none; color: var(--app-ink-muted); cursor: pointer; }
 .tab:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
-.tabActive { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); font-weight: 600; }
+.tabActive { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); font-weight: 500; }
 
 .blurb { margin: 0 0 var(--app-space-md); font-size: var(--app-text-sm); color: var(--app-ink-muted); max-width: 74ch; }
 
 .targetRow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }
-.targetLabel { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--app-ink-faint); }
-.select, .customInput { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 12px; border: 1px solid var(--app-border); border-radius: 4px; background: var(--app-bg); color: var(--app-ink); }
+.targetLabel { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; color: var(--app-ink-faint); }
+.select, .customInput { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 12px; border: 1px solid var(--app-border-strong); border-radius: var(--app-radius-sm); background: var(--app-bg); color: var(--app-ink); }
 .customInput { flex: 1 1 240px; }
 .select:focus-visible, .customInput:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 1px; }
 
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }
-.button { font: inherit; font-size: var(--app-text-sm); font-weight: 600; min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: 4px; background: none; color: var(--app-ink); cursor: pointer; }
+.button { font: inherit; font-size: var(--app-text-sm); font-weight: 500; min-height: 44px; padding: 8px 20px; border: 1px solid var(--app-border-strong); border-radius: var(--app-radius-pill); background: none; color: var(--app-ink); cursor: pointer; }
 .button:hover { border-color: var(--app-ink-muted); }
 .button:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
 .primary { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); }

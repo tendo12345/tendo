@@ -8,12 +8,12 @@
 
 .itemHead { display: flex; align-items: center; gap: var(--app-space-sm); font-size: var(--app-text-xs); color: var(--app-ink-faint); margin-bottom: var(--app-space-2xs); }
 
-.author { margin: 0 0 var(--app-space-2xs); font-weight: 600; font-size: var(--app-text-sm); }
+.author { margin: 0 0 var(--app-space-2xs); font-weight: 500; font-size: var(--app-text-sm); }
 .text { margin: 0 0 var(--app-space-sm); white-space: pre-wrap; overflow-wrap: break-word; }
 
 .actions { display: flex; gap: var(--app-space-sm); }
 .action {
-  font: inherit; font-size: var(--app-text-sm); font-weight: 600;
+  font: inherit; font-size: var(--app-text-sm); font-weight: 500;
   min-height: 36px; padding: 6px 14px;
   border: 1px solid var(--app-border-strong); border-radius: var(--app-radius-sm);
   background: none; color: var(--app-ink); cursor: pointer;
