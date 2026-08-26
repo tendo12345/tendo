@@ -276,12 +276,20 @@ independently in `ground.test.ts` rather than trusting the solver.
 
 ## Known gaps
 
-- `region` on `GenerateInput` is accepted and echoed but deliberately kept out of the search
-  query - feeding it to BM25 would break parity. A test pins this. It is now the only input
-  that genuinely does nothing.
 - The dataset still loads in full once someone generates; it is deferred, not reduced.
 
 ## Settled, not gaps
+
+- **`region` does a real job, and it is not selection.** It stays out of the BM25 query —
+  feeding it in would shift ranking and break parity, and "Nigeria" is not a style keyword —
+  and it never changes the generated system. Both are pinned (`parity.test.ts` "leaves region
+  out of the search query for now", `region.test.ts` "produces an identical system with or
+  without a region"). What it drives instead is `engine/region.ts`: whether the generated
+  pairing can render the region's script at all. The engine picks fonts on style and mood, so
+  a fintech query returns IBM Plex Sans — correct, and with no Arabic, CJK or Devanagari
+  glyphs. That is a way of being broken no contrast check catches, and the dataset already
+  carries eight script-specific pairings for it. An unrecognised region returns
+  `recognised: false` and says plainly that nothing was changed, rather than guessing.
 
 - **`industry` is not underweighted.** Measured across 55 product x industry combinations,
   it steers the category in 49. In the other 6 the product type wins, and it should:
