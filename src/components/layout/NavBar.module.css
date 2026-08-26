@@ -2,8 +2,10 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: color-mix(in srgb, var(--app-paper) 92%, transparent);
-  backdrop-filter: blur(8px);
+  /* No backdrop blur: glass chrome is the SaaS tell the brief asks to avoid, and it fights
+     the flat printed-surface feeling parchment is doing the work to establish. An opaque
+     canvas plus one Ash hairline is the whole treatment. */
+  background: var(--app-paper);
   border-bottom: 1px solid var(--app-border);
 }
 
@@ -12,7 +14,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--app-space-md);
-  padding-block: var(--app-space-sm);
+  padding-block: var(--app-space-md);
 }
 
 .logo {
@@ -34,16 +36,59 @@
   gap: var(--app-space-lg);
 }
 
+/*
+  Nav labels are mono, uppercase and tightly tracked — the reference's UI voice. The bar stays
+  deliberately quiet: no pill backgrounds, no icon boxes, no heavy active fill. Emphasis comes
+  from ink weight plus a 1px Lake Blue rule under the active item, which is the smallest thing
+  that still reads as "you are here".
+*/
 .link {
+  position: relative;
+  font-family: var(--app-font-body);
   font-size: var(--app-text-sm);
-  font-weight: 500;
-  color: var(--app-ink-muted);
-  transition: color var(--app-duration-base) var(--app-ease);
+  font-weight: 400;
+  letter-spacing: var(--app-tracking-label);
+  text-transform: uppercase;
+  color: var(--app-ink-faint);
+  padding-block: var(--app-space-3xs);
+  transition: color var(--app-duration-fast) var(--app-ease);
 }
 
-.link:hover,
+.link:hover {
+  color: var(--app-ink);
+}
+
 .linkActive {
   color: var(--app-ink);
+  font-weight: 500;
+}
+
+/*
+  Drawn as a pseudo-element rather than a border so the underline can grow from the centre on
+  hover without shifting the label's box. transform/opacity only — no layout in the animation.
+*/
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--app-accent);
+  transform: scaleX(0);
+  opacity: 0;
+  transition: transform var(--app-duration-base) var(--app-ease),
+    opacity var(--app-duration-base) var(--app-ease);
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+  opacity: 0.4;
+}
+
+.linkActive::after {
+  transform: scaleX(1);
+  opacity: 1;
 }
 
 .accountLink {

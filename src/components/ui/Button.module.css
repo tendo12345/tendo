@@ -15,14 +15,25 @@
   padding: 1rem 2rem;
   border-radius: var(--app-radius-pill);
   border: 1px solid transparent;
-  transition: background-color var(--app-duration-base) var(--app-ease),
-    border-color var(--app-duration-base) var(--app-ease),
-    color var(--app-duration-base) var(--app-ease),
+  /*
+    Tactile, not bouncy: a 1px rise on hover and a return to rest on press. Transitions sit at
+    160ms so the response is almost subconscious — long enough to read as motion, short enough
+    that it never sits between the user and the click.
+
+    transform and colour only. Nothing here triggers layout.
+  */
+  transition: background-color var(--app-duration-fast) var(--app-ease),
+    border-color var(--app-duration-fast) var(--app-ease),
+    color var(--app-duration-fast) var(--app-ease),
     transform var(--app-duration-fast) var(--app-ease);
 }
 
-.btn:active {
-  transform: scale(0.985);
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn:disabled {

@@ -1,28 +1,48 @@
+/*
+  The palette is the artifact, so the colour gets the space and the chrome gets out of its way.
+
+  The swatch is roughly half the card rather than a strip above a block of metadata, and the
+  supporting text is mono at caption size. Card motion is a 1px rise and a firmer border —
+  enough to read as interactive, far short of a floating lift.
+*/
 .card {
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius-lg);
   overflow: hidden;
   background: var(--app-surface);
+  transition: border-color var(--app-duration-base) var(--app-ease),
+    transform var(--app-duration-base) var(--app-ease);
+}
+
+.card:hover {
+  border-color: var(--app-border-strong);
+  transform: translateY(-1px);
 }
 
 .swatch {
-  height: 5.5rem;
+  height: 8.5rem;
 }
 
 .body {
-  padding: var(--app-space-sm);
+  padding: var(--app-space-md);
 }
 
+/* Token name reads as a technical label, not a card title — mono, uppercase, tracked. */
 .name {
+  font-family: var(--app-font-body);
   font-weight: 500;
-  font-size: var(--app-text-sm);
+  font-size: var(--app-text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--app-tracking-label);
+  color: var(--app-ink-faint);
+  margin-bottom: var(--app-space-3xs);
 }
 
 .hex {
   font-family: var(--app-font-mono);
-  font-size: var(--app-text-xs);
-  color: var(--app-ink-muted);
-  margin-bottom: 0.4rem;
+  font-size: var(--app-text-md);
+  color: var(--app-ink);
+  margin-bottom: var(--app-space-2xs);
 }
 
 .usage {
@@ -58,7 +78,7 @@
 
 .contrastBadge {
   font-weight: 500;
-  padding: 0.1rem 0.4rem;
-  border-radius: var(--app-radius-sm);
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--app-radius-pill);
   background: var(--app-surface-sunken);
 }
