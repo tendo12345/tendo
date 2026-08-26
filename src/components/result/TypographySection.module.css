@@ -10,7 +10,7 @@
 
 .specimenLabel {
   font-size: var(--app-text-xs);
-  font-weight: 700;
+  font-weight: 500;
   color: var(--app-ink-faint);
   text-transform: uppercase;
   letter-spacing: 0.05em;

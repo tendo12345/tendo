@@ -1,3 +1,4 @@
+import { useInView } from '../../hooks/useInView';
 import { SAMPLE_SYSTEM } from '../../lib/sampleSystem';
 import styles from './WhatYouGet.module.css';
 
@@ -9,9 +10,11 @@ const CARDS = [
 ];
 
 export function WhatYouGet() {
+  const head = useInView<HTMLDivElement>();
+
   return (
     <section id="what-you-get" className={`container ${styles.section}`}>
-      <div className={styles.head}>
+      <div ref={head.ref} className={`${styles.head} ${head.inView ? 'app-enter' : ''}`}>
         <h2 className={styles.title}>What you get</h2>
         <p className={styles.subtitle}>Every generated system ships with the same building blocks — and the reasoning behind each one.</p>
       </div>

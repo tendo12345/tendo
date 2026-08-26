@@ -58,7 +58,7 @@
 .tokenName {
   font-family: var(--app-font-mono);
   font-size: var(--app-text-xs);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .tokenUsage {

@@ -1,123 +1,196 @@
 /*
-  The application's OWN design system. Namespaced --app-* so it can never collide with the
-  --ds-* custom properties the Result workspace sets locally from a generated system (see
-  src/components/result — those are scoped to their own wrapper elements only).
+  The application's OWN design system — "Monad": editorial tech journal on warm parchment.
+
+  Namespaced --app-* so it can never collide with the --ds-* custom properties the Result
+  workspace sets locally from a generated system (see src/components/result — those are
+  scoped to their own wrapper elements only). A generated palette must still render exactly
+  as the engine produced it; nothing here may leak into that.
+
+  Every colour below is MEASURED, not chosen by eye. Ratios are stated against the surface
+  the role actually sits on, and the derived roles were solved against the ground wash's
+  darkest composite pixel rather than flat parchment — solving against the flat colour is
+  how a role ends up passing in isolation and failing in place.
 */
 
 :root {
-  /* ---- color: light (default) ---- */
-  --app-paper: #fbfaf8;
-  --app-surface: #ffffff;
-  --app-surface-sunken: #f3f1ec;
-  --app-ink: #14130f;
-  --app-ink-muted: #5b584e;
-  /* Was #8c887a, which failed at 3.40:1 even on flat paper and dropped to 2.84:1 over the
-     gradient's darkest point. #63604f clears 4.5:1 against both. */
-  --app-ink-faint: #63604f;
-  --app-border: #e4e0d6;
-  --app-border-strong: #cdc8ba;
-  --app-accent: #b1450c;
-  --app-accent-ink: #ffffff;
-  --app-accent-soft: #f6e3d5;
-  --app-success: #1e6b46;
-  --app-success-soft: #dcefe3;
-  --app-warning: #b45309;
-  --app-warning-soft: #fef6ea;
-  --app-error: #a3271f;
-  --app-error-soft: #f6dedb;
-  --app-focus-ring: #b1450c;
+  /* ---- colour: light (Monad, the specified theme) ----
+     Parchment is the signature surface. Pure white is deliberately absent: the warm tint is
+     what separates this from a default SaaS canvas, so --app-surface is parchment too and
+     cards separate by hairline border, not by a whiter fill. */
+  --app-paper: #f6f3f1;           /* Parchment — page canvas */
+  --app-surface: #f6f3f1;         /* Cards sit on the same warm surface, outlined not filled */
+  --app-surface-sunken: #f1edeb;  /* Recessed panels. Faint #686665 reads 4.56:1 here */
 
-  --app-shadow-color: 20 15 8;
+  --app-ink: #242424;             /* Off-Black — 14.05:1 on parchment, 13.07:1 on the wash */
+  --app-ink-muted: #4e4d4d;       /* Graphite — 7.63:1 / 7.09:1 */
+  /* Smoke #797776 as specified reads 4.03:1 on parchment — AA Large only, and it is used for
+     helper text and tertiary links, which are body copy. Darkened until it clears AA over the
+     wash as well: 5.17:1 on parchment, 4.81:1 at the ground's darkest point. */
+  --app-ink-faint: #686665;
 
-  /* ---- the dark ground, defined once and referenced by both dark selectors ----
-     Opacities are at their measured ceiling, not chosen by eye: the layers were
-     rasterised and the brightest resulting pixel read as #40253f, which leaves the
-     faintest ink (--app-ink-faint) at 4.86:1, still AA. Raising the moon wash to 0.40
-     brightens it to #4e2b4b and drops that ink to 4.26:1, which fails. Re-measure
-     before changing these. */
+  /* Ash is the specified hairline colour and reads 1.47:1 — correct for decorative dividers
+     and card edges, which is all the spec asks of it. It is NOT sufficient for the boundary
+     of an interactive control, so the strong variant is darkened to clear 3:1 (3.41:1). */
+  --app-border: #cecac8;          /* Ash — dividers, card edges */
+  --app-border-strong: #868382;   /* Control boundaries: inputs, selects, toggles */
+
+  --app-accent: #2b59d1;          /* Lake Blue — the single saturated fill, 5.51:1 / 5.12:1 */
+  --app-accent-ink: #ffffff;      /* 6.08:1 on Lake Blue */
+  --app-accent-soft: #cfdaf5;     /* Periwinkle Mist — the one coloured surface */
+
+  /*
+    Semantic roles, derived — and the one place this deviates from the reference.
+
+    Monad declares the pastels (Mint, Gold, Coral, Crimson) decorative-only and forbids new
+    accent colours for UI. But this app reports WCAG pass/fail and shows toasts; it cannot
+    say "this fails" in graphite. Rather than introduce foreign hues, each semantic role is
+    the nearest Monad pastel darkened until it clears AA over the wash. They stay in-family.
+    The pastels themselves remain decorative, used only as badge fills under Off-Black text.
+  */
+  --app-success: #4b715c;         /* <- Mint    4.98:1 / 4.63:1 */
+  --app-success-soft: #a7fccd;    /* Mint as a fill; Off-Black on it reads 12.90:1 */
+  --app-warning: #706848;         /* <- Gold    5.05:1 / 4.70:1 */
+  --app-warning-soft: #ecda98;    /* Gold fill; Off-Black 11.12:1 */
+  --app-error: #a25107;           /* <- Crimson 5.12:1 / 4.76:1 */
+  --app-error-soft: #ff9473;      /* Coral fill; Off-Black 7.20:1 */
+  --app-focus-ring: #2b59d1;      /* 5.51:1 parchment, 4.34:1 periwinkle, 6.08:1 white */
+
+  /*
+    Aliases for status TEXT, and the reason they exist rather than being cleaned up.
+
+    Eight modules across the workspace reference --app-positive-ink / --app-warning-ink /
+    --app-negative-ink, fourteen times, and none of those tokens was ever defined. Every one
+    silently rendered its hard-coded fallback instead: #15803D, #B45309, #B91C1C — a green,
+    amber and red from an older palette that survived the restyle untouched, because a remap
+    of --app-* cannot reach a name that does not exist.
+
+    Defining them here fixes all fourteen at once and, unlike editing each call site, cannot
+    miss one. It also means dark mode picks them up, which the literal fallbacks never did.
+  */
+  --app-positive-ink: var(--app-success);
+  --app-warning-ink: var(--app-warning);
+  --app-negative-ink: var(--app-error);
+
+  --app-shadow-color: 0 0 0;
+
+  /* ---- the dark palette, defined ONCE and referenced by both dark selectors ----
+     Monad specifies no dark theme. Rather than invent a foreign one, this inverts using the
+     system's own surfaces — Ink and Off-Black as ground, Parchment as ink, Ash as muted —
+     and lifts Lake Blue, Smoke and the border until they clear AA on the RAISED surface,
+     which is the lighter of the two grounds and therefore the harder test.
+
+     Defined as --app-dark-* here so the toggle and the prefers-color-scheme default cannot
+     drift apart; they previously duplicated the whole block and silently did. */
+  --app-dark-paper: #121111;
+  --app-dark-surface: #1c1b1a;
+  --app-dark-surface-sunken: #0b0a0a;
+  --app-dark-ink: #f6f3f1;           /* Parchment — 17.06:1 / 15.57:1 */
+  --app-dark-ink-muted: #cecac8;     /* Ash — 11.59:1 / 10.57:1 */
+  --app-dark-ink-faint: #868584;     /* Smoke, lifted — 5.12:1 / 4.67:1 */
+  --app-dark-border: #2a2827;
+  --app-dark-border-strong: #6c6968; /* 3.46:1 / 3.16:1 */
+  --app-dark-accent: #6083dd;        /* Lake Blue, lifted — 5.20:1 / 4.74:1 */
+  --app-dark-accent-ink: #0d1428;
+  --app-dark-accent-soft: #1e2a4a;
+  --app-dark-success: #a7fccd;       /* 15.66:1 */
+  --app-dark-success-soft: #16301f;
+  --app-dark-warning: #ecda98;       /* 13.51:1 */
+  --app-dark-warning-soft: #2e2716;
+  --app-dark-error: #ff9473;         /* 8.74:1 */
+  --app-dark-error-soft: #331a12;
+
+  /* ---- grounds ----
+     Monad's atmospheric wash: soft, heavily diffused coral / sky / gold radials, never
+     sharp-edged. The risk on a light ground is the DARKEST composite point — these stops all
+     sit below parchment's luminance, so they pull contrast DOWN for dark ink rather than up.
+
+     Rasterised and read at that darkest pixel: #f2eae5. Every role above clears AA there:
+     ink 13.07, muted 7.09, faint 4.81, accent 5.12, success 4.63, warning 4.70, error 4.76.
+     Raising any opacity darkens that pixel and starts failing the derived roles first.
+     Re-measure before changing these. */
+  --app-ground-light:
+    radial-gradient(52rem 40rem at 88% -8%, rgba(255, 148, 115, 0.06), transparent 62%),
+    radial-gradient(46rem 36rem at 4% 104%, rgba(160, 181, 235, 0.05), transparent 64%),
+    radial-gradient(38rem 32rem at 70% 96%, rgba(236, 218, 152, 0.05), transparent 66%);
+
   --app-ground-dark:
-    radial-gradient(42rem 42rem at 84% -8%, rgba(255, 138, 232, 0.32), transparent 60%),
-    radial-gradient(50rem 38rem at 6% 106%, rgba(255, 77, 210, 0.26), transparent 62%),
-    radial-gradient(38rem 30rem at 96% 78%, rgba(122, 92, 255, 0.2), transparent 66%),
-    radial-gradient(64rem 44rem at 44% 40%, rgba(150, 148, 175, 0.1), transparent 70%),
-    linear-gradient(176deg, #07070b 0%, #170f20 46%, #110b19 72%, #0b0712 100%);
+    radial-gradient(52rem 40rem at 86% -6%, rgba(43, 89, 209, 0.16), transparent 62%),
+    radial-gradient(46rem 36rem at 6% 104%, rgba(255, 148, 115, 0.08), transparent 64%),
+    radial-gradient(40rem 32rem at 64% 92%, rgba(167, 252, 205, 0.05), transparent 66%);
 
-  /* ---- light grounds ----
-     Unlike the dark ground, the risk here is the DARKEST composite point: these washes
-     tint warm and ramp down to #f3f1ec, which LOWERS contrast for dark ink rather than
-     raising it. Both were rasterised and measured at their darkest pixel.
+  --app-ground: var(--app-ground-light);
 
-     "Paper Haze" needed correcting. At the original cream 0.55 / orange 0.10 its darkest
-     point was #d2cdc8 and it broke three roles — accent 3.57:1, success 4.10:1, faint
-     2.25:1. The cause is that rgba(246,227,213) reads as cream but sits at luminance
-     0.793 against paper's 0.957, so at 55% it drags the ground down hard. Stepping the
-     cream down to 0.15 and the orange to 0.06 lifts the darkest point to #eae7e2, where
-     every role passes. */
-  --app-ground-light-a:
-    radial-gradient(40rem 34rem at 88% -10%, rgba(177, 69, 12, 0.06), transparent 60%),
-    radial-gradient(46rem 34rem at 4% 108%, rgba(246, 227, 213, 0.15), transparent 62%),
-    linear-gradient(180deg, #ffffff 0%, #fbfaf8 55%, #f3f1ec 100%);
+  /* ---- typography ----
+     The serif announces, the mono instructs. Untitled Serif and ABC Diatype Mono are
+     commercial; these are the reference's own listed substitutes. Instrument Serif ships a
+     single 400 weight, which enforces the "never bold a heading" rule structurally rather
+     than by convention. IBM Plex Mono was already loaded here, so the mono costs nothing new.
 
-  /* "Sunlit Paper" — more presence, and the safer of the two as written.
-     Darkest point #efe4dc: ink 14.87:1, muted 5.69:1, accent 4.51:1, error 5.86:1,
-     success 5.17:1. Used as the default. */
-  --app-ground-light-b:
-    radial-gradient(50rem 40rem at 82% -6%, rgba(177, 69, 12, 0.14), transparent 58%),
-    linear-gradient(172deg, #fffefc 0%, #fbfaf8 60%, #f3f1ec 100%);
-
-  --app-ground: var(--app-ground-light-b);
-
-  /* ---- typography ---- */
-  --app-font-display: 'Fraunces', ui-serif, Georgia, serif;
-  --app-font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+     There is no body sans: ALL functional text is mono. That is the defining gesture — a
+     sans-serif body would lose the identity immediately. */
+  --app-font-display: 'Instrument Serif', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+  --app-font-body: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --app-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
-  --app-text-xs: 0.75rem;
-  --app-text-sm: 0.875rem;
-  --app-text-base: 1rem;
-  --app-text-md: 1.125rem;
-  --app-text-lg: 1.375rem;
-  --app-text-xl: 1.75rem;
-  --app-text-2xl: 2.25rem;
-  --app-text-3xl: 3rem;
-  --app-text-4xl: 3.75rem;
+  /* Monad's scale, in rem. Tracking is negative at every size and tightens as size grows. */
+  --app-text-xs: 0.75rem;    /* 12 — caption, uppercase meta */
+  --app-text-sm: 0.875rem;   /* 14 — buttons, small print */
+  --app-text-base: 1rem;     /* 16 — body */
+  --app-text-md: 1.125rem;   /* 18 — nav labels, badges */
+  --app-text-lg: 1.25rem;    /* 20 — body-lg, hero subtext */
+  --app-text-xl: 1.5rem;     /* 24 — subheading, card titles */
+  --app-text-2xl: 2rem;      /* 32 — heading-sm */
+  --app-text-3xl: 2.5rem;    /* 40 — heading */
+  --app-text-4xl: 3rem;      /* 48 — heading-lg */
+  --app-text-5xl: 5rem;      /* 80 — display */
 
-  --app-leading-tight: 1.1;
+  --app-tracking-tight: -0.02em;   /* headings, all sizes */
+  --app-tracking-ui: -0.025em;     /* mono body */
+  --app-tracking-label: -0.022em;  /* nav labels, badges */
+
+  --app-leading-tight: 1.2;
   --app-leading-snug: 1.3;
-  --app-leading-normal: 1.55;
+  --app-leading-normal: 1.35;
 
-  /* ---- spacing (app chrome only — not the generated scale) ---- */
-  --app-space-3xs: 0.25rem;
-  --app-space-2xs: 0.5rem;
-  --app-space-xs: 0.75rem;
-  --app-space-sm: 1rem;
-  --app-space-md: 1.5rem;
-  --app-space-lg: 2rem;
-  --app-space-xl: 3rem;
-  --app-space-2xl: 4.5rem;
-  --app-space-3xl: 6.5rem;
+  /* ---- spacing (app chrome only — not the generated scale) — 8px base ---- */
+  --app-space-3xs: 0.25rem;  /* 4 */
+  --app-space-2xs: 0.5rem;   /* 8 */
+  --app-space-xs: 0.75rem;   /* 12 */
+  --app-space-sm: 1rem;      /* 16 — element gap */
+  --app-space-md: 1.5rem;    /* 24 */
+  --app-space-lg: 2rem;      /* 32 */
+  --app-space-xl: 2.5rem;    /* 40 — card padding */
+  --app-space-2xl: 4rem;     /* 64 — section gap */
+  --app-space-3xl: 5rem;     /* 80 */
 
-  --app-container: 1180px;
+  --app-container: 1432px;
   --app-container-narrow: 760px;
-  --app-nav-height: 4.5rem;
+  --app-nav-height: 5rem;    /* 80 */
   --app-subnav-height: 3.25rem;
 
-  /* ---- radius ---- */
-  --app-radius-sm: 4px;
-  --app-radius-md: 8px;
-  --app-radius-lg: 14px;
-  --app-radius-pill: 999px;
+  /* ---- radius ----
+     Pill-and-soft-rect. Nothing sharp: buttons and tags are fully round, cards are 40px,
+     and the smallest radius in the system is 12px. */
+  --app-radius-sm: 12px;
+  --app-radius-md: 16px;
+  --app-radius-lg: 40px;     /* cards */
+  --app-radius-pill: 9999px; /* buttons, tags, pills */
 
-  /* ---- shadow: restrained, no glow, no color blur ---- */
-  --app-shadow-sm: 0 1px 2px rgba(var(--app-shadow-color) / 0.06);
-  --app-shadow-md: 0 4px 10px rgba(var(--app-shadow-color) / 0.08);
-  --app-shadow-lg: 0 12px 28px rgba(var(--app-shadow-color) / 0.12);
+  /* ---- shadow ----
+     Cards do not get shadows in this system — elevation is a 1px Ash border and a surface
+     change (Parchment -> Periwinkle). Only genuinely floating layers (menus, toasts, modals)
+     take the single specified ambient shadow, which is why sm and md are none. */
+  --app-shadow-sm: none;
+  --app-shadow-md: none;
+  --app-shadow-lg: rgba(0, 0, 0, 0.1) 0 0 10px 0;
 
-  /* ---- motion ---- */
-  --app-duration-fast: 120ms;
-  --app-duration-base: 200ms;
-  --app-duration-slow: 360ms;
-  --app-ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  /* ---- motion ----
+     Calm and spacious. Slower than a typical UI on purpose: this reads as a journal, not a
+     dashboard. Every consumer must still respect prefers-reduced-motion. */
+  --app-duration-fast: 160ms;
+  --app-duration-base: 260ms;
+  --app-duration-slow: 480ms;
+  --app-ease: cubic-bezier(0.22, 0.61, 0.24, 1);
 
   /* ---- breakpoints (referenced in comments; media queries use literal px) ---- */
   --app-bp-sm: 390px;
@@ -126,54 +199,58 @@
   --app-bp-xl: 1280px;
 }
 
+/*
+  Both dark selectors read the same --app-dark-* values defined above. Do not inline literals
+  into either block: the two copies drifted apart once already when only one was tuned.
+*/
 :root[data-theme='dark'] {
-  /* Sumi-e: ink-wash ground, cool grey inks, one magenta accent used sparingly.
-     Contrast checked against --app-paper: ink 17.4:1, muted 8.2:1, faint 6.3:1,
-     accent 6.9:1, control borders 3.1:1. */
-  --app-paper: #0a090c;
-  --app-surface: #121016;
-  --app-surface-sunken: #060508;
-  --app-ink: #f2eff5;
-  --app-ink-muted: #a9a4b4;
-  --app-ink-faint: #9e98ad;
-  --app-border: #262230;
-  --app-border-strong: #615a78;
-  --app-accent: #ff4dd2;
-  --app-accent-ink: #170315;
-  --app-accent-soft: #2a0c24;
-  --app-success: #5fd3a0;
-  --app-success-soft: #102c22;
-  --app-error: #ff6b84;
-  --app-error-soft: #33101a;
-  --app-focus-ring: #ff4dd2;
-  --app-shadow-color: 0 0 0;
+  --app-paper: var(--app-dark-paper);
+  --app-surface: var(--app-dark-surface);
+  --app-surface-sunken: var(--app-dark-surface-sunken);
+  --app-ink: var(--app-dark-ink);
+  --app-ink-muted: var(--app-dark-ink-muted);
+  --app-ink-faint: var(--app-dark-ink-faint);
+  --app-border: var(--app-dark-border);
+  --app-border-strong: var(--app-dark-border-strong);
+  --app-accent: var(--app-dark-accent);
+  --app-accent-ink: var(--app-dark-accent-ink);
+  --app-accent-soft: var(--app-dark-accent-soft);
+  --app-success: var(--app-dark-success);
+  --app-success-soft: var(--app-dark-success-soft);
+  --app-warning: var(--app-dark-warning);
+  --app-warning-soft: var(--app-dark-warning-soft);
+  --app-error: var(--app-dark-error);
+  --app-error-soft: var(--app-dark-error-soft);
+  --app-positive-ink: var(--app-dark-success);
+  --app-warning-ink: var(--app-dark-warning);
+  --app-negative-ink: var(--app-dark-error);
+  --app-focus-ring: var(--app-dark-accent);
   --app-ground: var(--app-ground-dark);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    /* Sumi-e: ink-wash ground, cool grey inks, one magenta accent used sparingly.
-       Contrast checked against --app-paper: ink 17.4:1, muted 8.2:1, faint 6.3:1,
-       accent 6.9:1, control borders 3.1:1. */
-    --app-paper: #0a090c;
-    --app-surface: #121016;
-    --app-surface-sunken: #060508;
-    --app-ink: #f2eff5;
-    --app-ink-muted: #a9a4b4;
-    --app-ink-faint: #9e98ad;
-    --app-border: #262230;
-    --app-border-strong: #615a78;
-    --app-accent: #ff4dd2;
-    --app-accent-ink: #170315;
-    --app-accent-soft: #2a0c24;
-    --app-success: #5fd3a0;
-    --app-success-soft: #102c22;
-    --app-warning: #ffb84d;
-    --app-warning-soft: #332008;
-    --app-error: #ff6b84;
-    --app-error-soft: #33101a;
-    --app-focus-ring: #ff4dd2;
-    --app-shadow-color: 0 0 0;
-  --app-ground: var(--app-ground-dark);
+    --app-paper: var(--app-dark-paper);
+    --app-surface: var(--app-dark-surface);
+    --app-surface-sunken: var(--app-dark-surface-sunken);
+    --app-ink: var(--app-dark-ink);
+    --app-ink-muted: var(--app-dark-ink-muted);
+    --app-ink-faint: var(--app-dark-ink-faint);
+    --app-border: var(--app-dark-border);
+    --app-border-strong: var(--app-dark-border-strong);
+    --app-accent: var(--app-dark-accent);
+    --app-accent-ink: var(--app-dark-accent-ink);
+    --app-accent-soft: var(--app-dark-accent-soft);
+    --app-success: var(--app-dark-success);
+    --app-success-soft: var(--app-dark-success-soft);
+    --app-warning: var(--app-dark-warning);
+    --app-warning-soft: var(--app-dark-warning-soft);
+    --app-error: var(--app-dark-error);
+    --app-error-soft: var(--app-dark-error-soft);
+    --app-positive-ink: var(--app-dark-success);
+    --app-warning-ink: var(--app-dark-warning);
+    --app-negative-ink: var(--app-dark-error);
+    --app-focus-ring: var(--app-dark-accent);
+    --app-ground: var(--app-ground-dark);
   }
 }

@@ -13,7 +13,7 @@
 
 .label {
   font-size: var(--app-text-sm);
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .optional {
@@ -32,30 +32,34 @@
   resize: vertical;
   padding: var(--app-space-sm);
   border: 1px solid var(--app-border-strong);
-  border-radius: var(--app-radius-md);
+  border-radius: var(--app-radius-lg);
   background: var(--app-surface);
   font-size: var(--app-text-md);
   font-family: var(--app-font-body);
   line-height: 1.5;
-  transition: border-color var(--app-duration-base) var(--app-ease);
+  transition: border-color var(--app-duration-base) var(--app-ease),
+    background-color var(--app-duration-base) var(--app-ease);
 }
 
 .textarea:focus-visible {
   border-color: var(--app-accent);
+  background-color: var(--app-paper);
 }
 
 .input {
   width: 100%;
   padding: 0.7rem 0.9rem;
   border: 1px solid var(--app-border-strong);
-  border-radius: var(--app-radius-md);
+  border-radius: var(--app-radius-lg);
   background: var(--app-surface);
   font-size: var(--app-text-base);
-  transition: border-color var(--app-duration-base) var(--app-ease);
+  transition: border-color var(--app-duration-base) var(--app-ease),
+    background-color var(--app-duration-base) var(--app-ease);
 }
 
 .input:focus-visible {
   border-color: var(--app-accent);
+  background-color: var(--app-paper);
 }
 
 .chipRow {
@@ -68,7 +72,7 @@
 .error {
   color: var(--app-error);
   font-size: var(--app-text-xs);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .selectedRow {

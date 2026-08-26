@@ -2,7 +2,7 @@
 .body { flex: 1; min-width: 0; }
 
 .head { display: flex; align-items: baseline; gap: var(--app-space-xs); flex-wrap: wrap; margin-bottom: var(--app-space-3xs); }
-.author { font-weight: 600; font-size: var(--app-text-sm); }
+.author { font-weight: 500; font-size: var(--app-text-sm); }
 .time { font-size: var(--app-text-xs); color: var(--app-ink-faint); }
 
 /* Plain text only — see the doc comment in CommentItem.tsx. pre-wrap preserves line breaks

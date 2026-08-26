@@ -97,8 +97,15 @@ export default function WorkspacePage() {
           </ol>
         </nav>
 
+        {/*
+          Keyed on the section id so React remounts on every route change, which re-fires the
+          entrance animation. Without the key the subtree is reused and the new section
+          simply blinks into place — the switch reads as a jump rather than a turned page.
+          `app-enter` is inert under prefers-reduced-motion via the global backstop.
+        */}
+        <div key={active.id} className="app-enter">
         {active.id === 'overview' && (
-          <div className={styles.overview}>
+          <div className={`${styles.overview} app-stagger`}>
             <SystemDnaPanel output={output} />
             {/* Renders nothing unless a region was given. */}
             <RegionNotice output={output} />
@@ -121,6 +128,7 @@ export default function WorkspacePage() {
         {active.id === 'ai' && <AiPane output={output} />}
         {active.id === 'import' && <ImportPane />}
         {active.id === 'export' && <ExportSection output={output} />}
+        </div>
       </div>
     </div>
   );

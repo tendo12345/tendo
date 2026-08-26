@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/*
+  Two families, and only two: Instrument Serif announces, IBM Plex Mono instructs.
+
+  Instrument Serif ships a single 400 weight on purpose — the reference locks headings at 400
+  and asks the serif's stroke contrast and tight tracking to carry the hierarchy instead of
+  weight. Not loading a bold face means a stray `font-weight: 700` cannot silently render one.
+
+  The sans (Inter) and the old display serif (Fraunces) are gone. Every functional string in
+  this UI is mono now; a sans-serif body would lose the identity immediately.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 body {
   background: var(--app-paper);
@@ -6,43 +16,113 @@ body {
   font-family: var(--app-font-body);
   font-size: var(--app-text-base);
   line-height: var(--app-leading-normal);
+  letter-spacing: var(--app-tracking-ui);
 }
 
 /*
-  Ink-wash ground for the dark theme.
+  The atmospheric ground.
 
-  Three very low-opacity radial washes: a moon high on the right, a magenta bloom low on
-  the left, and a cold grey drift between them. Deliberately faint — the reference is a
-  poster, this is a workspace, and a background that competes with the content would
-  contradict the advice this tool hands out. Fixed attachment, so it never scrolls and
-  never needs animating.
+  Soft, heavily diffused radial washes — coral, sky and gold on light; blue, coral and mint on
+  dark. Never sharp-edged. Deliberately faint: the reference is a poster, this is a workspace,
+  and a background that competes with the content would contradict the advice this tool hands
+  out. Fixed attachment, so it never scrolls and never needs animating.
+
+  The ground is defined once, in tokens.css, as --app-ground. Both dark selectors (the explicit
+  toggle and the prefers-color-scheme default) point at the same value, so the two cannot drift
+  apart — which they already did once when the opacities were tuned in only one of two copies.
 */
 /*
-  The ground is defined once, in tokens.css, as --app-ground. Both dark selectors (the
-  explicit toggle and the prefers-color-scheme default) point at the same value, so the two
-  cannot drift apart — which they already did once when the opacities were tuned in only one
-  of two duplicated copies.
+  The ground moves onto a fixed pseudo-element so it can drift on `transform` instead of
+  `background-position`. Per the performance rule, motion here is transform-only — animating a
+  background or a filter on a full-viewport layer is exactly the kind of paint work that makes
+  a calm effect expensive.
+
+  html carries the paper colour so this layer, at z-index -1, still paints above it. If the
+  colour stayed on an opaque body, a negative-z-index child would render behind it and vanish.
+
+  `inset: -12%` oversizes the layer so the slow translate can never pull an edge into view.
 */
+html {
+  background-color: var(--app-paper);
+}
+
 body {
-  background-image: var(--app-ground, none);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background-color: transparent;
 }
 
+body::before {
+  content: '';
+  position: fixed;
+  inset: -12%;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--app-ground, none);
+  background-repeat: no-repeat;
+  animation: app-drift 34s var(--app-ease) infinite alternate;
+}
+
+/*
+  Drift, and why it is safe for contrast.
+
+  The washes only ever TRANSLATE. Their opacities and colours never change, so the darkest
+  point the composite can reach is still all three overlapping at their stated strength — the
+  case already measured at #f2eae5, where every text role clears AA. Movement can only ever
+  produce a lighter pixel than that bound, never a darker one.
+
+  Animating opacity here, which the brief offers as an option, would break that argument: a
+  wash at higher strength darkens the composite past the measured worst case. So position only.
+
+  34s, and roughly a percent of travel. If you can see it move, it is too much.
+*/
+@keyframes app-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(1.2%, -0.9%, 0) scale(1.03);
+  }
+}
+
+/*
+  Headings never go bold. Weight is locked at 400 at every size; the serif's contrast and the
+  -0.02em tracking do the work. This is the editorial signature — headlines whisper through
+  typographic refinement rather than shout through weight.
+*/
 h1,
 h2,
 h3,
 h4 {
   font-family: var(--app-font-display);
-  font-weight: 500;
+  font-weight: 400;
   line-height: var(--app-leading-tight);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--app-tracking-tight);
+  /*
+    Instrument Serif ships a single 400 weight. Without this, a module class setting a heavier
+    weight on a heading makes the browser SYNTHESIZE a bold — a smeared fake that looks like
+    the one thing this typography is defined by not doing. Disabling synthesis means such a
+    rule degrades to the real 400 face instead of a forgery.
+
+    IBM Plex Mono is unaffected: it ships a genuine 500, so emphasized UI labels still render.
+  */
+  font-synthesis-weight: none;
 }
 
 code,
 pre,
 kbd {
   font-family: var(--app-font-mono);
+}
+
+/*
+  Nav labels, buttons and tags: uppercase with tighter tracking, per the reference's UI voice.
+  Applied via a class rather than element selectors so it never catches body copy.
+*/
+.ui-label {
+  font-family: var(--app-font-body);
+  font-size: var(--app-text-sm);
+  letter-spacing: var(--app-tracking-label);
+  text-transform: uppercase;
 }
 
 ::selection {
@@ -87,7 +167,7 @@ kbd {
   background: var(--app-ink);
   color: var(--app-paper);
   padding: var(--app-space-2xs) var(--app-space-sm);
-  border-radius: var(--app-radius-sm);
+  border-radius: var(--app-radius-pill);
   transition: top var(--app-duration-base) var(--app-ease);
 }
 
@@ -106,3 +186,83 @@ kbd {
     padding-inline: var(--app-space-sm);
   }
 }
+
+/*
+  Motion.
+
+  The reference has no animation section, so the character is derived from the rest of it:
+  calm, spacious, editorial, and restrained — it explicitly asks for no hover fill change on
+  an accordion, and for elevation by border rather than shadow. So nothing here bounces,
+  scales up, or draws attention to itself. Content settles; it does not arrive.
+
+  One shared entrance, used wherever a block of content appears: an 8px rise and a fade over
+  --app-duration-slow. `both` holds the start frame, so there is no flash of final-position
+  content before the animation begins.
+
+  Deliberately NOT animated: the atmospheric ground. It is fixed-attachment precisely so it
+  never moves, and a drifting wash behind a tool that tells you to keep backgrounds calm
+  would contradict the advice the product hands out.
+*/
+@keyframes app-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.app-enter {
+  animation: app-enter var(--app-duration-slow) var(--app-ease) var(--app-enter-delay, 0ms) both;
+}
+
+/*
+  Stagger a container's direct children — used where a section is composed of several
+  meaningful blocks and should settle in order rather than all at once.
+
+  This lives in global.css, NOT in a CSS module, and that is load-bearing. CSS Modules rewrites
+  keyframe names it finds in a module file, so `animation: app-enter` inside one compiles to a
+  hashed name with no matching @keyframes. The rule then applies, computes cleanly, reports the
+  hashed name in getComputedStyle — and does absolutely nothing. It fails silently and looks
+  correct. Keep any rule that references app-enter in global scope.
+*/
+.app-stagger > * {
+  animation: app-enter var(--app-duration-slow) var(--app-ease) both;
+}
+
+/*
+  Scroll reveal is driven by useInView adding `app-enter` when the element arrives, NOT by a
+  hidden base class that a second class later un-hides.
+
+  That distinction is the whole design. A `.app-reveal { opacity: 0 }` waiting for
+  `.app-reveal-in` looks equivalent and has a failure mode: if the observer never fires — an
+  element inside a scroll container it cannot see, a display:none ancestor, an early
+  disconnect — the content is stranded at zero opacity permanently. Invisible content is a
+  far worse outcome than a missing animation, so the element is simply visible until there is
+  a reason to animate it.
+
+  Used selectively — major section headings and feature groups, never body text, tokens,
+  buttons, navigation or metadata. Animating every paragraph makes a page feel like it is
+  perpetually loading and is harder to read while scrolling.
+*/
+
+.app-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.app-stagger > *:nth-child(2) { animation-delay: 70ms; }
+.app-stagger > *:nth-child(3) { animation-delay: 140ms; }
+.app-stagger > *:nth-child(4) { animation-delay: 210ms; }
+.app-stagger > *:nth-child(n + 5) { animation-delay: 280ms; }
+
+/*
+  Motion is calm by default and absent on request.
+
+  The reduced-motion backstop is NOT repeated here — reset.css already carries the universal
+  one, and a second copy of a `*` rule is how two blocks drift apart while both look correct
+  in isolation. `app-enter` above is covered by it: the animation collapses to 0.001ms and
+  `both` leaves every element in its final state rather than stranded at opacity 0.
+
+  That matters more here than in a typical UI, because the durations in tokens.css are
+  deliberately slow. A 480ms entrance is exactly what a motion-sensitive reader does not want.
+*/

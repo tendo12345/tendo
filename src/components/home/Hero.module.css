@@ -1,30 +1,32 @@
 .hero {
-  padding-block: var(--app-space-2xl) var(--app-space-2xl);
+  padding-block: var(--app-space-3xl) var(--app-space-2xl);
   text-align: center;
 }
 
 .eyebrow {
   font-size: var(--app-text-xs);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--app-accent);
   margin-bottom: var(--app-space-sm);
 }
 
 .headline {
-  font-size: clamp(2.25rem, 5vw, var(--app-text-4xl));
-  max-width: 20ch;
+  font-size: clamp(2.5rem, 7vw, var(--app-text-5xl));
+  max-width: 18ch;
   margin-inline: auto;
   margin-bottom: var(--app-space-md);
+  text-wrap: balance;
 }
 
 .supporting {
-  max-width: 56ch;
+  max-width: 52ch;
   margin-inline: auto;
   color: var(--app-ink-muted);
-  font-size: var(--app-text-md);
-  margin-bottom: var(--app-space-lg);
+  font-size: var(--app-text-lg);
+  line-height: var(--app-leading-normal);
+  margin-bottom: var(--app-space-xl);
 }
 
 .ctas {
@@ -40,7 +42,8 @@
   border-radius: var(--app-radius-lg);
   overflow: hidden;
   text-align: left;
-  box-shadow: var(--app-shadow-lg);
+  /* No shadow. This is a card, and in this system cards are separated by a hairline and a
+     surface change — the ambient shadow is reserved for genuinely floating layers. */
 }
 
 .previewBar {
@@ -81,7 +84,7 @@
 
 .previewLabel {
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--app-ink-faint);

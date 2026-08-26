@@ -9,19 +9,19 @@
 }
 
 .findingHead { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--app-space-md); flex-wrap: wrap; }
-.findingCategory { margin: 0; font-size: var(--app-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
-.findingTitle { margin: 2px 0 0; font-size: var(--app-text-lg); font-weight: 600; }
+.findingCategory { margin: 0; font-size: var(--app-text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
+.findingTitle { margin: 2px 0 0; font-size: var(--app-text-lg); font-weight: 500; }
 
 .detail { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink); max-width: 72ch; line-height: 1.6; }
 .why, .fix { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); max-width: 72ch; line-height: 1.6; }
-.whyLabel { font-weight: 700; text-transform: uppercase; font-size: var(--app-text-xs); letter-spacing: 0.06em; color: var(--app-ink-faint); margin-right: 6px; }
+.whyLabel { font-weight: 500; text-transform: uppercase; font-size: var(--app-text-xs); letter-spacing: 0.06em; color: var(--app-ink-faint); margin-right: 6px; }
 
 .subTitle { font-size: var(--app-text-lg); margin: var(--app-space-xl) 0 var(--app-space-md); }
 
 .tableWrap { overflow-x: auto; border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); }
 .table { width: 100%; border-collapse: collapse; font-size: var(--app-text-sm); min-width: 640px; }
 .table th, .table td { text-align: left; padding: 8px var(--app-space-md); border-bottom: 1px solid var(--app-border); vertical-align: middle; }
-.table thead th { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); font-weight: 700; }
+.table thead th { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); font-weight: 500; }
 .table tbody tr:last-child th, .table tbody tr:last-child td { border-bottom: none; }
 .rowLabel { font-weight: 500; }
 .rowFail { background: var(--app-warning-wash, rgba(180, 83, 9, 0.06)); }
@@ -33,15 +33,15 @@
 .health { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); overflow: hidden; }
 .healthRow { display: grid; grid-template-columns: 150px 130px 1fr; gap: var(--app-space-md); align-items: baseline; padding: var(--app-space-md); border-bottom: 1px solid var(--app-border); font-size: var(--app-text-sm); }
 .health li:last-child { border-bottom: none; }
-.healthArea { font-weight: 600; }
-.rating { font-size: var(--app-text-xs); font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; justify-self: start; }
+.healthArea { font-weight: 500; }
+.rating { font-size: var(--app-text-xs); font-weight: 500; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; justify-self: start; }
 .strong { color: var(--app-positive-ink, #15803D); }
 .good { color: var(--app-ink-muted); }
 .healthMeasure { color: var(--app-ink-muted); }
 .improve { display: block; margin-top: 4px; font-style: normal; color: var(--app-ink-faint); font-size: var(--app-text-xs); }
 
 .notChecked { margin-top: var(--app-space-xl); padding: var(--app-space-md); border: 1px dashed var(--app-border); border-radius: var(--app-radius-sm, 4px); }
-.notCheckedTitle { margin: 0 0 4px; font-size: var(--app-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
+.notCheckedTitle { margin: 0 0 4px; font-size: var(--app-text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
 .notCheckedBody { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); max-width: 72ch; line-height: 1.6; }
 
 @media (max-width: 720px) {

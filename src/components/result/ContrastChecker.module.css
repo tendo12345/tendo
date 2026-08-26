@@ -53,13 +53,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 500;
   font-size: var(--app-text-sm);
 }
 
 .info { min-width: 0; }
 .infoHead { display: flex; align-items: center; gap: var(--app-space-2xs); flex-wrap: wrap; }
-.label { font-weight: 600; font-size: var(--app-text-sm); }
+.label { font-weight: 500; font-size: var(--app-text-sm); }
 .meta { margin: var(--app-space-3xs) 0 0; font-size: var(--app-text-xs); color: var(--app-ink-faint); font-variant-numeric: tabular-nums; }
 
 .fix {
@@ -85,7 +85,7 @@
 .fixButton {
   font: inherit;
   font-size: var(--app-text-xs);
-  font-weight: 600;
+  font-weight: 500;
   min-height: 32px;
   padding: 4px 12px;
   border: 1px solid var(--app-accent);

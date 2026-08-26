@@ -6,21 +6,21 @@
 .identity .meta { margin-bottom: 0; }
 
 .panel { border: 1px solid var(--app-border); border-radius: var(--app-radius-md, 8px); padding: var(--app-space-md); margin-bottom: var(--app-space-md); display: grid; gap: var(--app-space-sm); }
-.panelTitle { margin: 0; font-size: var(--app-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
+.panelTitle { margin: 0; font-size: var(--app-text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
 .panelBody { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; }
 
 .notice { border: 1px solid var(--app-border); border-left-width: 3px; border-radius: var(--app-radius-sm, 4px); padding: var(--app-space-md); margin-bottom: var(--app-space-lg); }
-.noticeTitle { margin: 0 0 4px; font-weight: 600; }
+.noticeTitle { margin: 0 0 4px; font-weight: 500; }
 .noticeBody { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; }
 
 .form { display: grid; gap: var(--app-space-sm); margin-bottom: var(--app-space-lg); }
-.label { font-size: var(--app-text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
+.label { font-size: var(--app-text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); }
 .input { font: inherit; min-height: 44px; padding: 10px 14px; border: 1px solid var(--app-border-strong); border-radius: var(--app-radius-sm, 4px); background: var(--app-surface); color: var(--app-ink); }
 .input:focus-visible { outline: 2px solid var(--app-focus-ring); outline-offset: 1px; }
 .hint { margin: 0; font-size: var(--app-text-xs); color: var(--app-ink-faint); }
 
 .primary, .button, .signOut {
-  font: inherit; font-size: var(--app-text-sm); font-weight: 600;
+  font: inherit; font-size: var(--app-text-sm); font-weight: 500;
   min-height: 44px; padding: 10px 18px;
   border: 1px solid var(--app-border-strong); border-radius: var(--app-radius-sm, 4px);
   background: none; color: var(--app-ink); cursor: pointer;

@@ -5,16 +5,30 @@
   text-align: center;
   gap: var(--app-space-sm);
   padding: var(--app-space-2xl) var(--app-space-md);
-  border: 1px dashed var(--app-border-strong);
+  /* Solid hairline, not dashed. A dashed box is the generic placeholder look the brief asks
+     to avoid; in this system separation is always one Ash line. */
+  border: 1px solid var(--app-border);
   border-radius: var(--app-radius-lg);
   background: var(--app-surface);
 }
 
+.label {
+  font-family: var(--app-font-body);
+  font-size: var(--app-text-xs);
+  font-weight: 500;
+  letter-spacing: var(--app-tracking-label);
+  text-transform: uppercase;
+  color: var(--app-ink-faint);
+}
+
 .title {
-  font-size: var(--app-text-lg);
+  font-size: var(--app-text-xl);
+  max-width: 24ch;
 }
 
 .description {
   color: var(--app-ink-muted);
-  max-width: 32ch;
+  font-size: var(--app-text-sm);
+  max-width: 40ch;
+  margin-bottom: var(--app-space-2xs);
 }
