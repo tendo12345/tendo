@@ -55,6 +55,22 @@
   --app-error-soft: #ff9473;      /* Coral fill; Off-Black 7.20:1 */
   --app-focus-ring: #2b59d1;      /* 5.51:1 parchment, 4.34:1 periwinkle, 6.08:1 white */
 
+  /*
+    Aliases for status TEXT, and the reason they exist rather than being cleaned up.
+
+    Eight modules across the workspace reference --app-positive-ink / --app-warning-ink /
+    --app-negative-ink, fourteen times, and none of those tokens was ever defined. Every one
+    silently rendered its hard-coded fallback instead: #15803D, #B45309, #B91C1C — a green,
+    amber and red from an older palette that survived the restyle untouched, because a remap
+    of --app-* cannot reach a name that does not exist.
+
+    Defining them here fixes all fourteen at once and, unlike editing each call site, cannot
+    miss one. It also means dark mode picks them up, which the literal fallbacks never did.
+  */
+  --app-positive-ink: var(--app-success);
+  --app-warning-ink: var(--app-warning);
+  --app-negative-ink: var(--app-error);
+
   --app-shadow-color: 0 0 0;
 
   /* ---- the dark palette, defined ONCE and referenced by both dark selectors ----
@@ -205,6 +221,9 @@
   --app-warning-soft: var(--app-dark-warning-soft);
   --app-error: var(--app-dark-error);
   --app-error-soft: var(--app-dark-error-soft);
+  --app-positive-ink: var(--app-dark-success);
+  --app-warning-ink: var(--app-dark-warning);
+  --app-negative-ink: var(--app-dark-error);
   --app-focus-ring: var(--app-dark-accent);
   --app-ground: var(--app-ground-dark);
 }
@@ -228,6 +247,9 @@
     --app-warning-soft: var(--app-dark-warning-soft);
     --app-error: var(--app-dark-error);
     --app-error-soft: var(--app-dark-error-soft);
+    --app-positive-ink: var(--app-dark-success);
+    --app-warning-ink: var(--app-dark-warning);
+    --app-negative-ink: var(--app-dark-error);
     --app-focus-ring: var(--app-dark-accent);
     --app-ground: var(--app-ground-dark);
   }

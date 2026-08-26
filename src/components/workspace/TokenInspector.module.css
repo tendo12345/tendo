@@ -98,15 +98,22 @@
   font-size: var(--app-text-xs);
 }
 
+/*
+  Origin is metadata, so it reads as metadata: mono, uppercase, tracked, hairline. Understated
+  on purpose — the distinction between generated, derived and default has to stay legible
+  without turning into three coloured alarms.
+*/
 .origin {
   display: inline-block;
+  font-family: var(--app-font-body);
   font-size: var(--app-text-xs);
   font-weight: 500;
-  padding: 1px 7px;
-  border-radius: 999px;
+  letter-spacing: var(--app-tracking-label);
+  padding: 2px 10px;
+  border-radius: var(--app-radius-pill);
   border: 1px solid var(--app-border);
   margin-right: 8px;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 
 .generated { color: var(--app-positive-ink, #15803D); border-color: currentColor; }
@@ -139,10 +146,10 @@
   font: inherit;
   font-size: var(--app-text-xs);
   font-weight: 500;
-  padding: 6px 12px;
-  min-height: 32px;
-  border: 1px solid var(--app-border);
-  border-radius: 4px;
+  padding: 6px 16px;
+  min-height: 36px;
+  border: 1px solid var(--app-border-strong);
+  border-radius: var(--app-radius-pill);
   background: none;
   color: var(--app-ink);
   cursor: pointer;

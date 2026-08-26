@@ -16,8 +16,8 @@
   display: flex;
   align-items: center;
   gap: var(--app-space-2xs);
-  padding: 0.65rem 1rem;
-  border-radius: var(--app-radius-md);
+  padding: 0.7rem 1.25rem;
+  border-radius: var(--app-radius-pill);
   background: var(--app-ink);
   color: var(--app-paper);
   font-size: var(--app-text-sm);

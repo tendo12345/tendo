@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useInView } from '../../hooks/useInView';
 import { SAMPLE_SYSTEM } from '../../lib/sampleSystem';
 import { Chip } from '../ui/Chip';
 import { DesignSystemScope } from '../result/DesignSystemScope';
@@ -56,10 +57,13 @@ function StepPreview({ index }: { index: number }) {
 
 export function HowItWorks() {
   const [active, setActive] = useState(0);
+  const head = useInView<HTMLDivElement>();
 
   return (
     <section className={`container ${styles.section}`}>
-      <div className={styles.head}>
+      {/* Only the section heading reveals. The step list and preview are interactive, and
+          animating them on scroll would delay the thing the reader came to use. */}
+      <div ref={head.ref} className={`${styles.head} ${head.inView ? 'app-enter' : ''}`}>
         <h2 className={styles.title}>How it works</h2>
       </div>
       <div className={styles.grid}>

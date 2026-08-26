@@ -15,7 +15,7 @@
 .fallbackNotice {
   border: 1px solid var(--app-warning);
   border-left-width: 3px;
-  border-radius: var(--app-radius-sm, 4px);
+  border-radius: var(--app-radius-md);
   padding: var(--app-space-sm) var(--app-space-md);
   background: var(--app-warning-soft);
   display: grid;
@@ -26,8 +26,11 @@
   font-size: var(--app-text-xs);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--app-warning);
+  letter-spacing: var(--app-tracking-label);
+  /* Off-Black, not --app-warning. Warning on its own Gold fill measures 4.00:1 — an outright
+     AA failure for small text. Off-Black on the same fill is 11.12:1, and the warning hue
+     still reads from the border. Same finding as the Badge primitive. */
+  color: var(--app-ink);
 }
 
 .fallbackBody {
