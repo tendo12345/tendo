@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSystemStore } from '../context/SystemStoreContext';
 import { localSystemStore } from '../lib/localSystemStore';
 import { createRemoteSystemStore, uploadLocalSystems } from '../lib/remoteSystemStore';
 import { supabase } from '../lib/supabase';
+import { enabledOAuthProviders, type OAuthProvider } from '../lib/authProviders';
 import { useToast } from '../context/ToastContext';
 import { Avatar } from '../components/ui/Avatar';
 import styles from './Account.module.css';
+
+const PROVIDER_LABELS: Record<OAuthProvider, string> = {
+  google: 'Continue with Google',
+  github: 'Continue with GitHub',
+};
 
 /**
  * Sign in, and manage what the account holds.
@@ -23,6 +29,23 @@ export default function AccountPage() {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [providers, setProviders] = useState<readonly OAuthProvider[]>([]);
+
+  /*
+    Only offer the OAuth providers the project has actually enabled.
+
+    Both buttons used to render unconditionally and neither provider was on, so clicking one
+    surfaced Supabase's raw "provider is not enabled" error. See `lib/authProviders.ts`.
+  */
+  useEffect(() => {
+    let live = true;
+    void enabledOAuthProviders().then((found) => {
+      if (live) setProviders(found);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
 
   if (!enabled) {
     return (
@@ -154,18 +177,26 @@ export default function AccountPage() {
         </form>
       )}
 
-      <div className={styles.divider}>
-        <span>or</span>
-      </div>
+      {providers.length > 0 && (
+        <>
+          <div className={styles.divider}>
+            <span>or</span>
+          </div>
 
-      <div className={styles.actions}>
-        <button type="button" className={styles.button} onClick={() => void signInWithProvider('google')}>
-          Continue with Google
-        </button>
-        <button type="button" className={styles.button} onClick={() => void signInWithProvider('github')}>
-          Continue with GitHub
-        </button>
-      </div>
+          <div className={styles.actions}>
+            {providers.map((provider) => (
+              <button
+                key={provider}
+                type="button"
+                className={styles.button}
+                onClick={() => void signInWithProvider(provider)}
+              >
+                {PROVIDER_LABELS[provider]}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

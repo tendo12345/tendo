@@ -16,6 +16,16 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
+/**
+ * The project URL and public key, for the few endpoints supabase-js has no method for.
+ *
+ * Safe to export for the same reason the key is safe in the bundle at all: it is the anon
+ * key, public by design, and RLS is what protects the data. `authProviders.ts` needs both to
+ * read `/auth/v1/settings`, which the SDK does not wrap.
+ */
+export const supabaseUrl = url;
+export const supabaseAnonKey = anonKey;
+
 let client: SupabaseClient | null = null;
 
 if (url && anonKey) {
