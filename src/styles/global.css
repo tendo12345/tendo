@@ -31,10 +31,57 @@ body {
   toggle and the prefers-color-scheme default) point at the same value, so the two cannot drift
   apart — which they already did once when the opacities were tuned in only one of two copies.
 */
+/*
+  The ground moves onto a fixed pseudo-element so it can drift on `transform` instead of
+  `background-position`. Per the performance rule, motion here is transform-only — animating a
+  background or a filter on a full-viewport layer is exactly the kind of paint work that makes
+  a calm effect expensive.
+
+  html carries the paper colour so this layer, at z-index -1, still paints above it. If the
+  colour stayed on an opaque body, a negative-z-index child would render behind it and vanish.
+
+  `inset: -12%` oversizes the layer so the slow translate can never pull an edge into view.
+*/
+html {
+  background-color: var(--app-paper);
+}
+
 body {
+  background-color: transparent;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: -12%;
+  z-index: -1;
+  pointer-events: none;
   background-image: var(--app-ground, none);
-  background-attachment: fixed;
   background-repeat: no-repeat;
+  animation: app-drift 34s var(--app-ease) infinite alternate;
+}
+
+/*
+  Drift, and why it is safe for contrast.
+
+  The washes only ever TRANSLATE. Their opacities and colours never change, so the darkest
+  point the composite can reach is still all three overlapping at their stated strength — the
+  case already measured at #f2eae5, where every text role clears AA. Movement can only ever
+  produce a lighter pixel than that bound, never a darker one.
+
+  Animating opacity here, which the brief offers as an option, would break that argument: a
+  wash at higher strength darkens the composite past the measured worst case. So position only.
+
+  34s, and roughly a percent of travel. If you can see it move, it is too much.
+*/
+@keyframes app-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(1.2%, -0.9%, 0) scale(1.03);
+  }
 }
 
 /*
