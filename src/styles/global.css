@@ -173,6 +173,26 @@ kbd {
 }
 
 /*
+  Stagger a container's direct children — used where a section is composed of several
+  meaningful blocks and should settle in order rather than all at once.
+
+  This lives in global.css, NOT in a CSS module, and that is load-bearing. CSS Modules rewrites
+  keyframe names it finds in a module file, so `animation: app-enter` inside one compiles to a
+  hashed name with no matching @keyframes. The rule then applies, computes cleanly, reports the
+  hashed name in getComputedStyle — and does absolutely nothing. It fails silently and looks
+  correct. Keep any rule that references app-enter in global scope.
+*/
+.app-stagger > * {
+  animation: app-enter var(--app-duration-slow) var(--app-ease) both;
+}
+
+.app-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.app-stagger > *:nth-child(2) { animation-delay: 70ms; }
+.app-stagger > *:nth-child(3) { animation-delay: 140ms; }
+.app-stagger > *:nth-child(4) { animation-delay: 210ms; }
+.app-stagger > *:nth-child(n + 5) { animation-delay: 280ms; }
+
+/*
   Motion is calm by default and absent on request.
 
   The reduced-motion backstop is NOT repeated here — reset.css already carries the universal

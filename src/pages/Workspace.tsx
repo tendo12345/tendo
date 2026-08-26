@@ -105,7 +105,7 @@ export default function WorkspacePage() {
         */}
         <div key={active.id} className="app-enter">
         {active.id === 'overview' && (
-          <div className={styles.overview}>
+          <div className={`${styles.overview} app-stagger`}>
             <SystemDnaPanel output={output} />
             {/* Renders nothing unless a region was given. */}
             <RegionNotice output={output} />
