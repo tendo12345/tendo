@@ -44,11 +44,19 @@ for component render tests written in JSX (see `src/components/blog/CommentItem.
 the first one). A `.test.ts` file with JSX in it is silently never collected; if a new
 component test isn't running, check the extension first.
 
-`vitest.config.ts` pins the pool to a single reused thread (`pool: 'threads'`,
-`singleThread: true`). On Windows, a forked worker booting jsdom can miss the pool's startup
+`vitest.config.ts` pins the pool to a single worker (`pool: 'threads'`,
+`fileParallelism: false`). On Windows, a worker booting jsdom can miss the pool's startup
 window and fail with "Timeout waiting for worker to respond" — the file never runs, which
-reads like a broken test but is a cold start, and it was intermittent rather than
-consistently broken. Do not "fix" this by re-enabling parallel workers.
+reads like a broken test but is a cold start. Do not "fix" this by re-enabling parallel
+workers.
+
+**The single-worker setting must stay top-level.** It used to be written as
+`poolOptions: { threads: { singleThread: true } }`, which **Vitest 4 removed** — the key is
+still accepted, but only so the config loader can print a deprecation before discarding it.
+Silently, the suite went fully parallel and all four jsdom files failed to start on every
+run: `Test Files 17 passed (17)` with four unhandled pool errors above it, which reads as
+green if you only look at the summary line. If a jsdom file stops running, check for a
+`DEPRECATED` line in the vitest output before suspecting the test.
 
 Two diagnostics that are not tests but answer "did I break the port?":
 
