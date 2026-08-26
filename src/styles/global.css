@@ -141,20 +141,45 @@ kbd {
 }
 
 /*
-  Motion is calm by default and absent on request.
+  Motion.
 
-  The durations in tokens.css are slower than a typical UI on purpose, which makes honouring
-  this preference more important rather than less: a 480ms transition is exactly the kind a
-  motion-sensitive reader does not want. Kept as a global backstop so a component that forgets
-  its own media query still cannot animate here.
+  The reference has no animation section, so the character is derived from the rest of it:
+  calm, spacious, editorial, and restrained — it explicitly asks for no hover fill change on
+  an accordion, and for elevation by border rather than shadow. So nothing here bounces,
+  scales up, or draws attention to itself. Content settles; it does not arrive.
+
+  One shared entrance, used wherever a block of content appears: an 8px rise and a fade over
+  --app-duration-slow. `both` holds the start frame, so there is no flash of final-position
+  content before the animation begins.
+
+  Deliberately NOT animated: the atmospheric ground. It is fixed-attachment precisely so it
+  never moves, and a drifting wash behind a tool that tells you to keep backgrounds calm
+  would contradict the advice the product hands out.
 */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@keyframes app-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
+
+.app-enter {
+  animation: app-enter var(--app-duration-slow) var(--app-ease) var(--app-enter-delay, 0ms) both;
+}
+
+/*
+  Motion is calm by default and absent on request.
+
+  The reduced-motion backstop is NOT repeated here — reset.css already carries the universal
+  one, and a second copy of a `*` rule is how two blocks drift apart while both look correct
+  in isolation. `app-enter` above is covered by it: the animation collapses to 0.001ms and
+  `both` leaves every element in its final state rather than stranded at opacity 0.
+
+  That matters more here than in a typical UI, because the durations in tokens.css are
+  deliberately slow. A 480ms entrance is exactly what a motion-sensitive reader does not want.
+*/
