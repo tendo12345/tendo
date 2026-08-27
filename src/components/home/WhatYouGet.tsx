@@ -1,8 +1,16 @@
+import type { CSSProperties } from 'react';
 import { useInView } from '../../hooks/useInView';
 import { Reveal } from '../motion/Reveal';
 import { Stagger } from '../motion/Stagger';
 import { SAMPLE_SYSTEM } from '../../lib/sampleSystem';
 import styles from './WhatYouGet.module.css';
+
+/*
+  One hue per card, from the reference's decorative palette — coral, mint, sky, gold. They are
+  passed as raw channels so the CSS can set the alpha, keeping the measured 0.14 ceiling in one
+  place instead of repeated per colour.
+*/
+const WASHES = ['255 148 115', '167 252 205', '160 181 235', '236 218 152'];
 
 const CARDS = [
   { title: 'Color System', items: ['Primary', 'Secondary', 'Accent', 'Background', 'Foreground', 'Muted', 'Border', 'Destructive'] },
@@ -33,8 +41,12 @@ export function WhatYouGet() {
         few grids into a page with a hundred observers.
       */}
       <Stagger className={styles.grid} variant="compose" step={80} maxDelay={400}>
-        {CARDS.map((card) => (
-          <div key={card.title} className={styles.card}>
+        {CARDS.map((card, i) => (
+          <div
+            key={card.title}
+            className={styles.card}
+            style={{ '--card-wash': WASHES[i % WASHES.length] } as CSSProperties}
+          >
             <p className={styles.cardTitle}>{card.title}</p>
             <div className={styles.list}>
               {card.items.map((item) => (
@@ -46,7 +58,10 @@ export function WhatYouGet() {
           </div>
         ))}
 
-        <div className={`${styles.card} ${styles.cardFeatured}`}>
+        <div
+          className={`${styles.card} ${styles.cardFeatured}`}
+          style={{ '--card-wash': '207 218 245' } as CSSProperties}
+        >
           <p className={styles.cardTitle}>Reasoning</p>
           <div className={styles.example}>
             <p className={styles.exampleQuestion}>Why this palette?</p>

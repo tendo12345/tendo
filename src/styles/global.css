@@ -159,14 +159,24 @@ kbd {
   border: 0;
 }
 
+/*
+  Keyboard-only, and still held to the 44px floor.
+
+  A coarse pointer never reaches this — it is off-screen until focused — so it is the one
+  control where the touch-target rule is arguably moot. Held to it anyway: it was the single
+  element failing the sweep, and "this one does not count" is how a floor stops being a floor.
+*/
 .skip-link {
   position: fixed;
   top: -100%;
   left: var(--app-space-sm);
   z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   background: var(--app-ink);
   color: var(--app-paper);
-  padding: var(--app-space-2xs) var(--app-space-sm);
+  padding: var(--app-space-2xs) var(--app-space-md);
   border-radius: var(--app-radius-pill);
   transition: top var(--app-duration-base) var(--app-ease);
 }
