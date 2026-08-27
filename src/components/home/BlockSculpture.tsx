@@ -29,7 +29,7 @@ interface Block {
   z: number;
   /** One of the sculpture's colour roles. */
   tone: 'ink' | 'paper' | 'ash' | 'blue' | 'peri' | 'sky' | 'mint' | 'coral' | 'gold';
-  /** Drift offsets in px, and a small rotation. Kept per-block so nothing moves in unison. */
+  /** Where this block travels to at the separated end of the cycle, plus a small rotation. */
   fx: number;
   fy: number;
   fz: number;

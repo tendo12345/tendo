@@ -160,8 +160,10 @@
   centre) to SEPARATED (full cell spacing plus the block's own offset), so the structure has
   somewhere to go.
 
-  Per-block durations and negative delays mean they do not converge in unison — the cube
-  gathers and loosens unevenly, which is what makes it look mechanical rather than pulsed.
+  Every block shares the period; only the phase differs, in four groups. That is the part that
+  has to be right — different periods let the blocks average each other out and the object
+  never changes state, while a shared period with no offset makes it pulse like a heartbeat.
+  Four phases is enough that the cube gathers and loosens unevenly.
 
   The keyframes restate the whole translate3d because a transform animation replaces the
   property outright; animating only the offset would snap every block to the origin.
