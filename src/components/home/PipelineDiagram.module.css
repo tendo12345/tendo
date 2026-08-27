@@ -1,0 +1,159 @@
+.wrap {
+  margin-block: var(--app-space-3xl);
+}
+
+.caption {
+  font-size: var(--app-text-xs);
+  letter-spacing: var(--app-tracking-label);
+  text-transform: uppercase;
+  color: var(--app-ink-faint);
+  margin-bottom: var(--app-space-md);
+}
+
+.frame {
+  position: relative;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  padding: var(--app-space-lg) var(--app-space-md);
+  overflow: hidden;
+}
+
+/*
+  The field behind the hub.
+
+  A single soft radial, sitting under everything at low opacity. It is decorative and must
+  stay that way: nothing reads text off it, and at this strength it cannot move any
+  foreground pair off its measured ratio. If this ever gains opacity, re-measure the labels
+  drawn over it.
+*/
+.glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    22rem 16rem at 50% 52%,
+    rgba(167, 252, 205, 0.34),
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.svg {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Hairline connectors, in the same Ash used for every other divider in the system. */
+.lines path {
+  stroke: var(--app-border);
+  stroke-width: 1.25;
+  fill: none;
+}
+
+.node rect {
+  fill: var(--app-paper);
+  stroke: var(--app-border);
+  stroke-width: 1;
+}
+
+.node text {
+  font-family: var(--app-font-body);
+  font-size: 13px;
+  letter-spacing: var(--app-tracking-label);
+  fill: var(--app-ink-muted);
+}
+
+.nodeOut text {
+  fill: var(--app-ink);
+}
+
+.hub rect {
+  fill: var(--app-paper);
+  stroke: var(--app-border-strong);
+  stroke-width: 1;
+}
+
+.hubLabel {
+  font-family: var(--app-font-body);
+  font-size: 14px;
+  letter-spacing: var(--app-tracking-label);
+  fill: var(--app-ink);
+}
+
+.hubSub {
+  font-family: var(--app-font-body);
+  font-size: 11px;
+  letter-spacing: var(--app-tracking-label);
+  fill: var(--app-ink-faint);
+}
+
+/*
+  Travelling markers.
+
+  `offset-distance` is the only animated property — it compiles to a transform along the
+  path, so this stays off the layout and paint path entirely no matter how many are in
+  flight. Linear timing on purpose: data moving down a pipe does not ease.
+
+  The negative delays set in the JSX start each marker partway along its route, so the
+  diagram is already mid-flow on first paint instead of every marker launching from the
+  same edge at once.
+*/
+.marker {
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  animation-name: pipeline-travel;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.markerRaw {
+  fill: var(--app-warning);
+}
+
+.markerDone {
+  fill: var(--app-success);
+}
+
+@keyframes pipeline-travel {
+  from {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  to {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/*
+  Narrow screens.
+
+  The diagram keeps its aspect ratio and simply gets smaller, which stops working well below
+  roughly 640px — the 13px labels would drop under legible size. Rather than redraw it as a
+  vertical stack, which would be a second diagram to maintain, it scrolls horizontally inside
+  its own frame at its minimum readable width. The page itself never scrolls sideways.
+*/
+@media (max-width: 640px) {
+  .frame {
+    overflow-x: auto;
+    padding: var(--app-space-md) var(--app-space-sm);
+  }
+
+  .svg {
+    min-width: 34rem;
+  }
+
+  .wrap {
+    margin-block: var(--app-space-2xl);
+  }
+}
