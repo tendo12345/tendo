@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useInView } from '../../hooks/useInView';
+import { useSectionProgress } from '../../hooks/useScrollMotion';
 import { SAMPLE_SYSTEM } from '../../lib/sampleSystem';
 import { Chip } from '../ui/Chip';
 import { DesignSystemScope } from '../result/DesignSystemScope';
@@ -55,9 +56,44 @@ function StepPreview({ index }: { index: number }) {
   );
 }
 
+/*
+  Scroll advances the explanation; pointing at a step still wins.
+
+  The section was already interactive — hover or focus a step and the panel changes. Making it
+  scroll-driven must not take that away, so the two inputs are kept separate rather than
+  fighting over one piece of state: `hovered` is whatever the user is pointing at, `stage` is
+  where the scroll has got to, and the panel shows the pointer's choice when there is one.
+
+  Written as `hovered ?? stage` rather than as one value two things write to. A single
+  `active` that both update looks simpler and produces the bug where scrolling a pixel while
+  hovering yanks the panel away from the step under the cursor.
+*/
 export function HowItWorks() {
-  const [active, setActive] = useState(0);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [stage, setStage] = useState(0);
   const head = useInView<HTMLDivElement>();
+
+  /*
+    Map scroll progress onto a step index.
+
+    The driver PUSHES progress here — it already runs one rAF loop for the whole page, and it
+    only ticks on scroll. An earlier version polled the CSS variable in its own animation
+    frame, which burned a frame forever including while the section was off screen. If you
+    need a scroll value, subscribe; never poll for it.
+
+    The window is 0.30–0.75 rather than 0–1 because the column enters and leaves the viewport
+    at those extremes: unclamped, step 3 would be showing before the section is on screen.
+    setStage is called with a guard so unchanged progress does not re-render.
+  */
+  const handleProgress = useCallback((progress: number) => {
+    const span = (progress - 0.3) / 0.45;
+    const index = Math.max(0, Math.min(2, Math.floor(span * 3)));
+    setStage((prev) => (prev === index ? prev : index));
+  }, []);
+
+  const stepsRef = useSectionProgress<HTMLDivElement>(1, handleProgress);
+
+  const active = hovered ?? stage;
 
   return (
     <section className={`container ${styles.section}`}>
@@ -67,13 +103,14 @@ export function HowItWorks() {
         <h2 className={styles.title}>How it works</h2>
       </div>
       <div className={styles.grid}>
-        <div className={styles.steps}>
+        <div ref={stepsRef} className={styles.steps} onMouseLeave={() => setHovered(null)}>
           {STEPS.map((step, i) => (
             <div
               key={step.number}
               className={`${styles.step} ${i === active ? styles.stepActive : ''}`}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
+              onMouseEnter={() => setHovered(i)}
+              onFocus={() => setHovered(i)}
+              onBlur={() => setHovered(null)}
               tabIndex={0}
               role="button"
             >
@@ -86,7 +123,11 @@ export function HowItWorks() {
           ))}
         </div>
         <div className={styles.preview}>
-          <StepPreview index={active} />
+          {/* Keyed so a stage change remounts and replays the entrance rather than swapping
+              content in place. `app-enter` is the GLOBAL class, not a module rule. */}
+          <div key={active} className={`${styles.stage} app-enter`}>
+            <StepPreview index={active} />
+          </div>
         </div>
       </div>
     </section>

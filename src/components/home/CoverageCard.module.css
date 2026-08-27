@@ -1,0 +1,159 @@
+.wrap {
+  margin-block: var(--app-space-3xl);
+}
+
+/*
+  Periwinkle Mist — the single elevated surface in the system.
+
+  No shadow and no border: the colour itself is the elevation, which is the whole reason this
+  surface exists. Adding a hairline to it would make it look like every other card wearing a
+  different paint.
+*/
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--app-space-xl);
+  align-items: center;
+  background: var(--app-accent-soft);
+  border-radius: var(--app-radius-lg);
+  padding: var(--app-space-3xl) var(--app-space-xl);
+  overflow: hidden;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.heading {
+  font-family: var(--app-font-display);
+  font-weight: 400;
+  font-size: var(--app-text-3xl);
+  line-height: var(--app-leading-tight);
+  letter-spacing: var(--app-tracking-tight);
+  color: var(--app-ink);          /* 11.09:1 on Periwinkle */
+  margin-bottom: var(--app-space-md);
+}
+
+/*
+  Body copy here is `ink-muted`, NOT `ink-faint`.
+
+  Measured on this surface: muted #4e4d4d reads 6.02:1, faint #686665 reads 4.08:1 — a fail.
+  Periwinkle is a light surface and it eats the faint role, so the muted step is the floor for
+  anything on this card. Do not reach for the faint token here.
+*/
+.body {
+  font-size: var(--app-text-base);
+  line-height: var(--app-leading-normal);
+  color: var(--app-ink-muted);
+  max-width: 34rem;
+  margin-bottom: var(--app-space-lg);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 1rem 2rem;
+  border-radius: var(--app-radius-pill);
+  background: var(--app-ink);
+  color: var(--app-paper);        /* 14.05:1 */
+  font-size: var(--app-text-sm);
+  letter-spacing: var(--app-tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    transform var(--app-duration-fast) var(--app-ease),
+    background-color var(--app-duration-fast) var(--app-ease);
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+}
+
+.cta:active {
+  transform: translateY(0);
+}
+
+/*
+  The scrolling column.
+
+  Masked at both ends so names dissolve rather than being chopped by the frame edge — the cut
+  is what makes a marquee look like a bug. `mask-image` is the whole effect; there is no
+  gradient overlay element, so it works whatever is behind it.
+*/
+.listFrame {
+  position: relative;
+  height: 20rem;
+  overflow: hidden;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+}
+
+/*
+  Loops by translating exactly 50% — one full copy of the list.
+
+  The track holds the names twice, so at the instant it resets the second copy sits precisely
+  where the first was and the wrap is invisible. Any other distance produces a visible jump.
+
+  60s for 24 names is deliberately slow. This is ambient texture proving breadth, not a list
+  anyone is expected to read item by item, and at a readable speed it would pull attention off
+  the heading next to it.
+*/
+.track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-space-md);
+  animation: coverage-scroll 60s linear infinite;
+  will-change: transform;
+}
+
+.trackStill {
+  animation: none;
+}
+
+@keyframes coverage-scroll {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.item {
+  font-family: var(--app-font-display);
+  font-size: var(--app-text-xl);
+  line-height: 1.2;
+  letter-spacing: var(--app-tracking-tight);
+  color: var(--app-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 860px) {
+  .card {
+    grid-template-columns: 1fr;
+    padding: var(--app-space-xl) var(--app-space-lg);
+    gap: var(--app-space-lg);
+  }
+
+  .heading {
+    font-size: var(--app-text-2xl);
+  }
+
+  /*
+    Shorter, not removed. The column is the evidence for the sentence above it, so dropping
+    it on mobile would leave the claim unsupported — but 20rem of scrolling names is most of
+    a phone screen.
+  */
+  .listFrame {
+    height: 12rem;
+  }
+
+  .item {
+    font-size: var(--app-text-lg);
+  }
+}

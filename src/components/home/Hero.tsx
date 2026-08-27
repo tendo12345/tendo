@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { SAMPLE_SYSTEM as SAMPLE } from '../../lib/sampleSystem';
+import { Parallax } from '../motion/Parallax';
 import { DesignSystemScope } from '../result/DesignSystemScope';
 import ds from '../result/dsPreview.module.css';
 import { Button } from '../ui/Button';
@@ -14,6 +15,15 @@ import styles from './Hero.module.css';
   inside half a second and nobody waits on decoration. Under prefers-reduced-motion the
   global backstop collapses the animation, and `both` means every element still ends in its
   final state rather than stuck at opacity 0.
+
+  On scroll the hero does not simply leave. Each band drifts at its own rate — the preview
+  furthest, the eyebrow least — so the composition compresses instead of sliding away as one
+  sheet. The numbers are small by design: this should register as depth, not as movement.
+
+  Parallax is a WRAPPER around each band rather than a class on it, and that is structural.
+  The entrance animation animates `transform`; so does parallax. On one element the animation
+  wins and the parallax silently does nothing. Nesting gives each its own node and its own
+  transform, so the two compose instead of competing.
 */
 function enterAt(ms: number): CSSProperties {
   return { '--app-enter-delay': `${ms}ms` } as CSSProperties;
@@ -24,26 +34,35 @@ export function Hero() {
 
   return (
     <section className={`container ${styles.hero}`}>
-      <p className={`${styles.eyebrow} app-enter`} style={enterAt(0)}>
-        Design System Generator
-      </p>
-      <h1 className={`${styles.headline} app-enter`} style={enterAt(60)}>
-        Turn a product idea into a complete design system.
-      </h1>
-      <p className={`${styles.supporting} app-enter`} style={enterAt(120)}>
-        Describe what you're building and get a practical design direction with colors, typography, spacing,
-        components, and the reasoning behind every major choice.
-      </p>
-      <div className={`${styles.ctas} app-enter`} style={enterAt(180)}>
-        <Button href="/generator" variant="primary">
-          Generate a Design System
-        </Button>
-        <Button href="#what-you-get" variant="secondary">
-          Explore Examples
-        </Button>
-      </div>
+      <Parallax speed={-10}>
+        <p className={`${styles.eyebrow} app-enter`} style={enterAt(0)}>
+          Design System Generator
+        </p>
+      </Parallax>
+      <Parallax speed={-26}>
+        <h1 className={`${styles.headline} app-clip-in`} style={enterAt(60)}>
+          Turn a product idea into a complete design system.
+        </h1>
+      </Parallax>
+      <Parallax speed={-18}>
+        <p className={`${styles.supporting} app-enter`} style={enterAt(120)}>
+          Describe what you're building and get a practical design direction with colors, typography, spacing,
+          components, and the reasoning behind every major choice.
+        </p>
+      </Parallax>
+      <Parallax speed={-14}>
+        <div className={`${styles.ctas} app-enter`} style={enterAt(180)}>
+          <Button href="/generator" variant="primary">
+            Generate a Design System
+          </Button>
+          <Button href="#what-you-get" variant="secondary">
+            Explore Examples
+          </Button>
+        </div>
+      </Parallax>
 
       <DesignSystemScope output={SAMPLE}>
+        <Parallax speed={-40} className={styles.previewCarrier}>
         <div className={`${styles.previewFrame} app-enter`} style={enterAt(240)}>
           <div className={styles.previewBar}>
             <span>{SAMPLE.category} — generated from "fintech mobile app, trustworthy, modern, minimal"</span>
@@ -86,6 +105,7 @@ export function Hero() {
             </div>
           </div>
         </div>
+        </Parallax>
       </DesignSystemScope>
     </section>
   );

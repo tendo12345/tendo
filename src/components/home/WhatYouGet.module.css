@@ -23,11 +23,39 @@
   gap: var(--app-space-md);
 }
 
+/*
+  Each card carries its own soft colour field, the way the reference does — the washes are not
+  only behind the page, they sit inside the surfaces.
+
+  0.14 is a measured ceiling, not a taste call. The limiting case is Coral under the faintest
+  text role: at 0.14 the darkest composite is #F9E7E1 and #686665 reads 4.72:1; at 0.18 it is
+  #F8E2DA and 4.59:1, which fails the AA margin this codebase holds. Raise the opacity and the
+  faint role fails on the warm hues first.
+
+  The wash is a ::before rather than a background-image on the card so it cannot interfere
+  with the border, and it is clipped by the same radius.
+*/
 .card {
+  position: relative;
+  isolation: isolate;
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius-lg);
   padding: var(--app-space-lg);
   background: var(--app-surface);
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    18rem 14rem at 88% 6%,
+    rgb(var(--card-wash, 255 148 115) / 0.14),
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .cardFeatured {

@@ -17,7 +17,8 @@
     "data:verify": "tsx scripts/verify-data-parity.ts",
     "build:sample": "tsx scripts/build-sample-system.ts",
     "mcp": "tsx mcp-server/src/index.ts",
-    "mcp:build": "npm --prefix mcp-server run build"
+    "mcp:build": "npm --prefix mcp-server run build",
+    "build:coverage": "tsx scripts/build-coverage.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

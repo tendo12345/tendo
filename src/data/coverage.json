@@ -1,0 +1,32 @@
+{
+  "productCount": 161,
+  "styleCount": 84,
+  "paletteCount": 161,
+  "pairingCount": 73,
+  "sampleProducts": [
+    "SaaS (General)",
+    "Analytics Dashboard",
+    "Government/Public Service",
+    "NFT/Web3 Platform",
+    "EV/Charging Ecosystem",
+    "Hyperlocal Services",
+    "Travel/Tourism Agency",
+    "Online Course/E-learning",
+    "Logistics/Delivery",
+    "Home Services (Plumber/Electrician)",
+    "Veterinary Clinic",
+    "Magazine/Blog",
+    "Digital Products/Downloads",
+    "Coding Bootcamp",
+    "Quantum Computing Interface",
+    "Personal Finance Tracker",
+    "Recipe & Cooking App",
+    "Flashcard & Study Tool",
+    "Scanner & Document Manager",
+    "Translator App",
+    "Trivia & Quiz Game",
+    "Short Video Editor",
+    "Wardrobe & Outfit Planner",
+    "Gift & Wishlist"
+  ]
+}

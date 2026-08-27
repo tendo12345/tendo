@@ -24,6 +24,9 @@ export default defineConfig({
           // dataset chunk — the whole point of precomputing it is that the home page can
           // render without pulling the dataset in.
           if (id.includes('sample-system')) return undefined
+          // Same reasoning: coverage.json is a handful of precomputed counts and names, and
+          // must stay OUT of the dataset chunk or the landing page pulls all of src/data in.
+          if (id.includes('coverage.json')) return undefined
           if (id.includes('/src/data/')) return 'design-data'
           if (id.includes('node_modules/@supabase')) return 'supabase'
           // Blog post content, same reasoning as design-data: it changes on its own schedule
