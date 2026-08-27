@@ -1,6 +1,51 @@
 .hero {
   padding-block: var(--app-space-3xl) var(--app-space-2xl);
-  text-align: center;
+}
+
+/*
+  The two-part composition: type left, object right.
+
+  The object column is 44% — inside the 40–48% the brief asks for, and the point of that range
+  is balance: narrower and the sculpture reads as an illustration parked beside the text, wider
+  and it starts competing with the headline it is supposed to support.
+
+  align-items: center rather than start, so the object is optically balanced against the whole
+  text block instead of hanging off its first line.
+*/
+.composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 44%);
+  gap: var(--app-space-2xl);
+  align-items: center;
+  min-height: min(78vh, 44rem);
+}
+
+.copy {
+  min-width: 0;
+  text-align: left;
+}
+
+/*
+  The sculpture recedes as the hero leaves.
+
+  --progress is written by the scroll driver on the hero element. The text bands run their own
+  parallax and travel further, so the object falls behind them in depth rather than the two
+  sliding away together. Everything here is transform and opacity; nothing triggers layout.
+
+  Values stay small — 20px and 4% of scale across the entire pass — because the object should
+  settle back rather than visibly leave.
+*/
+.object {
+  min-width: 0;
+  transform: translateY(calc(var(--progress, 0) * -20px)) scale(calc(1 - var(--progress, 0) * 0.04));
+  opacity: calc(1 - var(--progress, 0) * 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .object {
+    transform: none;
+    opacity: 1;
+  }
 }
 
 .eyebrow {
@@ -12,17 +57,20 @@
   margin-bottom: var(--app-space-sm);
 }
 
+/*
+  64–80px on desktop per the brief, scaling down to ~40px on a phone. clamp() rather than
+  breakpoints so it tracks the viewport continuously — a headline this large lands on an
+  awkward wrap at some width otherwise.
+*/
 .headline {
-  font-size: clamp(2.5rem, 7vw, var(--app-text-5xl));
-  max-width: 18ch;
-  margin-inline: auto;
+  font-size: clamp(2.5rem, 5.4vw, 5rem);
+  max-width: 16ch;
   margin-bottom: var(--app-space-md);
   text-wrap: balance;
 }
 
 .supporting {
-  max-width: 52ch;
-  margin-inline: auto;
+  max-width: 46ch;
   color: var(--app-ink-muted);
   font-size: var(--app-text-lg);
   line-height: var(--app-leading-normal);
@@ -31,7 +79,6 @@
 
 .ctas {
   display: flex;
-  justify-content: center;
   gap: var(--app-space-sm);
   flex-wrap: wrap;
   margin-bottom: var(--app-space-2xl);
@@ -114,7 +161,37 @@
   border-radius: 1px;
 }
 
+/*
+  Below 900px the two columns stack, in reading order: label, headline, copy, actions, object.
+
+  The sculpture stays. It is the composition rather than decoration, and dropping it on a
+  phone would leave the hero as a plain text block — the brief is explicit that it remains
+  visible, just smaller and with less movement.
+*/
 @media (max-width: 900px) {
+  .composition {
+    grid-template-columns: 1fr;
+    gap: var(--app-space-xl);
+    min-height: 0;
+  }
+
+  .copy {
+    text-align: center;
+  }
+
+  .supporting {
+    margin-inline: auto;
+  }
+
+  .ctas {
+    justify-content: center;
+  }
+
+  .headline {
+    max-width: 18ch;
+    margin-inline: auto;
+  }
+
   .previewBody {
     grid-template-columns: repeat(2, 1fr);
   }
