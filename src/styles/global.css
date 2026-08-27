@@ -230,7 +230,104 @@ kbd {
   correct. Keep any rule that references app-enter in global scope.
 */
 .app-stagger > * {
-  animation: app-enter var(--app-duration-slow) var(--app-ease) both;
+  animation: app-enter var(--app-duration-slow) var(--app-ease) var(--app-enter-delay, 0ms) both;
+}
+
+/*
+  The actual stagger, which this class was missing.
+
+  It previously set one animation on every child with no delay, so all of them ran together —
+  a stagger in name only, and the kind of bug that survives review because the section really
+  does animate. The delays below are what make a generated system read as being ASSEMBLED:
+  identity, then palette, then type, then the supporting detail.
+
+  Capped at the eighth child. Past that the wait is longer than anyone will watch, and a
+  reader who scrolled straight to the bottom of a long section should not find it still
+  arriving.
+*/
+.app-stagger > *:nth-child(1) { --app-enter-delay: 0ms; }
+.app-stagger > *:nth-child(2) { --app-enter-delay: 70ms; }
+.app-stagger > *:nth-child(3) { --app-enter-delay: 140ms; }
+.app-stagger > *:nth-child(4) { --app-enter-delay: 210ms; }
+.app-stagger > *:nth-child(5) { --app-enter-delay: 280ms; }
+.app-stagger > *:nth-child(6) { --app-enter-delay: 350ms; }
+.app-stagger > *:nth-child(7) { --app-enter-delay: 400ms; }
+.app-stagger > *:nth-child(n + 8) { --app-enter-delay: 440ms; }
+
+/*
+  Clip reveal, for large serif headings only.
+
+  A heading that slides up reads as a moved object; a heading that uncovers reads as type
+  being set. The difference is the clip: the glyphs are unveiled from their own baseline
+  rather than travelling, which suits a display face and looks wrong on anything small.
+
+  The translate is along for the ride at a fraction of the distance — enough to give the
+  reveal a direction, not enough to make it a slide. Do not reuse this on body copy or UI
+  labels: at 14px the clip is imperceptible and only costs a repaint.
+*/
+@keyframes app-clip-in {
+  from {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+.app-clip-in {
+  animation: app-clip-in var(--app-duration-reveal) var(--app-ease-reveal)
+    var(--app-enter-delay, 0ms) both;
+}
+
+/*
+  Composed entrance, for cards in a grid.
+
+  Richer than `app-enter` because a card is a surface rather than a line of text: it travels
+  further, scales a hair, and uncovers from its top edge, so a grid assembles instead of
+  fading up as one sheet.
+
+  The scale is 0.985 — deliberately almost nothing. Anything stronger reads as a card being
+  thrown at the viewport, and at 1.0-to-1.05 it turns into the bounce the brief rules out. The
+  clip does the work; the scale only stops the movement feeling flat.
+*/
+@keyframes app-compose {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+    clip-path: inset(8% 0 0 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0);
+  }
+}
+
+.app-compose {
+  animation: app-compose var(--app-duration-reveal) var(--app-ease-reveal)
+    var(--app-enter-delay, 0ms) both;
+}
+
+/*
+  Parallax carrier.
+
+  The driver writes --parallax-y; this turns it into a compositor transform. translate3d
+  rather than translateY to keep the element on its own layer, since it is repositioned on
+  most frames while it is on screen.
+
+  will-change is set here and only here. It is a real cost — each hinted element gets its own
+  layer — and it is justified for a handful of deliberately-placed parallax carriers. It is
+  not justified on cards or list items, so do not add this class to them.
+*/
+.app-parallax {
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  will-change: transform;
 }
 
 /*

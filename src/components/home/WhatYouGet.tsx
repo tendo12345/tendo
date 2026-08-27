@@ -1,4 +1,6 @@
 import { useInView } from '../../hooks/useInView';
+import { Reveal } from '../motion/Reveal';
+import { Stagger } from '../motion/Stagger';
 import { SAMPLE_SYSTEM } from '../../lib/sampleSystem';
 import styles from './WhatYouGet.module.css';
 
@@ -14,12 +16,23 @@ export function WhatYouGet() {
 
   return (
     <section id="what-you-get" className={`container ${styles.section}`}>
-      <div ref={head.ref} className={`${styles.head} ${head.inView ? 'app-enter' : ''}`}>
-        <h2 className={styles.title}>What you get</h2>
-        <p className={styles.subtitle}>Every generated system ships with the same building blocks — and the reasoning behind each one.</p>
+      <div ref={head.ref} className={styles.head}>
+        {/* Clip reveal on the display heading only. The subtitle is supporting copy and
+            stays still — §14: reveal statements, not every line of text. */}
+        <Reveal as="h2" variant="clip" className={styles.title}>
+          What you get
+        </Reveal>
+        <p className={`${styles.subtitle} ${head.inView ? 'app-enter' : ''}`}>
+          Every generated system ships with the same building blocks — and the reasoning behind each one.
+        </p>
       </div>
 
-      <div className={styles.grid}>
+      {/*
+        One observer for the whole grid, not one per card. Five cards each watching themselves
+        is five observers doing the work of one, and the pattern is what turns a page with a
+        few grids into a page with a hundred observers.
+      */}
+      <Stagger className={styles.grid} variant="compose" step={80} maxDelay={400}>
         {CARDS.map((card) => (
           <div key={card.title} className={styles.card}>
             <p className={styles.cardTitle}>{card.title}</p>
@@ -40,7 +53,7 @@ export function WhatYouGet() {
             <p className={styles.exampleAnswer}>{SAMPLE_SYSTEM.reasoning.colors.why}</p>
           </div>
         </div>
-      </div>
+      </Stagger>
     </section>
   );
 }

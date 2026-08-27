@@ -187,10 +187,27 @@
   /* ---- motion ----
      Calm and spacious. Slower than a typical UI on purpose: this reads as a journal, not a
      dashboard. Every consumer must still respect prefers-reduced-motion. */
-  --app-duration-fast: 160ms;
-  --app-duration-base: 260ms;
-  --app-duration-slow: 480ms;
+  /*
+    Four durations, each for a different job. The rule that keeps them honest: nothing the
+    user is WAITING on may use a slow one. A button responding to a click gets `fast`; a
+    heading uncovering itself as you scroll past can afford `reveal`, because nobody is
+    blocked on it.
+  */
+  --app-duration-fast: 160ms;    /* micro-interaction: hover, press, focus */
+  --app-duration-base: 260ms;    /* ordinary UI state change */
+  --app-duration-slow: 480ms;    /* content entrance */
+  --app-duration-reveal: 620ms;  /* large composed reveals — headings, diagrams */
+
+  /*
+    Two curves, and the difference is the tail.
+
+    `ease` is for interaction: it settles quickly because the user is waiting for a result.
+    `ease-reveal` decelerates over a much longer tail, which is what makes a reveal feel
+    placed rather than fired. Neither overshoots — no bounce, no elastic. The brief rules
+    those out and they would read as toy-like against this typography.
+  */
   --app-ease: cubic-bezier(0.22, 0.61, 0.24, 1);
+  --app-ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* ---- breakpoints (referenced in comments; media queries use literal px) ---- */
   --app-bp-sm: 390px;

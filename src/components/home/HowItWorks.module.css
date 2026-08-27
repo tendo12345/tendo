@@ -91,7 +91,22 @@
   border-radius: 4px;
 }
 
+/*
+  The preview is a sticky stage.
+
+  As the reader scrolls the three steps, this panel holds position and its CONTENTS change,
+  so the section reads as one explanation progressing rather than three cards scrolling past.
+  That is the whole point of the sticky treatment — the visual is the constant and the text is
+  what moves.
+
+  `top` clears the fixed navigation. `align-self: start` is required for sticky to work inside
+  a grid: the default `stretch` makes the item full-height, and an item that already fills its
+  track has nothing to stick within.
+*/
 .preview {
+  position: sticky;
+  top: calc(var(--app-nav-height) + var(--app-space-lg));
+  align-self: start;
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius-lg);
   padding: var(--app-space-lg);
@@ -101,8 +116,46 @@
   justify-content: center;
 }
 
+/*
+  Give the steps column enough height for the sticky stage to have something to travel
+  against. Without this the section is barely taller than the viewport and the panel never
+  actually sticks — it just sits there, which looks like the effect is broken.
+*/
+.steps {
+  gap: var(--app-space-xl);
+  padding-block: var(--app-space-lg);
+}
+
+/*
+  Stage wrapper. Layout only — deliberately NO animation property here.
+
+  The entrance comes from the global `app-enter` class applied in the JSX. Writing
+  `animation: app-enter` in this file would compile the keyframe name to a module-local hash
+  with no matching @keyframes: the rule applies, computes cleanly, reports an animation in
+  getComputedStyle, and does nothing at all. See the note in global.css.
+*/
+.stage {
+  width: 100%;
+}
+
 @media (max-width: 800px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  /*
+    No sticky stage on narrow screens.
+
+    §33: mobile simplifies rather than reproducing desktop choreography. A sticky panel in a
+    single column pins the visual over the text the reader is trying to reach, which is worse
+    than no effect at all.
+  */
+  .preview {
+    position: static;
+  }
+
+  .steps {
+    gap: var(--app-space-lg);
+    padding-block: 0;
   }
 }
