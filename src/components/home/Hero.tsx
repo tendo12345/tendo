@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react';
+import { useSectionProgress } from '../../hooks/useScrollMotion';
 import { SAMPLE_SYSTEM as SAMPLE } from '../../lib/sampleSystem';
+import { BlockSculpture } from './BlockSculpture';
 import { Parallax } from '../motion/Parallax';
 import { DesignSystemScope } from '../result/DesignSystemScope';
 import ds from '../result/dsPreview.module.css';
@@ -24,6 +26,14 @@ import styles from './Hero.module.css';
   The entrance animation animates `transform`; so does parallax. On one element the animation
   wins and the parallax silently does nothing. Nesting gives each its own node and its own
   transform, so the two compose instead of competing.
+
+  The composition is two-part: type on the left, the block sculpture on the right. The copy is
+  left-aligned rather than centred because a centred column beside a large object reads as two
+  competing centres — the ragged right edge is what lets the sculpture hold the other side.
+
+  The sample preview stays, below the two-part block. It is real engine output and the most
+  honest thing on the page, so it was not going to be deleted to make room; it simply sits
+  under the first screen instead of inside it.
 */
 function enterAt(ms: number): CSSProperties {
   return { '--app-enter-delay': `${ms}ms` } as CSSProperties;
@@ -31,35 +41,47 @@ function enterAt(ms: number): CSSProperties {
 
 export function Hero() {
   const swatches = [SAMPLE.colors.primary, SAMPLE.colors.secondary, SAMPLE.colors.accent, SAMPLE.colors.background];
+  /* Drives the sculpture's recede-on-scroll. The text bands use Parallax and move faster,
+     which is what puts the object behind them in depth. */
+  const heroRef = useSectionProgress<HTMLElement>();
 
   return (
-    <section className={`container ${styles.hero}`}>
-      <Parallax speed={-10}>
-        <p className={`${styles.eyebrow} app-enter`} style={enterAt(0)}>
-          Design System Generator
-        </p>
-      </Parallax>
-      <Parallax speed={-26}>
-        <h1 className={`${styles.headline} app-clip-in`} style={enterAt(60)}>
-          Turn a product idea into a complete design system.
-        </h1>
-      </Parallax>
-      <Parallax speed={-18}>
-        <p className={`${styles.supporting} app-enter`} style={enterAt(120)}>
-          Describe what you're building and get a practical design direction with colors, typography, spacing,
-          components, and the reasoning behind every major choice.
-        </p>
-      </Parallax>
-      <Parallax speed={-14}>
-        <div className={`${styles.ctas} app-enter`} style={enterAt(180)}>
-          <Button href="/generator" variant="primary">
-            Generate a Design System
-          </Button>
-          <Button href="#what-you-get" variant="secondary">
-            Explore Examples
-          </Button>
+    <section ref={heroRef} className={`container ${styles.hero}`}>
+      <div className={styles.composition}>
+        <div className={styles.copy}>
+          <Parallax speed={-10}>
+            <p className={`${styles.eyebrow} app-enter`} style={enterAt(0)}>
+              Design System Generator
+            </p>
+          </Parallax>
+          <Parallax speed={-26}>
+            <h1 className={`${styles.headline} app-clip-in`} style={enterAt(80)}>
+              Turn a product idea into a complete design system.
+            </h1>
+          </Parallax>
+          <Parallax speed={-18}>
+            <p className={`${styles.supporting} app-enter`} style={enterAt(150)}>
+              Describe what you're building and get a practical design direction with colors, typography,
+              spacing, components, and the reasoning behind every major choice.
+            </p>
+          </Parallax>
+          <Parallax speed={-14}>
+            <div className={`${styles.ctas} app-enter`} style={enterAt(220)}>
+              <Button href="/generator" variant="primary">
+                Generate a Design System
+              </Button>
+              <Button href="#what-you-get" variant="secondary">
+                Explore Examples
+              </Button>
+            </div>
+          </Parallax>
+
         </div>
-      </Parallax>
+
+        <div className={styles.object}>
+          <BlockSculpture />
+        </div>
+      </div>
 
       <DesignSystemScope output={SAMPLE}>
         <Parallax speed={-40} className={styles.previewCarrier}>
