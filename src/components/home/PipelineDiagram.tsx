@@ -1,3 +1,4 @@
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import styles from './PipelineDiagram.module.css';
 
@@ -16,48 +17,86 @@ import styles from './PipelineDiagram.module.css';
   happening right now. Generation itself is synchronous and takes microseconds — the honest
   presentation of that is no animation at all, which is why the old fake step sequence was
   removed rather than restyled.
+
+  TWO LAYOUTS, and the narrow one is not optional.
+
+  This began as one wide diagram that scrolled sideways inside its frame on small screens.
+  That looked defensible in the CSS and was wrong on a phone: what fits is the inputs and the
+  hub, with every output off-screen. The entire meaning of the diagram is inputs → match →
+  outputs, so hiding the outputs behind a horizontal scroll leaves the half that explains
+  nothing. A diagram whose point requires scrolling to see is not a diagram.
+
+  So narrow screens get a genuine vertical flow: inputs above, hub, outputs below. It is a
+  second geometry to keep in step, which is a real cost — but the alternative was shipping a
+  picture that only works on a laptop.
 */
 
 interface Node {
   id: string;
   label: string;
-  y: number;
 }
 
 const INPUTS: Node[] = [
-  { id: 'product', label: 'PRODUCT TYPE', y: 46 },
-  { id: 'industry', label: 'INDUSTRY', y: 106 },
-  { id: 'keywords', label: 'KEYWORDS', y: 166 },
-  { id: 'region', label: 'REGION', y: 226 },
+  { id: 'product', label: 'PRODUCT TYPE' },
+  { id: 'industry', label: 'INDUSTRY' },
+  { id: 'keywords', label: 'KEYWORDS' },
+  { id: 'region', label: 'REGION' },
 ];
 
 const OUTPUTS: Node[] = [
-  { id: 'palette', label: 'PALETTE', y: 40 },
-  { id: 'type', label: 'TYPOGRAPHY', y: 100 },
-  { id: 'tokens', label: 'TOKENS', y: 160 },
-  { id: 'components', label: 'COMPONENTS', y: 220 },
-  { id: 'reasoning', label: 'REASONING', y: 280 },
+  { id: 'palette', label: 'PALETTE' },
+  { id: 'type', label: 'TYPOGRAPHY' },
+  { id: 'tokens', label: 'TOKENS' },
+  { id: 'components', label: 'COMPONENTS' },
+  { id: 'reasoning', label: 'REASONING' },
 ];
 
-const HUB_X = 500;
-const HUB_Y = 166;
+const DESCRIPTION =
+  'Inputs — product type, industry, keywords and region — feed a matching step, which produces a palette, typography, tokens, components and reasoning.';
 
-/** Curve from a left node's right edge into the hub. */
-function inPath(y: number): string {
-  return `M 214 ${y} C 320 ${y}, 360 ${HUB_Y}, 436 ${HUB_Y}`;
-}
+/* ---------------------------------------------------------------- wide ---- */
 
-/** Curve from the hub out to a right node's left edge. */
-function outPath(y: number): string {
-  return `M 564 ${HUB_Y} C 640 ${HUB_Y}, 680 ${y}, 774 ${y}`;
-}
+const WIDE = {
+  viewBox: '0 0 1000 320',
+  hubX: 500,
+  hubY: 166,
+  inputY: (i: number) => 46 + i * 60,
+  outputY: (i: number) => 40 + i * 60,
+};
+
+const widePathIn = (i: number) =>
+  `M 214 ${WIDE.inputY(i)} C 320 ${WIDE.inputY(i)}, 360 ${WIDE.hubY}, 436 ${WIDE.hubY}`;
+
+const widePathOut = (i: number) =>
+  `M 564 ${WIDE.hubY} C 640 ${WIDE.hubY}, 680 ${WIDE.outputY(i)}, 774 ${WIDE.outputY(i)}`;
+
+/* -------------------------------------------------------------- narrow ---- */
+
+const NARROW = {
+  viewBox: '0 0 360 640',
+  hubX: 180,
+  hubY: 300,
+  inputX: (i: number) => (i % 2 === 0 ? 12 : 190),
+  inputY: (i: number) => 34 + Math.floor(i / 2) * 56,
+  outputY: (i: number) => 420 + i * 44,
+};
+
+/** Inputs sit in a 2×2 block and converge downward into the hub. */
+const narrowPathIn = (i: number) =>
+  `M ${NARROW.inputX(i) + 79} ${NARROW.inputY(i) + 17} C ${NARROW.inputX(i) + 79} ${
+    NARROW.inputY(i) + 70
+  }, ${NARROW.hubX} ${NARROW.hubY - 90}, ${NARROW.hubX} ${NARROW.hubY - 44}`;
+
+/** Outputs stack below and fan out from the hub. */
+const narrowPathOut = (i: number) =>
+  `M ${NARROW.hubX} ${NARROW.hubY + 44} C ${NARROW.hubX} ${NARROW.hubY + 90}, ${
+    NARROW.hubX
+  } ${NARROW.outputY(i) - 30}, ${NARROW.hubX} ${NARROW.outputY(i) - 17}`;
 
 /*
-  Marker timings.
-
-  Staggered by hand rather than generated so the flow never pulses in unison — evenly spaced
-  markers read as a machine ticking, which is the opposite of the calm this page is after.
-  Durations differ per lane for the same reason.
+  Marker timings. Staggered by hand rather than generated so the flow never pulses in unison —
+  evenly spaced markers read as a machine ticking, which is the opposite of the calm this page
+  is after. Durations differ per lane for the same reason.
 */
 const IN_MARKERS = [
   { lane: 0, dur: 7.5, delay: 0 },
@@ -76,6 +115,11 @@ const OUT_MARKERS = [
 
 export function PipelineDiagram() {
   const reducedMotion = usePrefersReducedMotion();
+  const narrow = useMediaQuery('(max-width: 640px)');
+
+  const pathIn = narrow ? narrowPathIn : widePathIn;
+  const pathOut = narrow ? narrowPathOut : widePathOut;
+  const geo = narrow ? NARROW : WIDE;
 
   return (
     <div className={styles.wrap}>
@@ -84,22 +128,24 @@ export function PipelineDiagram() {
       <div className={styles.frame}>
         {/* Soft field behind the hub. Decorative, and low enough in opacity that it cannot
             affect the contrast of anything drawn on top of it. */}
-        <span className={styles.glow} aria-hidden="true" />
+        <span
+          className={`${styles.glow} ${narrow ? styles.glowNarrow : ''}`}
+          aria-hidden="true"
+        />
 
         <svg
           className={styles.svg}
-          viewBox="0 0 1000 320"
+          viewBox={geo.viewBox}
           fill="none"
           role="img"
-          aria-label="Inputs — product type, industry, keywords and region — feed a matching step, which produces a palette, typography, tokens, components and reasoning."
+          aria-label={DESCRIPTION}
         >
-          {/* Connectors first, so nodes paint over their ends. */}
           <g className={styles.lines}>
-            {INPUTS.map((n) => (
-              <path key={n.id} d={inPath(n.y)} />
+            {INPUTS.map((n, i) => (
+              <path key={n.id} d={pathIn(i)} />
             ))}
-            {OUTPUTS.map((n) => (
-              <path key={n.id} d={outPath(n.y)} />
+            {OUTPUTS.map((n, i) => (
+              <path key={n.id} d={pathOut(i)} />
             ))}
           </g>
 
@@ -119,7 +165,7 @@ export function PipelineDiagram() {
                   className={`${styles.marker} ${styles.markerRaw}`}
                   r="4"
                   style={{
-                    offsetPath: `path("${inPath(INPUTS[m.lane].y)}")`,
+                    offsetPath: `path("${pathIn(m.lane)}")`,
                     animationDuration: `${m.dur}s`,
                     animationDelay: `-${m.delay}s`,
                   }}
@@ -131,7 +177,7 @@ export function PipelineDiagram() {
                   className={`${styles.marker} ${styles.markerDone}`}
                   r="4"
                   style={{
-                    offsetPath: `path("${outPath(OUTPUTS[m.lane].y)}")`,
+                    offsetPath: `path("${pathOut(m.lane)}")`,
                     animationDuration: `${m.dur}s`,
                     animationDelay: `-${m.delay}s`,
                   }}
@@ -141,34 +187,56 @@ export function PipelineDiagram() {
           )}
 
           {/* Input nodes */}
-          {INPUTS.map((n) => (
+          {INPUTS.map((n, i) => (
             <g key={n.id} className={styles.node}>
-              <rect x="16" y={n.y - 17} width="198" height="34" rx="17" />
-              <text x="40" y={n.y + 5}>
-                {n.label}
-              </text>
+              {narrow ? (
+                <>
+                  <rect x={NARROW.inputX(i)} y={NARROW.inputY(i)} width="158" height="34" rx="17" />
+                  <text x={NARROW.inputX(i) + 16} y={NARROW.inputY(i) + 22}>
+                    {n.label}
+                  </text>
+                </>
+              ) : (
+                <>
+                  <rect x="16" y={WIDE.inputY(i) - 17} width="198" height="34" rx="17" />
+                  <text x="40" y={WIDE.inputY(i) + 5}>
+                    {n.label}
+                  </text>
+                </>
+              )}
             </g>
           ))}
 
           {/* The hub. The dotted ring echoes the mark in the nav rather than being a spinner —
               it does not rotate, because nothing is spinning. */}
           <g className={styles.hub}>
-            <rect x="436" y={HUB_Y - 44} width="128" height="88" rx="28" />
-            <text x={HUB_X} y={HUB_Y - 12} textAnchor="middle" className={styles.hubLabel}>
+            <rect x={geo.hubX - 64} y={geo.hubY - 44} width="128" height="88" rx="28" />
+            <text x={geo.hubX} y={geo.hubY - 12} textAnchor="middle" className={styles.hubLabel}>
               MATCH
             </text>
-            <text x={HUB_X} y={HUB_Y + 22} textAnchor="middle" className={styles.hubSub}>
+            <text x={geo.hubX} y={geo.hubY + 22} textAnchor="middle" className={styles.hubSub}>
               BM25
             </text>
           </g>
 
           {/* Output nodes */}
-          {OUTPUTS.map((n) => (
+          {OUTPUTS.map((n, i) => (
             <g key={n.id} className={`${styles.node} ${styles.nodeOut}`}>
-              <rect x="774" y={n.y - 17} width="210" height="34" rx="17" />
-              <text x="798" y={n.y + 5}>
-                {n.label}
-              </text>
+              {narrow ? (
+                <>
+                  <rect x="101" y={NARROW.outputY(i) - 17} width="158" height="34" rx="17" />
+                  <text x={NARROW.hubX} y={NARROW.outputY(i) + 5} textAnchor="middle">
+                    {n.label}
+                  </text>
+                </>
+              ) : (
+                <>
+                  <rect x="774" y={WIDE.outputY(i) - 17} width="210" height="34" rx="17" />
+                  <text x="798" y={WIDE.outputY(i) + 5}>
+                    {n.label}
+                  </text>
+                </>
+              )}
             </g>
           ))}
         </svg>

@@ -136,24 +136,37 @@
 }
 
 /*
-  Narrow screens.
+  Narrow screens get the vertical geometry, NOT a scrollable wide one.
 
-  The diagram keeps its aspect ratio and simply gets smaller, which stops working well below
-  roughly 640px — the 13px labels would drop under legible size. Rather than redraw it as a
-  vertical stack, which would be a second diagram to maintain, it scrolls horizontally inside
-  its own frame at its minimum readable width. The page itself never scrolls sideways.
+  The earlier version kept the wide diagram and let the frame scroll sideways. On a phone that
+  showed the inputs and the hub with every output off-screen — which hides the half of the
+  picture that explains what the tool produces. The component switches geometry instead; see
+  the note in PipelineDiagram.tsx.
+
+  No overflow-x here on purpose. The narrow SVG fits its frame, so nothing should scroll; if
+  this ever needs a scrollbar again, the geometry is wrong rather than the container.
 */
 @media (max-width: 640px) {
   .frame {
-    overflow-x: auto;
-    padding: var(--app-space-md) var(--app-space-sm);
-  }
-
-  .svg {
-    min-width: 34rem;
+    padding: var(--app-space-md) var(--app-space-xs);
   }
 
   .wrap {
     margin-block: var(--app-space-2xl);
   }
+
+  /* The labels are drawn at a smaller viewBox width, so they need a size bump to land at the
+     same rendered px as the wide layout. */
+  .node text {
+    font-size: 11px;
+  }
+}
+
+/* The hub field follows the hub, which moves to the middle of a taller canvas. */
+.glowNarrow {
+  background: radial-gradient(
+    12rem 12rem at 50% 47%,
+    rgb(167 252 205 / 0.34),
+    transparent 68%
+  );
 }
