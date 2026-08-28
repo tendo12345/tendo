@@ -66,7 +66,7 @@ export function AccessibilityPane({ output }: { output: DesignSystemOutput }) {
         ))}
       </ul>
 
-      <h3 className={styles.subTitle}>Contrast detail</h3>
+      <h3 className={styles.subTitle}>Contrast Detail</h3>
       <div className={styles.tableWrap}>
         <table className={styles.table}>
           <thead>
@@ -102,7 +102,7 @@ export function AccessibilityPane({ output }: { output: DesignSystemOutput }) {
         </table>
       </div>
 
-      <h3 className={styles.subTitle}>System health</h3>
+      <h3 className={styles.subTitle}>System Health</h3>
       <ul className={styles.health}>
         {health.areas.map((a) => (
           <li key={a.area} className={styles.healthRow}>

@@ -21,7 +21,7 @@ export function StatesPane({ output }: { output: DesignSystemOutput }) {
   return (
     <section aria-labelledby="states-heading" className={result.section}>
       <h2 id="states-heading" className={result.sectionTitleSpaced}>
-        Component states
+        Component States
       </h2>
       <p className={result.sectionIntro}>
         Derived from the resting appearance the engine generated — the dataset carries no

@@ -56,7 +56,7 @@ export function Hero() {
           </Parallax>
           <Parallax speed={-26}>
             <h1 className={`${styles.headline} app-clip-in`} style={enterAt(80)}>
-              Turn a product idea into a complete design system.
+              Turn a Product Idea Into a Complete Design System.
             </h1>
           </Parallax>
           <Parallax speed={-18}>

@@ -33,7 +33,7 @@ export function CoverageCard() {
       <div className={styles.card}>
         <div className={styles.copy}>
           <h2 id="coverage-heading" className={styles.heading}>
-            It already knows your product.
+            It Already Knows Your Product.
           </h2>
           <p className={styles.body}>
             {COVERAGE.productCount} product types, {COVERAGE.styleCount} design styles,{' '}

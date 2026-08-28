@@ -28,7 +28,7 @@ export function WhatYouGet() {
         {/* Clip reveal on the display heading only. The subtitle is supporting copy and
             stays still — §14: reveal statements, not every line of text. */}
         <Reveal as="h2" variant="clip" className={styles.title}>
-          What you get
+          What You Get
         </Reveal>
         <p className={`${styles.subtitle} ${head.inView ? 'app-enter' : ''}`}>
           Every generated system ships with the same building blocks — and the reasoning behind each one.

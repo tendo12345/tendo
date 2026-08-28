@@ -84,7 +84,7 @@ export function TokensPane({ output }: { output: DesignSystemOutput }) {
           ))}
 
           <div className={styles.group}>
-            <h3 className={styles.groupTitle}>Component bindings</h3>
+            <h3 className={styles.groupTitle}>Component Bindings</h3>
             <p className={styles.groupNote}>
               How each generated component consumes the system.
             </p>

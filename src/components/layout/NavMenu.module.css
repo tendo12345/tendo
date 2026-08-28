@@ -49,13 +49,19 @@
   This is a floating layer, so it takes the one ambient shadow the system allows — cards get a
   hairline instead, but a menu overlapping page content needs to read as above it.
 
-  Right-aligned because the trigger sits at the end of the bar; anchoring left would push the
-  panel off-screen on a narrow viewport.
+  LEFT-aligned, because the trigger now sits at the start of the bar. It was `right: 0` while
+  the trigger was on the right; moving the trigger without moving this anchored the panel's
+  right edge to the trigger's right edge and put it at x = -132 on a 375px screen — entirely
+  off the viewport.
+
+  Worth remembering how that hid: overflow to the LEFT does not grow scrollWidth, so the
+  horizontal-scroll check that catches most layout escapes reported clean. Only reading the
+  panel's own left edge found it.
 */
 .panel {
   position: absolute;
   top: calc(100% + var(--app-space-2xs));
-  right: 0;
+  left: 0;
   z-index: 60;
   min-width: 12rem;
   display: flex;
