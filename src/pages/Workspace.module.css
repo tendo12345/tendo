@@ -6,7 +6,7 @@
   position: sticky;
   top: var(--app-nav-height);
   z-index: 20;
-  background: var(--app-bg);
+  background: var(--app-paper);
   border-bottom: 1px solid var(--app-border);
 }
 

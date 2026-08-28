@@ -52,8 +52,20 @@
   font-size: var(--app-text-sm);
 }
 
+/*
+  App ink, for the same reason as .directionName above.
+
+  This is a font specimen on an app-surface panel inside a DesignSystemScope, so without an
+  explicit colour it inherits var(--ds-foreground) — picked for the generated background, not
+  for parchment. On any dark-themed generated system that measured 1.06:1: invisible.
+
+  The typeface is conveyed by font-family; the colour only has to be readable. Its sibling
+  .bodyLabel already set app ink, which is why only this line vanished — exactly the same
+  asymmetry that hid the .directionName case.
+*/
 .headingSample {
   font-size: 1.4rem;
+  color: var(--app-ink);
 }
 
 .wideCard {

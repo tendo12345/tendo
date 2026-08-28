@@ -16,7 +16,7 @@
 .smallButton:hover:not(:disabled) { border-color: var(--app-ink-muted); }
 .smallButton:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
 .smallButton:disabled { opacity: 0.5; cursor: default; }
-.primaryButton { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); }
+.primaryButton { background: var(--app-ink); color: var(--app-paper); border-color: var(--app-ink); }
 
 .outcome { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; max-width: 74ch; }
 .outcomeFlat { margin: 0; font-size: var(--app-text-sm); color: var(--app-ink-muted); line-height: 1.6; max-width: 74ch; padding: var(--app-space-sm) var(--app-space-md); border: 1px dashed var(--app-border); border-radius: var(--app-radius-sm, 4px); }

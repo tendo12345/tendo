@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { Avatar } from '../ui/Avatar';
 import { NavMenu } from './NavMenu';
-import { NotificationBell } from './NotificationBell';
 import { accountsEnabled } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import styles from './NavBar.module.css';
@@ -24,7 +23,7 @@ import styles from './NavBar.module.css';
   two.
 
   The right group is the auth pair from the reference — a plain "Sign up" beside a filled
-  "Log in" — and becomes a notification control plus a profile avatar once signed in.
+  "Log in" — and becomes a profile avatar once signed in.
 
   Both auth links go to /account, because Basis has ONE flow: sign-in is passwordless and the
   first link creates the account, so there is nothing separate to register. They are labelled
@@ -87,9 +86,20 @@ export function NavBar() {
             </>
           )}
 
+          {/*
+            Signed in: the avatar only.
+
+            A notification control lived here and has been removed. Basis has no notification
+            system — nothing in the engine, the store or Supabase produces an event addressed
+            to a user — so the control could only ever open an empty panel. This codebase's
+            rule is that features which cannot be built honestly are absent rather than
+            stubbed, and a bell that never rings is the stub that rule describes.
+
+            If notifications become real, the two honest sources already in the app are
+            replies to a user's blog comments and the admin report queue.
+          */}
           {signedIn && (
             <>
-              <NotificationBell />
               <NavLink
                 to="/account"
                 className={({ isActive }) => `${styles.profile} ${isActive ? styles.profileActive : ''}`}

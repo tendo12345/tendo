@@ -2,4 +2,15 @@
 .switchButton { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: var(--app-radius-pill); background: none; color: var(--app-ink-muted); cursor: pointer; }
 .switchButton:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
 .switchActive { background: var(--app-ink); color: var(--app-paper); border-color: var(--app-ink); font-weight: 500; }
-.originTag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.75; }
+/*
+  No opacity. It sets no colour of its own and inherits the button's, which already passes —
+  the fade was the only thing breaking it.
+
+  Measured at 10px on the inactive button: #4e4d4d at 0.75 composites to #787776 and reads
+  4.05:1, an AA fail. Removing the fade restores 7.63:1. The active button was never at risk
+  (8.49 faded, 14.05 without), which is why this only failed in one of the two states.
+
+  Opacity is the trap here: it looks like a styling nicety and is really a contrast change,
+  applied to text small enough that AA has the least margin to give.
+*/
+.originTag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
