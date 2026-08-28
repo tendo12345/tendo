@@ -152,6 +152,30 @@ describe('semantic tokens', () => {
     }
   });
 
+  it('never derives text that fails AA against the raised surface either', () => {
+    /*
+      The sibling of the test above, and the gap it was hiding.
+
+      `color.surface.raised` is `colors.muted` whenever the palette supplies one, so it is a
+      different colour from the background — and these are exactly the tokens that land on it.
+      `color.text.muted` lists metadata and disabled labels in its own usedBy; raised lists
+      cards, popovers and table headers. Metadata inside a card is the ordinary case.
+
+      Measured before the fade learned about this surface: 15 of 161 product types failed here,
+      worst at 3.73:1, while every one of them passed against the background. Solving for one
+      surface and rendering on the other is what made that invisible.
+    */
+    for (const output of ALL) {
+      const tokens = buildSemanticTokens(output);
+      const raised = tokens.find((t) => t.name === 'color.surface.raised')!.value;
+      for (const name of ['color.text.secondary', 'color.text.muted']) {
+        const token = tokens.find((t) => t.name === name)!;
+        const ratio = contrastRatio(token.value, raised) ?? 0;
+        expect(ratio, `${output.category} ${name} on raised ${raised}`).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+  });
+
   it('admits that success and warning are Basis defaults, not dataset values', () => {
     for (const name of ['color.feedback.success', 'color.feedback.warning']) {
       const t = tokens.find((x) => x.name === name);

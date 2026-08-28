@@ -68,26 +68,47 @@ const TEXT_CONTRAST_MARGIN = 0.6;
  * AA plus a margin, so muted text is as quiet as the palette can afford and no quieter. On
  * palettes with room this is identical to the old behaviour; on tight ones it is darker, and
  * legible.
+ *
+ * It clears that bar on the RAISED surface too, not only the background.
+ *
+ * Solving against the background alone was correct for the surface it targeted — measured
+ * across all 161 product types, zero failed there. But `color.surface.raised` is a different
+ * colour whenever the palette supplies `colors.muted`, and these tokens are the ones that land
+ * on it: this function produces `color.text.muted`, whose own `usedBy` lists metadata and
+ * disabled labels, while raised lists cards, popovers and table headers. Those co-occur
+ * constantly — metadata inside a card is the ordinary case, not an edge one.
+ *
+ * On the same 161, muted text failed AA on the raised surface 15 times, worst at 3.73:1, and
+ * every failure was a palette where raised differed from the background. Requiring both
+ * surfaces fixes those and changes nothing where the two are the same colour.
  */
 function fadeToward(
   foreground: string,
   background: string,
   amount: number,
+  raised?: string,
 ): { value: string; source: string } {
   const bar = TEXT_CONTRAST_TARGET + TEXT_CONTRAST_MARGIN;
   const pct = Math.round(amount * 100);
+  // Only a distinct raised surface adds a constraint; when it equals the background the
+  // second check is the first one repeated.
+  const second = raised && raised.toLowerCase() !== background.toLowerCase() ? raised : null;
 
   for (let fade = amount; fade > 0; fade -= 0.05) {
     const candidate = mix(foreground, background, fade);
     if (!candidate) break;
-    if ((contrastRatio(candidate, background) ?? 0) >= bar) {
+    const onBackground = contrastRatio(candidate, background) ?? 0;
+    const onRaised = second ? (contrastRatio(candidate, second) ?? 0) : Infinity;
+    if (onBackground >= bar && onRaised >= bar) {
       const at = Math.round(fade * 100);
+      // Name the surface that actually forced the back-off, so the reason is not guesswork.
+      const limiting = onRaised < onBackground ? 'the raised surface' : 'the background';
       return {
         value: candidate,
         source:
           at === pct
             ? `colors.foreground faded ${pct}% toward the background`
-            : `colors.foreground faded ${at}% toward the background — ${pct}% would drop below ${bar}:1 on this palette`,
+            : `colors.foreground faded ${at}% toward the background — ${pct}% would drop below ${bar}:1 against ${limiting} on this palette`,
       };
     }
   }
@@ -150,12 +171,12 @@ export function buildSemanticTokens(output: DesignSystemOutput): SemanticToken[]
     source: 'colors.foreground', role: 'Body and heading text',
     usedBy: ['Headings', 'Body copy'],
   });
-  const secondaryText = fadeToward(c.foreground, c.background, 0.3);
+  const secondaryText = fadeToward(c.foreground, c.background, 0.3, raised);
   add({
     name: 'color.text.secondary', value: secondaryText.value, group: 'color', origin: 'derived',
     source: secondaryText.source, role: 'Supporting text', usedBy: ['Descriptions', 'Captions'],
   });
-  const mutedText = fadeToward(c.foreground, c.background, 0.5);
+  const mutedText = fadeToward(c.foreground, c.background, 0.5, raised);
   add({
     name: 'color.text.muted', value: mutedText.value, group: 'color', origin: 'derived',
     source: mutedText.source,
