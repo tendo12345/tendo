@@ -54,7 +54,7 @@ export default function AdminCommentsPage() {
 
   return (
     <div className={`container ${styles.wrap}`}>
-      <h1 className={styles.title}>Moderation queue</h1>
+      <h1 className={styles.title}>Moderation Queue</h1>
       <p className={styles.meta}>Comments reported by users, or already removed, awaiting review.</p>
 
       {loading ? (

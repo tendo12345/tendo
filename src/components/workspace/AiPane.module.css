@@ -1,5 +1,5 @@
 .tabs { display: flex; flex-wrap: wrap; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }
-.tab { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: 999px; background: none; color: var(--app-ink-muted); cursor: pointer; }
+.tab { font: inherit; font-size: var(--app-text-sm); min-height: 44px; padding: 8px 16px; border: 1px solid var(--app-border); border-radius: var(--app-radius-pill); background: none; color: var(--app-ink-muted); cursor: pointer; }
 .tab:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
 .tabActive { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); font-weight: 500; }
 

@@ -9,12 +9,16 @@
   border-bottom: 1px solid var(--app-border);
 }
 
+/*
+  `space-between` used to spread three groups across the bar, which floated the links in the
+  middle. The reference groups them against the wordmark, so the links now sit directly after
+  the logo and `.actions` is pushed to the far edge with an auto margin instead.
+*/
 .bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--app-space-md);
-  padding-block: var(--app-space-md);
+  padding-block: var(--app-space-sm);
 }
 
 .logo {
@@ -33,23 +37,22 @@
 .links {
   display: flex;
   align-items: center;
-  gap: var(--app-space-lg);
+  gap: var(--app-space-md);
 }
 
 /*
-  Nav labels are mono, uppercase and tightly tracked — the reference's UI voice. The bar stays
-  deliberately quiet: no pill backgrounds, no icon boxes, no heavy active fill. Emphasis comes
-  from ink weight plus a 1px Lake Blue rule under the active item, which is the smallest thing
+  Labels read as words, not as UI chrome: Title Case at body size, no tracking, no uppercase.
+  The bar stays quiet otherwise — no pill backgrounds, no icon boxes, no heavy active fill.
+  Emphasis is ink weight plus a 1px Lake Blue rule under the active item, the smallest thing
   that still reads as "you are here".
 */
 .link {
   position: relative;
   font-family: var(--app-font-body);
-  font-size: var(--app-text-sm);
-  font-weight: 400;
-  letter-spacing: var(--app-tracking-label);
-  text-transform: uppercase;
-  color: var(--app-ink-faint);
+  font-size: var(--app-text-base);
+  font-weight: 500;
+  letter-spacing: normal;
+  color: var(--app-ink-muted);
   padding-block: var(--app-space-3xs);
   transition: color var(--app-duration-fast) var(--app-ease);
 }
@@ -91,34 +94,48 @@
   opacity: 1;
 }
 
+/*
+  The plain-text auth action beside the filled call to action — the reference's "Sign up" next
+  to "Log in". Text rather than a second button on purpose: two filled pills side by side give
+  the bar two equal destinations and neither reads as primary.
+*/
 .accountLink {
   display: inline-flex;
   align-items: center;
-  gap: var(--app-space-3xs);
+  gap: var(--app-space-2xs);
+  min-height: 44px;
+  font-size: var(--app-text-base);
+  font-weight: 500;
+  color: var(--app-ink-muted);
+  transition: color var(--app-duration-fast) var(--app-ease);
 }
 
+.accountLink:hover {
+  color: var(--app-ink);
+}
+
+/* margin-inline-start: auto is what pushes this group to the far edge now that the bar is no
+   longer space-between. */
 .actions {
   display: flex;
   align-items: center;
-  gap: var(--app-space-sm);
+  gap: var(--app-space-md);
+  margin-inline-start: auto;
 }
 
-.themeToggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 999px;
-  border: 1px solid var(--app-border-strong);
-  font-size: 1rem;
-  color: var(--app-ink-muted);
-  transition: color var(--app-duration-base) var(--app-ease), border-color var(--app-duration-base) var(--app-ease);
-}
+/*
+  The auth pair stays on mobile. The reference shows "Sign up" beside "Log in" on the narrow
+  layout too, and hiding sign-in behind the menu would bury the one action a signed-out
+  visitor is most likely to want.
+*/
+@media (max-width: 767px) {
+  .actions {
+    gap: var(--app-space-2xs);
+  }
 
-.themeToggle:hover {
-  color: var(--app-ink);
-  border-color: var(--app-ink);
+  .accountLink {
+    font-size: var(--app-text-sm);
+  }
 }
 
 @media (max-width: 767px) {
@@ -128,25 +145,50 @@
 }
 
 /*
-  Touch targets for the chrome.
-
-  The theme toggle and the logo are real navigation controls but sat at 36px and 34px. Raised
-  only on coarse pointers so the desktop bar keeps its proportions.
-
-  min-width matters as much as min-height here and was missing: the toggle is square, so
-  raising only the height left it 36px wide and still under the 44px minimum in the axis a
-  thumb actually misses. Measured at 360px it was 36x44.
+  Touch targets for the chrome. The logo and links are real navigation controls and sat under
+  44px; raised only on coarse pointers so the desktop bar keeps its proportions.
 */
 @media (pointer: coarse), (max-width: 720px) {
-  .themeToggle,
   .logo,
   .link {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
   }
+}
 
-  .themeToggle {
-    min-width: 44px;
+/*
+  Which navigation is visible: inline links from 768px up, the dropdown below it. The two can
+  never both be on screen, which would show the same destinations twice in one bar.
+*/
+
+@media (min-width: 768px) {
+  .menuWrap {
+    display: none;
   }
+}
+
+/*
+  The signed-in profile control.
+
+  A 44x44 target wrapping the avatar, so the tap area is the control rather than the 24px
+  image inside it — an avatar sized to look right in a bar is always smaller than a finger.
+*/
+.profile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid transparent;
+  transition: border-color var(--app-duration-fast) var(--app-ease);
+}
+
+.profile:hover {
+  border-color: var(--app-border-strong);
+}
+
+.profileActive {
+  border-color: var(--app-accent);
 }

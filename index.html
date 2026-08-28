@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Basis — Design System Generator</title>
     <meta name="description" content="Turn a product idea into a complete design system: colors, typography, spacing, components, and the reasoning behind each choice." />
-    <script>
-      (function () {
-        try {
-          var stored = localStorage.getItem('dsg-theme');
-          if (stored === 'light' || stored === 'dark') {
-            document.documentElement.setAttribute('data-theme', stored);
-          }
-        } catch (e) {}
-      })();
-    </script>
+    <!--
+      Light and dark follow the browser or device. This tells the UA the page genuinely supports
+      both, so form controls, scrollbars and the canvas flash the right colour before any CSS
+      loads — without it, a dark-mode visitor gets a white flash on first paint.
+
+      The inline script that used to sit here read a stored `dsg-theme` and set `data-theme` on
+      the root. With the theme toggle gone nothing writes that key and no selector reads the
+      attribute, so the script only ever produced a misleading attribute for anyone inspecting
+      the page. Any value still in a returning visitor's localStorage is now inert.
+    -->
+    <meta name="color-scheme" content="light dark" />
   </head>
   <body>
     <div id="root"></div>

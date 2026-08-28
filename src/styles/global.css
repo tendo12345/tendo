@@ -1,14 +1,15 @@
 /*
-  Two families, and only two: Instrument Serif announces, IBM Plex Mono instructs.
+  One family for the interface: Instrument Sans, 400-700 with a true italic.
 
-  Instrument Serif ships a single 400 weight on purpose — the reference locks headings at 400
-  and asks the serif's stroke contrast and tight tracking to carry the hierarchy instead of
-  weight. Not loading a bold face means a stray `font-weight: 700` cannot silently render one.
+  It replaces the Instrument Serif / IBM Plex Mono pairing that the rest of this stylesheet was
+  written around. Worth knowing when reading the rules below: they were tuned for two families
+  that contrasted by FORM, and a single sans has to carry the same hierarchy on size, weight
+  and spacing alone.
 
-  The sans (Inter) and the old display serif (Fraunces) are gone. Every functional string in
-  this UI is mono now; a sans-serif body would lose the identity immediately.
+  IBM Plex Mono is still loaded, for code only. A sans-serif code block loses column alignment
+  and the cue that its content is literal.
 */
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 body {
   background: var(--app-paper);
@@ -85,9 +86,17 @@ body::before {
 }
 
 /*
-  Headings never go bold. Weight is locked at 400 at every size; the serif's contrast and the
-  -0.02em tracking do the work. This is the editorial signature — headlines whisper through
-  typographic refinement rather than shout through weight.
+  Headings stay at weight 400.
+
+  That was the right call for a serif, whose stroke contrast did the work weight normally
+  does. With a single sans it means headings and body copy now share BOTH family and weight,
+  so size and spacing are the only things separating them. If the hierarchy reads flat, this
+  line is the first thing to change — 600 here restores the separation without touching
+  anything else.
+
+  font-synthesis-weight is kept as a guard rather than a necessity: Instrument Sans ships real
+  400-700, so nothing would be faked, but the rule costs nothing and still protects any face
+  that lands here later without the full range.
 */
 h1,
 h2,
@@ -97,14 +106,6 @@ h4 {
   font-weight: 400;
   line-height: var(--app-leading-tight);
   letter-spacing: var(--app-tracking-tight);
-  /*
-    Instrument Serif ships a single 400 weight. Without this, a module class setting a heavier
-    weight on a heading makes the browser SYNTHESIZE a bold — a smeared fake that looks like
-    the one thing this typography is defined by not doing. Disabling synthesis means such a
-    rule degrades to the real 400 face instead of a forgery.
-
-    IBM Plex Mono is unaffected: it ships a genuine 500, so emphasized UI labels still render.
-  */
   font-synthesis-weight: none;
 }
 

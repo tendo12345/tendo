@@ -1,0 +1,121 @@
+.wrap {
+  position: relative;
+}
+
+/*
+  44x44 in both axes. The nav toggle next to this one shipped 36px wide for a while because
+  only min-height was set — a square control needs both, and the width is the axis a thumb
+  actually misses on.
+*/
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid var(--app-border-strong);
+  background: none;
+  color: var(--app-ink);
+  cursor: pointer;
+  transition:
+    border-color var(--app-duration-fast) var(--app-ease),
+    background-color var(--app-duration-fast) var(--app-ease);
+}
+
+.trigger:hover {
+  border-color: var(--app-ink);
+  background: var(--app-surface-sunken);
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 18px;
+}
+
+.icon span {
+  display: block;
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentcolor;
+}
+
+/*
+  The panel.
+
+  This is a floating layer, so it takes the one ambient shadow the system allows — cards get a
+  hairline instead, but a menu overlapping page content needs to read as above it.
+
+  LEFT-aligned, because the trigger now sits at the start of the bar. It was `right: 0` while
+  the trigger was on the right; moving the trigger without moving this anchored the panel's
+  right edge to the trigger's right edge and put it at x = -132 on a 375px screen — entirely
+  off the viewport.
+
+  Worth remembering how that hid: overflow to the LEFT does not grow scrollWidth, so the
+  horizontal-scroll check that catches most layout escapes reported clean. Only reading the
+  panel's own left edge found it.
+*/
+.panel {
+  position: absolute;
+  top: calc(100% + var(--app-space-2xs));
+  left: 0;
+  z-index: 60;
+  min-width: 12rem;
+  display: flex;
+  flex-direction: column;
+  padding: var(--app-space-2xs);
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-md);
+  box-shadow: var(--app-shadow-lg);
+  animation: nav-menu-in var(--app-duration-fast) var(--app-ease) both;
+}
+
+/*
+  Opens from the top edge rather than fading in place, so the panel reads as belonging to the
+  button that produced it. Kept short — this is a control responding to a click, and the user
+  is waiting on it.
+*/
+@keyframes nav-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--app-space-sm);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-ink-muted);
+  font-size: var(--app-text-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--app-duration-fast) var(--app-ease),
+    background-color var(--app-duration-fast) var(--app-ease);
+}
+
+.item:hover {
+  color: var(--app-ink);
+  background: var(--app-surface-sunken);
+}
+
+/*
+  The current page is marked by weight and colour, not by a filled background — a solid active
+  row in a short list reads as a hover state stuck on.
+*/
+.itemActive {
+  color: var(--app-ink);
+  font-weight: 600;
+}

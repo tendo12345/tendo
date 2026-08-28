@@ -15,7 +15,6 @@ export interface ToastMessage {
   tone: ToastTone;
 }
 
-export type Theme = 'light' | 'dark';
 
 export interface ResultSection {
   id: string;

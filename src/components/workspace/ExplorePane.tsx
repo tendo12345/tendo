@@ -66,7 +66,7 @@ export function ExplorePane({ output }: { output: DesignSystemOutput }) {
   return (
     <section aria-labelledby="explore-heading" className={result.section}>
       <h2 id="explore-heading" className={result.sectionTitleSpaced}>
-        Explore directions
+        Explore Directions
       </h2>
       <p className={result.sectionIntro}>
         Each direction re-runs the engine with extra style keywords, so what comes back was
@@ -166,7 +166,7 @@ export function ExplorePane({ output }: { output: DesignSystemOutput }) {
         </>
       )}
 
-      <h3 className={styles.subTitle}>Saved systems</h3>
+      <h3 className={styles.subTitle}>Saved Systems</h3>
       <p className={styles.historyNote}>
         {info.description} Only the description you typed is stored — the system is rebuilt
         from it, so a saved system never goes stale as the engine improves.

@@ -35,7 +35,7 @@ export function ColorSystemSection({ output }: ColorSystemSectionProps) {
     <section id="colors" className={result.section} aria-labelledby="colors-heading">
       <div className={result.sectionHead}>
         <h2 id="colors-heading" className={result.sectionTitle}>
-          Color system
+          Color System
         </h2>
       </div>
       {colors.notes && <p className={result.sectionIntro}>{colors.notes}</p>}

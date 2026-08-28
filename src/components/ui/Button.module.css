@@ -4,10 +4,15 @@
   justify-content: center;
   gap: var(--app-space-2xs);
   font-family: var(--app-font-body);
-  font-weight: 500;
+  /*
+    Labels are Title Case, not uppercase. Uppercase was the mono voice of the previous
+    typography; with a single sans and word-shaped nav labels it read as shouting next to
+    them. Applies to every button, which is the point — the bar's call to action is one of
+    these, and it cannot be the only one styled differently.
+  */
+  font-weight: 600;
   font-size: var(--app-text-sm);
-  letter-spacing: var(--app-tracking-label);
-  text-transform: uppercase;
+  letter-spacing: normal;
   line-height: 1;
   white-space: nowrap;
   /* 16px/32px and a fully round container: the reference's button is a 100px pill, and pill

@@ -7,6 +7,7 @@ import { LiveUIExampleSection } from '../components/result/LiveUIExampleSection'
 import { OverviewSection } from '../components/result/OverviewSection';
 import { ReasoningSection } from '../components/result/ReasoningSection';
 import { ResultHeader } from '../components/result/ResultHeader';
+import { SaveToAccountNotice } from '../components/workspace/SaveToAccountNotice';
 import { TypographySection } from '../components/result/TypographySection';
 import { Button } from '../components/ui/Button';
 import { EmptyState } from '../components/ui/EmptyState';
@@ -57,6 +58,9 @@ export default function WorkspacePage() {
   return (
     <div>
       <ResultHeader output={output} generatedAt={generatedAt} onRegenerate={regenerate} />
+
+      {/* Renders nothing unless accounts exist and the visitor is signed out. */}
+      <SaveToAccountNotice />
 
       <nav className={styles.nav} aria-label="Workspace sections">
         <div className={`${styles.navInner} container hscroll`}>

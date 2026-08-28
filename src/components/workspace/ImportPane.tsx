@@ -44,7 +44,7 @@ export function ImportPane() {
   return (
     <section aria-labelledby="import-heading" className={result.section}>
       <h2 id="import-heading" className={result.sectionTitleSpaced}>
-        Import a system
+        Import a System
       </h2>
       <p className={result.sectionIntro}>
         Paste CSS custom properties, a JSON token file, a W3C design-token file, or a Tailwind

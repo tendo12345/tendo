@@ -16,7 +16,7 @@
 .table code { font-family: var(--app-font-mono, ui-monospace, monospace); font-size: var(--app-text-xs); }
 .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--app-border); margin-right: 6px; vertical-align: -2px; }
 .ratio { color: var(--app-ink-faint); font-size: var(--app-text-xs); margin-left: 6px; font-variant-numeric: tabular-nums; }
-.origin { font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor; text-transform: capitalize; }
+.origin { font-size: 10px; font-weight: 500; padding: 1px 7px; border-radius: var(--app-radius-pill); border: 1px solid currentColor; text-transform: capitalize; }
 .generated { color: var(--app-positive-ink, #15803D); }
 .derived { color: var(--app-ink-faint); }
 .default { color: var(--app-warning-ink, #B45309); }

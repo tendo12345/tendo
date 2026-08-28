@@ -7,7 +7,7 @@
   min-height: 44px;
   padding: 6px 14px;
   border: 1px solid var(--app-border);
-  border-radius: 999px;
+  border-radius: var(--app-radius-pill);
   background: none;
   color: var(--app-ink-muted);
   cursor: pointer;
@@ -23,7 +23,7 @@
 
 .cardHead { display: flex; align-items: baseline; justify-content: space-between; gap: var(--app-space-sm); }
 .componentName { margin: 0; font-weight: 500; }
-.ratio { font-size: var(--app-text-xs); font-variant-numeric: tabular-nums; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.ratio { font-size: var(--app-text-xs); font-variant-numeric: tabular-nums; padding: 2px 8px; border-radius: var(--app-radius-pill); border: 1px solid currentColor; white-space: nowrap; }
 .ratioOk { color: var(--app-positive-ink, #15803D); }
 .ratioLow { color: var(--app-warning-ink, #B45309); }
 

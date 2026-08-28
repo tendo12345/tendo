@@ -1,20 +1,56 @@
 import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { Avatar } from '../ui/Avatar';
-import { ThemeToggle } from './ThemeToggle';
+import { NavMenu } from './NavMenu';
+import { NotificationBell } from './NotificationBell';
 import { accountsEnabled } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import styles from './NavBar.module.css';
 
+/*
+  Bar layout, following the reference.
+
+    desktop   [logo] [links…] ······························ [account] [cta]
+    mobile    [menu] [logo]   ······························ [cta]
+
+  Two things are load-bearing rather than cosmetic:
+
+  The links sit immediately after the logo, not centred. A centred group reads as a website
+  masthead; left-grouped against the wordmark reads as an application, which is what this is.
+
+  On mobile the menu trigger comes FIRST in the DOM, before the logo — not repositioned with
+  CSS. Order matters for keyboard and screen-reader users, who meet the navigation before the
+  home link exactly as a sighted user does, and a CSS-only reorder would have separated the
+  two.
+
+  The right group is the auth pair from the reference — a plain "Sign up" beside a filled
+  "Log in" — and becomes a notification control plus a profile avatar once signed in.
+
+  Both auth links go to /account, because Basis has ONE flow: sign-in is passwordless and the
+  first link creates the account, so there is nothing separate to register. They are labelled
+  as two only because the reference shows two; the page they land on handles either case.
+
+  When Supabase is unconfigured the pair is hidden entirely rather than shown-and-broken,
+  which is the same rule the rest of the app follows. That leaves the bar with no right-hand
+  action in that deployment, which is correct: there is genuinely nothing to sign in to.
+
+  There is no theme control: light and dark follow the browser or device via
+  `prefers-color-scheme`. See the note in tokens.css.
+*/
 export function NavBar() {
+  const { status, user, isAdmin } = useAuth();
+
   // Hidden entirely when unconfigured rather than shown-and-broken: a nav item leading to
   // "there is nothing to sign in to" is worse than no nav item.
   const showAccount = accountsEnabled();
-  const { status, user, isAdmin } = useAuth();
+  const signedIn = showAccount && status === 'signed-in' && user;
 
   return (
     <header className={styles.header}>
       <div className={`${styles.bar} container`}>
+        {/* Mobile only. First in source order so it is also first for a keyboard. */}
+        <NavMenu />
+
         <NavLink to="/" className={styles.logo}>
           <span className={styles.logoMark}>◆</span> Basis
         </NavLink>
@@ -37,22 +73,32 @@ export function NavBar() {
               Moderation
             </NavLink>
           )}
-          {showAccount && (
-            <NavLink
-              to="/account"
-              className={({ isActive }) => `${styles.link} ${styles.accountLink} ${isActive ? styles.linkActive : ''}`}
-            >
-              {status === 'signed-in' && user && <Avatar email={user.email ?? ''} size="sm" />}
-              Account
-            </NavLink>
-          )}
         </nav>
 
         <div className={styles.actions}>
-          <ThemeToggle />
-          <Button href="/generator" variant="primary" size="sm">
-            Start Generating
-          </Button>
+          {showAccount && !signedIn && (
+            <>
+              <NavLink to="/account" className={styles.accountLink}>
+                Sign up
+              </NavLink>
+              <Button href="/account" variant="primary" size="sm">
+                Log in
+              </Button>
+            </>
+          )}
+
+          {signedIn && (
+            <>
+              <NotificationBell />
+              <NavLink
+                to="/account"
+                className={({ isActive }) => `${styles.profile} ${isActive ? styles.profileActive : ''}`}
+                aria-label="Your account"
+              >
+                <Avatar email={user.email ?? ''} size="sm" />
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
     </header>

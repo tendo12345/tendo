@@ -50,7 +50,7 @@ export default function GeneratorPage() {
     <div className={`container ${styles.page}`}>
       <div className={styles.header}>
         <p className={styles.eyebrow}>Design System Generator</p>
-        <h1 className={styles.title}>Create your design system</h1>
+        <h1 className={styles.title}>Create Your Design System</h1>
         <p className={styles.subtitle}>Tell us what you're building. We'll handle the design decisions.</p>
       </div>
 

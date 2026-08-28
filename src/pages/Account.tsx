@@ -98,7 +98,7 @@ export default function AccountPage() {
   if (status === 'signed-in' && user) {
     return (
       <div className={`container ${styles.wrap}`}>
-        <h1 className={styles.title}>Your account</h1>
+        <h1 className={styles.title}>Your Account</h1>
         <div className={styles.identity}>
           <Avatar email={user.email ?? ''} size="md" />
           <p className={styles.meta}>
@@ -141,7 +141,7 @@ export default function AccountPage() {
 
   return (
     <div className={`container ${styles.wrap}`}>
-      <h1 className={styles.title}>Sign in</h1>
+      <h1 className={styles.title}>Sign In</h1>
       <p className={styles.meta}>
         Accounts let your saved systems follow you between browsers. Basis works without one —
         everything generates and exports either way.

@@ -100,7 +100,7 @@ export function HowItWorks() {
       {/* Only the section heading reveals. The step list and preview are interactive, and
           animating them on scroll would delay the thing the reader came to use. */}
       <div ref={head.ref} className={`${styles.head} ${head.inView ? 'app-enter' : ''}`}>
-        <h2 className={styles.title}>How it works</h2>
+        <h2 className={styles.title}>How It Works</h2>
       </div>
       <div className={styles.grid}>
         <div ref={stepsRef} className={styles.steps} onMouseLeave={() => setHovered(null)}>

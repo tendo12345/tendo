@@ -1,0 +1,64 @@
+.wrap {
+  position: relative;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid transparent;
+  background: none;
+  color: var(--app-ink-muted);
+  cursor: pointer;
+  transition:
+    color var(--app-duration-fast) var(--app-ease),
+    background-color var(--app-duration-fast) var(--app-ease);
+}
+
+.trigger:hover {
+  color: var(--app-ink);
+  background: var(--app-surface-sunken);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/*
+  Right-aligned: this sits at the end of the bar, so anchoring left would run the panel off
+  the viewport. The mirror of the menu's problem, which anchored right while its trigger was
+  on the left and ended up at x = -132.
+*/
+.panel {
+  position: absolute;
+  top: calc(100% + var(--app-space-2xs));
+  right: 0;
+  z-index: 60;
+  width: 15rem;
+  padding: var(--app-space-md);
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-md);
+  box-shadow: var(--app-shadow-lg);
+}
+
+.empty {
+  font-size: var(--app-text-base);
+  font-weight: 500;
+  color: var(--app-ink);
+  margin-bottom: var(--app-space-3xs);
+}
+
+/*
+  The second line is the honest part and should not be removed to make the panel tidier: it
+  tells the reader the emptiness is a fact about the product, not a loading state or a
+  failure they should retry.
+*/
+.note {
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+}

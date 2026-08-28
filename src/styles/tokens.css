@@ -79,8 +79,8 @@
      and lifts Lake Blue, Smoke and the border until they clear AA on the RAISED surface,
      which is the lighter of the two grounds and therefore the harder test.
 
-     Defined as --app-dark-* here so the toggle and the prefers-color-scheme default cannot
-     drift apart; they previously duplicated the whole block and silently did. */
+     Defined as --app-dark-* here rather than inline in the media query below, so the measured
+     ratios live beside the light ones they were solved against. */
   --app-dark-paper: #121111;
   --app-dark-surface: #1c1b1a;
   --app-dark-surface-sunken: #0b0a0a;
@@ -121,15 +121,21 @@
   --app-ground: var(--app-ground-light);
 
   /* ---- typography ----
-     The serif announces, the mono instructs. Untitled Serif and ABC Diatype Mono are
-     commercial; these are the reference's own listed substitutes. Instrument Serif ships a
-     single 400 weight, which enforces the "never bold a heading" rule structurally rather
-     than by convention. IBM Plex Mono was already loaded here, so the mono costs nothing new.
+     One family: Instrument Sans, for both display and functional text.
 
-     There is no body sans: ALL functional text is mono. That is the defining gesture — a
-     sans-serif body would lose the identity immediately. */
-  --app-font-display: 'Instrument Serif', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
-  --app-font-body: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+     This replaces the earlier serif/mono pairing. That pairing was the design's loudest
+     gesture, so losing it is a real change in character rather than a swap of names — the
+     hierarchy now has to come from size, weight and spacing alone, with no contrast of form
+     to lean on. Everything below is unchanged, so the scale and tracking still assume type
+     that was chosen for a different pairing; if the hierarchy reads flat, that is where to
+     look first.
+
+     Instrument Sans ships 400-700 with a true italic, so no weight is ever synthesised.
+     Code keeps IBM Plex Mono. */
+  --app-font-display: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --app-font-body: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Code stays monospace. A sans-serif code block loses column alignment and the visual cue
+     that something is literal, which is not a typography preference but a legibility one. */
   --app-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
   /* Monad's scale, in rem. Tracking is negative at every size and tightens as size grows. */
@@ -169,12 +175,15 @@
   --app-subnav-height: 3.25rem;
 
   /* ---- radius ----
-     Pill-and-soft-rect. Nothing sharp: buttons and tags are fully round, cards are 40px,
-     and the smallest radius in the system is 12px. */
-  --app-radius-sm: 12px;
-  --app-radius-md: 16px;
-  --app-radius-lg: 40px;     /* cards */
-  --app-radius-pill: 9999px; /* buttons, tags, pills */
+     One radius for everything: 10px. Flat and uniform by request, replacing the earlier
+     pill-and-soft-rect language where buttons were fully round and cards were 40px. */
+  /* Every component radius is 10px. The pill token is kept as a NAME so the ~40 call sites
+     that ask for it do not all have to change, but it no longer produces a pill — if a truly
+     round shape is ever needed again, add a separate token rather than editing this one. */
+  --app-radius-sm: 10px;
+  --app-radius-md: 10px;
+  --app-radius-lg: 10px;
+  --app-radius-pill: 10px;
 
   /* ---- shadow ----
      Cards do not get shadows in this system — elevation is a 1px Ash border and a surface
@@ -217,36 +226,20 @@
 }
 
 /*
-  Both dark selectors read the same --app-dark-* values defined above. Do not inline literals
-  into either block: the two copies drifted apart once already when only one was tuned.
-*/
-:root[data-theme='dark'] {
-  --app-paper: var(--app-dark-paper);
-  --app-surface: var(--app-dark-surface);
-  --app-surface-sunken: var(--app-dark-surface-sunken);
-  --app-ink: var(--app-dark-ink);
-  --app-ink-muted: var(--app-dark-ink-muted);
-  --app-ink-faint: var(--app-dark-ink-faint);
-  --app-border: var(--app-dark-border);
-  --app-border-strong: var(--app-dark-border-strong);
-  --app-accent: var(--app-dark-accent);
-  --app-accent-ink: var(--app-dark-accent-ink);
-  --app-accent-soft: var(--app-dark-accent-soft);
-  --app-success: var(--app-dark-success);
-  --app-success-soft: var(--app-dark-success-soft);
-  --app-warning: var(--app-dark-warning);
-  --app-warning-soft: var(--app-dark-warning-soft);
-  --app-error: var(--app-dark-error);
-  --app-error-soft: var(--app-dark-error-soft);
-  --app-positive-ink: var(--app-dark-success);
-  --app-warning-ink: var(--app-dark-warning);
-  --app-negative-ink: var(--app-dark-error);
-  --app-focus-ring: var(--app-dark-accent);
-  --app-ground: var(--app-ground-dark);
-}
+  Dark mode follows the browser or device, and nothing else.
 
+  There is no theme toggle and no stored preference. This was previously two blocks — an
+  explicit `[data-theme='dark']` for the toggle, and this media query guarded by
+  `:not([data-theme='light'])` so a manual light choice could win. With the toggle gone,
+  nothing ever sets that attribute, so both the second selector and the whole duplicate block
+  were dead weight. One block now, which also removes the drift risk the old comment warned
+  about: there is only one copy to keep correct.
+
+  Values still come from --app-dark-* above rather than literals, so the measured ratios stay
+  in one place.
+*/
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
+  :root {
     --app-paper: var(--app-dark-paper);
     --app-surface: var(--app-dark-surface);
     --app-surface-sunken: var(--app-dark-surface-sunken);

@@ -30,7 +30,7 @@ export function ModesPane({ output }: { output: DesignSystemOutput }) {
   return (
     <section aria-labelledby="modes-heading" className={result.section}>
       <h2 id="modes-heading" className={result.sectionTitleSpaced}>
-        Light and dark
+        Light and Dark
       </h2>
 
       <ModeSwitcher modes={modes} activeIndex={active} onChange={setActive} />
