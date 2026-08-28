@@ -17,7 +17,7 @@
 .finding { border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); padding: var(--app-space-md); display: grid; gap: var(--app-space-sm); }
 .findingHead { display: flex; align-items: baseline; justify-content: space-between; gap: var(--app-space-md); flex-wrap: wrap; }
 .findingTitle { margin: 0; font-weight: 500; }
-.severity { font-size: var(--app-text-xs); font-weight: 500; padding: 2px 10px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.severity { font-size: var(--app-text-xs); font-weight: 500; padding: 2px 10px; border-radius: var(--app-radius-pill); border: 1px solid currentColor; white-space: nowrap; }
 .info { color: var(--app-positive-ink, #15803D); }
 .warning { color: var(--app-warning-ink, #B45309); }
 .attention { color: var(--app-negative-ink, #B91C1C); }

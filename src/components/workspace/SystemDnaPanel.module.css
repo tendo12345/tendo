@@ -35,7 +35,7 @@
   line-height: 1.2;
   padding: 4px 12px;
   border: 1px solid var(--app-border);
-  border-radius: 999px;
+  border-radius: var(--app-radius-pill);
 }
 
 .summary {

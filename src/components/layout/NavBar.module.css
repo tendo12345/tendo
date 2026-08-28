@@ -109,7 +109,7 @@
   justify-content: center;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 999px;
+  border-radius: var(--app-radius-pill);
   border: 1px solid var(--app-border-strong);
   font-size: 1rem;
   color: var(--app-ink-muted);
@@ -148,5 +148,26 @@
 
   .themeToggle {
     min-width: 44px;
+  }
+}
+
+/*
+  The bar's call to action, and why it goes away on a phone.
+
+  Adding the 44px menu trigger pushed this row to 383px inside a 375px viewport — an 8px
+  horizontal scroll on the whole page, which is a floor this project does not break. The row
+  now carries a theme toggle, a menu and a CTA, and one of them has to yield below ~480px.
+
+  The CTA is the right one: Generator is the first item in the menu, and the hero's own
+  "Generate a Design System" button sits a few hundred pixels down the same screen. The menu
+  cannot yield, because it is now the only navigation.
+*/
+.barCta {
+  display: inline-flex;
+}
+
+@media (max-width: 480px) {
+  .barCta {
+    display: none;
   }
 }

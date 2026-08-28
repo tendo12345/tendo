@@ -34,7 +34,7 @@
 .healthRow { display: grid; grid-template-columns: 150px 130px 1fr; gap: var(--app-space-md); align-items: baseline; padding: var(--app-space-md); border-bottom: 1px solid var(--app-border); font-size: var(--app-text-sm); }
 .health li:last-child { border-bottom: none; }
 .healthArea { font-weight: 500; }
-.rating { font-size: var(--app-text-xs); font-weight: 500; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; justify-self: start; }
+.rating { font-size: var(--app-text-xs); font-weight: 500; padding: 2px 8px; border-radius: var(--app-radius-pill); border: 1px solid currentColor; justify-self: start; }
 .strong { color: var(--app-positive-ink, #15803D); }
 .good { color: var(--app-ink-muted); }
 .healthMeasure { color: var(--app-ink-muted); }

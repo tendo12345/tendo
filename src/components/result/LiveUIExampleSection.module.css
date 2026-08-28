@@ -45,7 +45,7 @@
 
 .line {
   height: 0.65rem;
-  border-radius: 999px;
+  border-radius: var(--app-radius-pill);
   background: var(--ds-muted, #e2e8f0);
 }
 
