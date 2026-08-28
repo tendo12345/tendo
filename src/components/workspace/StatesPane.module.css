@@ -15,7 +15,7 @@
 
 .stateButton:hover { color: var(--app-ink); border-color: var(--app-ink-muted); }
 .stateButton:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
-.stateActive { background: var(--app-ink); color: var(--app-bg); border-color: var(--app-ink); font-weight: 500; }
+.stateActive { background: var(--app-ink); color: var(--app-paper); border-color: var(--app-ink); font-weight: 500; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--app-space-lg); }
 
