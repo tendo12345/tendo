@@ -29,9 +29,20 @@
   flex-wrap: wrap;
 }
 
+/*
+  Explicit app ink, because this sits on an app-surface panel INSIDE a DesignSystemScope.
+
+  Without it the colour inherits from `.scope`, which is var(--ds-foreground) — a colour picked
+  for the generated background, not for parchment. Whenever the generated system is dark-themed
+  that lands near-white on a light panel and disappears; the sibling `.directionDetail` already
+  set app ink and was unaffected, which is why only this line vanished.
+
+  The rule, same as the hero: generated foreground only ever goes on a generated surface.
+*/
 .directionName {
   font-weight: 500;
   margin-bottom: 0.35rem;
+  color: var(--app-ink);
 }
 
 .directionDetail,

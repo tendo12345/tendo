@@ -116,11 +116,27 @@
   background: var(--app-border-strong);
 }
 
+/*
+  The body sits on the GENERATED background, not the app's surface.
+
+  `dsPreview`'s `.scope` sets `color: var(--ds-foreground)` on everything inside it, and that
+  colour is chosen for the generated system's own background. The sample system is dark-themed
+  (#0F172A), so its foreground is #F8FAFC — which on parchment measured **1.06:1** and was
+  simply invisible. It appeared to work in dark mode only because the app's surface there is
+  also dark, which is a coincidence rather than correctness.
+
+  Putting the body on --ds-background makes the pairing the engine actually intends: 17.06:1.
+  It also matches how the palette swatches, button and input already behave — they carry
+  generated fills, so the surface under them should be generated too.
+
+  Rule this encodes: generated FOREGROUND may only ever be painted on a generated SURFACE.
+*/
 .previewBody {
   padding: var(--app-space-xl);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--app-space-lg);
+  background: var(--ds-background);
 }
 
 .previewBlock {
@@ -129,12 +145,18 @@
   gap: var(--app-space-2xs);
 }
 
+/*
+  These labels sit on the generated background now, so they cannot use app ink — it is chosen
+  against parchment and would fail on a dark generated ground. Derived from the generated
+  foreground instead, at 62%: measured 7.12:1 on this sample, and it tracks whatever palette
+  the system carries rather than being pinned to one.
+*/
 .previewLabel {
   font-size: 0.65rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--app-ink-faint);
+  color: color-mix(in srgb, var(--ds-foreground) 62%, var(--ds-background));
 }
 
 .swatchRow {
