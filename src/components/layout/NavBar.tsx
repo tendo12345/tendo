@@ -2,24 +2,30 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { Avatar } from '../ui/Avatar';
 import { NavMenu } from './NavMenu';
-import { ThemeToggle } from './ThemeToggle';
 import { accountsEnabled } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import styles from './NavBar.module.css';
 
 /*
-  Navigation lives in one place: the menu.
+  Two navigations, one visible at a time.
 
-  The bar previously carried inline links that were `display: none` below 767px, which meant a
-  phone had no navigation at all — no Generator, no Blog, no Account, only the logo and the
-  CTA. Consolidating into the dropdown fixes that and avoids the alternative, which was two
-  parallel navigations showing the same four destinations side by side on desktop.
+  Desktop and tablet get the inline links; below 768px they are replaced by the dropdown. The
+  swap is done in CSS rather than by rendering one or the other, so there is no layout shift
+  while JS decides and no chance of a resize leaving the wrong one on screen.
 
-  Nothing became unreachable: every destination the inline links carried, including the
-  admin-only Moderation route, is in NavMenu under the same conditions.
+  Both are rendered, which means both are in the DOM at once. That is deliberate but not free:
+  the two lists must carry the same destinations under the same conditions, or the app gains a
+  route that is reachable on one screen size and not another. NavMenu holds the same set —
+  Generator, Account when Supabase is configured, About, Blog, and Moderation for admins.
+
+  There is no theme control here any more. Light and dark follow the browser or device via
+  `prefers-color-scheme`; see the note in tokens.css.
 */
 export function NavBar() {
-  const { status, user } = useAuth();
+  const { status, user, isAdmin } = useAuth();
+
+  // Hidden entirely when unconfigured rather than shown-and-broken: a nav item leading to
+  // "there is nothing to sign in to" is worse than no nav item.
   const showAccount = accountsEnabled();
 
   return (
@@ -29,23 +35,49 @@ export function NavBar() {
           <span className={styles.logoMark}>◆</span> Basis
         </NavLink>
 
+        <nav className={styles.links} aria-label="Primary">
+          <NavLink to="/generator" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
+            Generator
+          </NavLink>
+          <NavLink to="/about" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
+            About
+          </NavLink>
+          <NavLink to="/blog" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>
+            Blog
+          </NavLink>
+          {isAdmin && (
+            <NavLink
+              to="/admin/comments"
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              Moderation
+            </NavLink>
+          )}
+          {showAccount && (
+            <NavLink
+              to="/account"
+              className={({ isActive }) => `${styles.link} ${styles.accountLink} ${isActive ? styles.linkActive : ''}`}
+            >
+              {status === 'signed-in' && user && <Avatar email={user.email ?? ''} size="sm" />}
+              Account
+            </NavLink>
+          )}
+        </nav>
 
         <div className={styles.actions}>
-          {/* Signed-in avatar stays in the bar rather than moving into the menu: it is status,
-              not navigation, and hiding it behind a click would remove the only at-a-glance
-              signal that you are signed in. */}
-          {showAccount && status === 'signed-in' && user && <Avatar email={user.email ?? ''} size="sm" />}
-          <ThemeToggle />
-          <NavMenu />
           {/*
-            Hidden on the narrowest screens — see the note in NavBar.module.css. Generator is
-            in the menu and the hero's own call to action is directly below, so nothing is lost.
+            The avatar appears in the bar only on mobile. On wider screens the Account link
+            above already carries it, and showing both would put the same face twice in one row.
           */}
-          <span className={styles.barCta}>
-            <Button href="/generator" variant="primary" size="sm">
-              Start Generating
-            </Button>
-          </span>
+          {showAccount && status === 'signed-in' && user && (
+            <span className={styles.mobileAvatar}>
+              <Avatar email={user.email ?? ''} size="sm" />
+            </span>
+          )}
+          <NavMenu />
+          <Button href="/generator" variant="primary" size="sm">
+            Start Generating
+          </Button>
         </div>
       </div>
     </header>

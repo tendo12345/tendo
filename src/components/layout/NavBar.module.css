@@ -103,24 +103,6 @@
   gap: var(--app-space-sm);
 }
 
-.themeToggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: var(--app-radius-pill);
-  border: 1px solid var(--app-border-strong);
-  font-size: 1rem;
-  color: var(--app-ink-muted);
-  transition: color var(--app-duration-base) var(--app-ease), border-color var(--app-duration-base) var(--app-ease);
-}
-
-.themeToggle:hover {
-  color: var(--app-ink);
-  border-color: var(--app-ink);
-}
-
 @media (max-width: 767px) {
   .links {
     display: none;
@@ -138,36 +120,33 @@
   thumb actually misses. Measured at 360px it was 36x44.
 */
 @media (pointer: coarse), (max-width: 720px) {
-  .themeToggle,
   .logo,
   .link {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
   }
-
-  .themeToggle {
-    min-width: 44px;
-  }
 }
 
 /*
-  The bar's call to action, and why it goes away on a phone.
+  Which navigation is visible.
 
-  Adding the 44px menu trigger pushed this row to 383px inside a 375px viewport — an 8px
-  horizontal scroll on the whole page, which is a floor this project does not break. The row
-  now carries a theme toggle, a menu and a CTA, and one of them has to yield below ~480px.
-
-  The CTA is the right one: Generator is the first item in the menu, and the hero's own
-  "Generate a Design System" button sits a few hundred pixels down the same screen. The menu
-  cannot yield, because it is now the only navigation.
+  Inline links from 768px up, the dropdown below it. The existing rule already hid .links on
+  narrow screens; this adds the mirror so the two can never both be on screen, which would show
+  the same destinations twice in one bar.
 */
-.barCta {
-  display: inline-flex;
+.mobileAvatar {
+  display: none;
 }
 
-@media (max-width: 480px) {
-  .barCta {
+@media (max-width: 767px) {
+  .mobileAvatar {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .menuWrap {
     display: none;
   }
 }

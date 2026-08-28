@@ -79,8 +79,8 @@
      and lifts Lake Blue, Smoke and the border until they clear AA on the RAISED surface,
      which is the lighter of the two grounds and therefore the harder test.
 
-     Defined as --app-dark-* here so the toggle and the prefers-color-scheme default cannot
-     drift apart; they previously duplicated the whole block and silently did. */
+     Defined as --app-dark-* here rather than inline in the media query below, so the measured
+     ratios live beside the light ones they were solved against. */
   --app-dark-paper: #121111;
   --app-dark-surface: #1c1b1a;
   --app-dark-surface-sunken: #0b0a0a;
@@ -226,36 +226,20 @@
 }
 
 /*
-  Both dark selectors read the same --app-dark-* values defined above. Do not inline literals
-  into either block: the two copies drifted apart once already when only one was tuned.
-*/
-:root[data-theme='dark'] {
-  --app-paper: var(--app-dark-paper);
-  --app-surface: var(--app-dark-surface);
-  --app-surface-sunken: var(--app-dark-surface-sunken);
-  --app-ink: var(--app-dark-ink);
-  --app-ink-muted: var(--app-dark-ink-muted);
-  --app-ink-faint: var(--app-dark-ink-faint);
-  --app-border: var(--app-dark-border);
-  --app-border-strong: var(--app-dark-border-strong);
-  --app-accent: var(--app-dark-accent);
-  --app-accent-ink: var(--app-dark-accent-ink);
-  --app-accent-soft: var(--app-dark-accent-soft);
-  --app-success: var(--app-dark-success);
-  --app-success-soft: var(--app-dark-success-soft);
-  --app-warning: var(--app-dark-warning);
-  --app-warning-soft: var(--app-dark-warning-soft);
-  --app-error: var(--app-dark-error);
-  --app-error-soft: var(--app-dark-error-soft);
-  --app-positive-ink: var(--app-dark-success);
-  --app-warning-ink: var(--app-dark-warning);
-  --app-negative-ink: var(--app-dark-error);
-  --app-focus-ring: var(--app-dark-accent);
-  --app-ground: var(--app-ground-dark);
-}
+  Dark mode follows the browser or device, and nothing else.
 
+  There is no theme toggle and no stored preference. This was previously two blocks — an
+  explicit `[data-theme='dark']` for the toggle, and this media query guarded by
+  `:not([data-theme='light'])` so a manual light choice could win. With the toggle gone,
+  nothing ever sets that attribute, so both the second selector and the whole duplicate block
+  were dead weight. One block now, which also removes the drift risk the old comment warned
+  about: there is only one copy to keep correct.
+
+  Values still come from --app-dark-* above rather than literals, so the measured ratios stay
+  in one place.
+*/
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
+  :root {
     --app-paper: var(--app-dark-paper);
     --app-surface: var(--app-dark-surface);
     --app-surface-sunken: var(--app-dark-surface-sunken);

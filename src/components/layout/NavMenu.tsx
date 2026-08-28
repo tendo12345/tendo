@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { accountsEnabled } from '../../lib/supabase';
+import bar from './NavBar.module.css';
 import styles from './NavMenu.module.css';
 
 /*
@@ -79,7 +80,8 @@ export function NavMenu() {
   }, [open]);
 
   return (
-    <div ref={wrapRef} className={styles.wrap}>
+    /* bar.menuWrap is what hides this from 768px up, where the inline links take over. */
+    <div ref={wrapRef} className={`${styles.wrap} ${bar.menuWrap}`}>
       <button
         ref={triggerRef}
         type="button"
