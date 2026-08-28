@@ -1,0 +1,363 @@
+/*
+  Sizing is driven by two custom properties so the whole sculpture scales from one place:
+  --unit is a block's edge, --gap the space between neighbours. Everything else is derived.
+*/
+.stage {
+  /*
+    Sized against the column, not by eye.
+
+    The object first rendered at a 240px lattice inside a 535px stage — it read as an
+    illustration parked in the corner rather than the counterweight to the headline. The unit
+    is what fills it: at 100px the lattice spans ~324px, roughly 60% of its column, which is
+    as large as it goes before the outer blocks start clipping under rotation.
+  */
+  --unit: 100px;
+  --gap: 8px;
+  /* One period for every block. See the note on `group` in BlockSculpture.tsx. */
+  --cycle: 9s;
+  --step: calc(var(--unit) + var(--gap));
+
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 34rem;
+  /* The object leans out of its column slightly, which is what stops the two halves of the
+     hero reading as two boxes side by side. */
+  isolation: isolate;
+}
+
+/*
+  Atmospheric field behind the object.
+
+  Confined to this column and sitting BEHIND the sculpture, never behind hero text — the text
+  lives in the other grid column. That containment is what keeps it out of the contrast
+  budget: no measured foreground pair is drawn over it, so it cannot pull any role off its
+  ratio the way a page-wide wash would. If this ever moves under the copy, re-measure.
+*/
+.field {
+  position: absolute;
+  inset: 8% 4%;
+  z-index: -1;
+  border-radius: 50%;
+  background:
+    radial-gradient(46% 44% at 62% 32%, rgb(43 89 209 / 0.16), transparent 70%),
+    radial-gradient(50% 46% at 32% 68%, rgb(160 181 235 / 0.2), transparent 72%),
+    radial-gradient(40% 38% at 70% 74%, rgb(207 218 245 / 0.24), transparent 70%);
+  filter: blur(46px);
+  animation: field-drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes field-drift {
+  from {
+    transform: translate3d(-18px, 10px, 0);
+  }
+
+  to {
+    transform: translate3d(18px, -18px, 0);
+  }
+}
+
+/*
+  Perspective lives on the scene, the rotation on the lattice inside it.
+
+  Separating them matters: perspective must not be part of the animated transform, or the
+  vanishing point travels with the object and the depth cue collapses.
+
+  --tilt-x / --tilt-y are written by the pointer handler and default to zero, so the object is
+  correct with no JS at all.
+*/
+.scene {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+
+  /*
+    Strong perspective, deliberately.
+
+    1400px on an object this size produced almost no foreshortening — the blocks read as a
+    flat grid of rounded squares. Depth in CSS 3D comes from the ratio of perspective to
+    object size, so a ~700px value against a ~230px lattice is what actually makes the far
+    blocks recede.
+  */
+  perspective: 760px;
+  perspective-origin: 50% 42%;
+  transform-style: preserve-3d;
+}
+
+/*
+  Entrance only. Kept on its own element because it and the turn both animate `transform`:
+  sharing a node, this one's `both` fill-mode pins the final frame and the turn never runs —
+  silently, with a perfectly valid computed style.
+*/
+.entrance {
+  transform-style: preserve-3d;
+  animation: lattice-enter 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.entranceStill {
+  animation: none;
+  transform: rotateX(12deg) rotateY(-22deg);
+  opacity: 1;
+}
+
+.lattice {
+  position: relative;
+  width: calc(var(--step) * 3);
+  height: calc(var(--step) * 3);
+  transform-style: preserve-3d;
+  animation: lattice-turn 16s ease-in-out infinite alternate;
+}
+
+/*
+  The global turn: a sculptural object changing orientation, not a product model spinning.
+  Never completes a revolution, so the same faces stay broadly toward the viewer and the fixed
+  face tones keep reading as light.
+*/
+@keyframes lattice-turn {
+  from {
+    transform: rotateX(calc(3deg + var(--tilt-x))) rotateY(calc(-8deg + var(--tilt-y)));
+  }
+
+  to {
+    transform: rotateX(calc(-4deg + var(--tilt-x))) rotateY(calc(8deg + var(--tilt-y)));
+  }
+}
+
+/* The structure arrives assembled but off-axis, then settles square. */
+@keyframes lattice-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.88) rotateX(10deg) rotateY(-15deg) translateY(30px);
+  }
+
+  /*
+    Settles at a three-quarter pose, not square-on.
+
+    The continuous turn travels +/-8deg either side of this. Landing at 0 would swing the
+    object through dead-on every cycle, where a cube shows only its front faces and stops
+    looking like a solid at all. Holding the base angle here means the turn reads as a
+    sculpture shifting its weight rather than a panel flipping.
+  */
+  to {
+    opacity: 1;
+    transform: rotateX(12deg) rotateY(-22deg);
+  }
+}
+
+.latticeStill {
+  animation: none;
+}
+
+/*
+  The cube breathes between assembled and separated.
+
+  This is the behaviour the reference actually shows: at one moment the blocks sit tight and
+  the object reads as a solid cube, a few seconds later they have pushed out along their axes
+  and it reads as a structure coming apart — then it reforms.
+
+  An earlier version drifted each block around its own fixed lattice cell. That is a different
+  thing and a worse one: every block wobbling in place reads as jitter, because the object as a
+  whole never changes state. The travel here is from COMPACT (cells pulled 14% toward the
+  centre) to SEPARATED (full cell spacing plus the block's own offset), so the structure has
+  somewhere to go.
+
+  Every block shares the period; only the phase differs, in four groups. That is the part that
+  has to be right — different periods let the blocks average each other out and the object
+  never changes state, while a shared period with no offset makes it pulse like a heartbeat.
+  Four phases is enough that the cube gathers and loosens unevenly.
+
+  The keyframes restate the whole translate3d because a transform animation replaces the
+  property outright; animating only the offset would snap every block to the origin.
+*/
+.block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--unit);
+  height: var(--unit);
+  margin: calc(var(--unit) / -2) 0 0 calc(var(--unit) / -2);
+  transform-style: preserve-3d;
+  transform: translate3d(
+    calc(var(--x) * var(--step)),
+    calc(var(--y) * var(--step)),
+    calc(var(--z) * var(--step))
+  );
+  animation:
+    block-drift var(--cycle) ease-in-out var(--drift-delay) infinite alternate,
+    block-enter 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--enter-delay) both;
+}
+
+@keyframes block-drift {
+  from {
+    transform: translate3d(
+      calc(var(--x) * var(--step) * 0.86),
+      calc(var(--y) * var(--step) * 0.86),
+      calc(var(--z) * var(--step) * 0.86)
+    );
+  }
+
+  to {
+    transform: translate3d(
+        calc(var(--x) * var(--step) + var(--fx) * var(--drift-scale, 1)),
+        calc(var(--y) * var(--step) + var(--fy) * var(--drift-scale, 1)),
+        calc(var(--z) * var(--step) + var(--fz) * var(--drift-scale, 1))
+      )
+      rotateZ(calc(var(--rot) * var(--drift-scale, 1)));
+  }
+}
+
+@keyframes block-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.blockStill {
+  animation: none;
+  opacity: 1;
+}
+
+/*
+  Three faces, not six.
+
+  Only the front, top and one side are ever visible inside a ±8° turn, so the other three are
+  simply not built — sixty fewer elements on the page for no visible difference.
+*/
+.face {
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  background: var(--face);
+}
+
+/*
+  A single directional highlight, faked.
+
+  CSS 3D has no lighting model, so each face is a flat fill and the object looks like coloured
+  paper. This gradient puts a soft sheen across the top-left of every front face — the same
+  direction on all of them, which is what sells a shared light source. It is what separates a
+  block that looks moulded from one that looks printed.
+*/
+.front {
+  --face: var(--tone);
+  transform: translateZ(calc(var(--unit) / 2));
+  background-image: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.28),
+    rgb(255 255 255 / 0.06) 42%,
+    rgb(0 0 0 / 0.06) 78%
+  );
+}
+
+.top {
+  background-image: linear-gradient(160deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0));
+}
+
+.side {
+  background-image: linear-gradient(200deg, rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.28));
+}
+
+/* Fixed tonal offsets stand in for a light source: top catches it, the side falls away. */
+.top {
+  --face: color-mix(in srgb, var(--tone) 84%, #ffffff);
+  transform: rotateX(90deg) translateZ(calc(var(--unit) / 2));
+}
+
+.side {
+  --face: color-mix(in srgb, var(--tone) 80%, #000000);
+  transform: rotateY(90deg) translateZ(calc(var(--unit) / 2));
+}
+
+/*
+  Palette.
+
+  App tokens only — this is Basis's own chrome, never a generated system, so it must not read
+  as engine output and must never touch --ds-*. Roughly two thirds neutral, a quarter blue,
+  the rest warm accents.
+*/
+.ink { --tone: var(--app-ink); }
+.paper { --tone: var(--app-paper); }
+.ash { --tone: var(--app-border); }
+.blue { --tone: var(--app-accent); }
+.peri { --tone: var(--app-accent-soft); }
+.sky { --tone: #a0b5eb; }
+.mint { --tone: #a7fccd; }
+.coral { --tone: #ff9473; }
+.gold { --tone: #ecda98; }
+
+/*
+  A paper-coloured block on a parchment page would vanish, so the neutral blocks carry a
+  hairline. It reads as an edge on the object rather than as a border on a card.
+*/
+.paper .front,
+.ash .front {
+  box-shadow: inset 0 0 0 1px rgb(36 36 36 / 0.1);
+}
+
+@media (max-width: 1023px) {
+  .stage {
+    --unit: 74px;
+    min-height: 26rem;
+  }
+}
+
+/*
+  Mobile: smaller unit, and the drift is scaled down with it.
+
+  The brief asks for roughly half the displacement on small screens. Rather than a second set
+  of per-block numbers, the offsets are multiplied down here — one place to change, and it
+  cannot drift out of step with the values in the component.
+*/
+@media (max-width: 767px) {
+  .stage {
+    --unit: 62px;
+    --gap: 6px;
+    min-height: 21rem;
+  }
+
+  /* Halves every axis at once. An earlier version rewrote --fx here against a --fx-base that
+     was never defined, which silently zeroed horizontal drift and left the other two axes at
+     full strength — a scale multiplier cannot go out of step that way. */
+  .stage {
+    --drift-scale: 0.5;
+  }
+
+  .scene {
+    perspective: 1000px;
+  }
+
+  .field {
+    filter: blur(34px);
+  }
+}
+
+/*
+  Reduced motion.
+
+  The object stays — it is the composition, not decoration — but nothing moves: no turn, no
+  drift, no field animation, and the pointer listener is never attached in the first place.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .field {
+    animation: none;
+  }
+
+  .lattice {
+    animation: none;
+  }
+
+  /* Still holds the three-quarter pose, so the object is dimensional while motionless. */
+  .entrance {
+    animation: none;
+    transform: rotateX(12deg) rotateY(-22deg);
+    opacity: 1;
+  }
+
+  .block {
+    animation: none;
+    opacity: 1;
+  }
+}
