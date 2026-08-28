@@ -169,10 +169,34 @@
   visible, just smaller and with less movement.
 */
 @media (max-width: 900px) {
+  /*
+    Pull the stacked hero up so the object is not entirely below the fold.
+
+    Measured on a 812px viewport: the sculpture started 739px down, leaving ~70px of it on the
+    first screen — and nothing at all on a 667px phone. The brief puts the object last in the
+    mobile order, which is right, but "last" should not mean "invisible until you scroll".
+
+    The three costs were all mobile-only slack rather than anything structural: 80px of hero
+    top padding, 64px below the actions, and a 40px column gap. Halving them recovers ~90px
+    without touching type sizes, the reading order, or the desktop composition.
+  */
+  .hero {
+    padding-block: var(--app-space-lg) var(--app-space-2xl);
+  }
+
   .composition {
     grid-template-columns: 1fr;
-    gap: var(--app-space-xl);
+    gap: var(--app-space-md);
     min-height: 0;
+  }
+
+  /*
+    The actions carry a large bottom margin from the old single-column hero, where the sample
+    preview followed them directly. In the two-part composition the object follows instead, and
+    the column gap above already separates them — so this is doubled spacing, not breathing room.
+  */
+  .ctas {
+    margin-bottom: var(--app-space-lg);
   }
 
   .copy {
