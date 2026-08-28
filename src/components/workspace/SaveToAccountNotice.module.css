@@ -1,0 +1,98 @@
+.wrap {
+  margin-top: var(--app-space-sm);
+}
+
+/*
+  Drops in from above rather than fading in place, so it reads as arriving with the result
+  the visitor just generated. `both` holds the start frame; the universal reduced-motion
+  backstop in reset.css collapses it, and the element still ends visible.
+*/
+.notice {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-md);
+  flex-wrap: wrap;
+  padding: var(--app-space-md);
+  background: var(--app-accent-soft);
+  border-radius: var(--app-radius-md);
+  animation: save-notice-in var(--app-duration-slow) var(--app-ease-reveal) both;
+}
+
+@keyframes save-notice-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.body {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+
+.title {
+  font-weight: 600;
+  color: var(--app-ink);          /* 11.09:1 on the periwinkle surface */
+  margin-bottom: var(--app-space-3xs);
+}
+
+/*
+  Body copy is ink-muted, NOT ink-faint.
+
+  Measured on this surface: muted #4e4d4d reads 6.02:1, faint #686665 reads 4.08:1 and fails.
+  Periwinkle is light enough to eat the faint role, so muted is the floor here — the same
+  constraint the coverage card carries.
+*/
+.text {
+  font-size: var(--app-text-sm);
+  line-height: var(--app-leading-normal);
+  color: var(--app-ink-muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--app-space-2xs);
+}
+
+.signIn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--app-space-md);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-ink);
+  color: var(--app-paper);        /* 14.05:1 */
+  font-size: var(--app-text-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: opacity var(--app-duration-fast) var(--app-ease);
+}
+
+.signIn:hover {
+  opacity: 0.9;
+}
+
+.dismiss {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--app-space-sm);
+  border: none;
+  border-radius: var(--app-radius-sm);
+  background: none;
+  color: var(--app-ink-muted);
+  font: inherit;
+  font-size: var(--app-text-sm);
+  cursor: pointer;
+  transition: color var(--app-duration-fast) var(--app-ease);
+}
+
+.dismiss:hover {
+  color: var(--app-ink);
+}

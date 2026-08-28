@@ -19,17 +19,30 @@
 
 .navInner::-webkit-scrollbar { display: none; }
 
+/*
+  min-width matters here as much as min-height, and only min-height was set.
+
+  These links used to be uppercase mono with letter-spacing, which made even a short label
+  like "Colors" comfortably wider than a finger. In a narrower sans at normal case the same
+  labels measured 39-44px wide on a phone — tall enough, and too thin to hit reliably in a
+  horizontally scrolling row where a miss scrolls the strip instead of following the link.
+
+  Centred so the extra width is shared either side of short labels rather than pushed to one
+  edge, which would misalign them against the longer ones.
+*/
 .navLink {
   position: relative;
-  padding: var(--app-space-md) 0;
+  padding: var(--app-space-md) var(--app-space-2xs);
   font-size: var(--app-text-sm);
   font-weight: 500;
   color: var(--app-ink-muted);
   text-decoration: none;
   white-space: nowrap;
   min-height: 44px;
+  min-width: 44px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   border-bottom: 2px solid transparent;
 }
 
