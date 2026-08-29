@@ -36,7 +36,7 @@
 .table th, .table td { text-align: left; padding: 8px var(--app-space-md); border-bottom: 1px solid var(--app-border); overflow-wrap: anywhere; }
 .table thead th { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); font-weight: 500; }
 .rowSame td, .rowSame th { color: var(--app-ink-faint); }
-.rowDiff { background: var(--app-surface-2, rgba(127,127,127,0.06)); }
+.rowDiff { background: var(--app-surface-sunken); }
 .rowDiff td:last-child { font-weight: 500; }
 
 .saveRow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--app-space-sm); margin-bottom: var(--app-space-md); }

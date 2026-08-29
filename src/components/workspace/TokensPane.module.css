@@ -61,11 +61,11 @@
 
 .tokenList li:last-child .token { border-bottom: none; }
 
-.token:hover { background: var(--app-surface-2, rgba(127, 127, 127, 0.06)); }
+.token:hover { background: var(--app-surface-sunken); }
 .token:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: -2px; }
 
 .tokenActive {
-  background: var(--app-surface-2, rgba(127, 127, 127, 0.1));
+  background: var(--app-surface-sunken);
   box-shadow: inset 3px 0 0 var(--app-accent, currentColor);
 }
 

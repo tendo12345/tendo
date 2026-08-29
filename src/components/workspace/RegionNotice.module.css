@@ -13,7 +13,7 @@
 
 .problem,
 .rtl {
-  border: 1px solid var(--app-warning-wash, rgba(180, 83, 9, 0.3));
+  border: 1px solid var(--app-warning);
   border-left-width: 3px;
   border-radius: var(--app-radius-sm, 4px);
   padding: var(--app-space-md);

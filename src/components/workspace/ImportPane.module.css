@@ -8,7 +8,7 @@
 .button:focus-visible { outline: 2px solid var(--app-accent, currentColor); outline-offset: 2px; }
 .primary { background: var(--app-ink); color: var(--app-paper); border-color: var(--app-ink); }
 
-.error { margin: 0 0 var(--app-space-md); padding: var(--app-space-md); border: 1px solid var(--app-warning-wash, rgba(180,83,9,0.3)); border-left-width: 3px; border-radius: var(--app-radius-sm, 4px); font-size: var(--app-text-sm); color: var(--app-ink-muted); max-width: 72ch; }
+.error { margin: 0 0 var(--app-space-md); padding: var(--app-space-md); border: 1px solid var(--app-warning); border-left-width: 3px; border-radius: var(--app-radius-sm, 4px); font-size: var(--app-text-sm); color: var(--app-ink-muted); max-width: 72ch; }
 
 .summary { display: flex; flex-wrap: wrap; gap: var(--app-space-lg); font-size: var(--app-text-sm); color: var(--app-ink-muted); padding: var(--app-space-md); border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); margin-bottom: var(--app-space-md); }
 .skipped { color: var(--app-ink-faint); }

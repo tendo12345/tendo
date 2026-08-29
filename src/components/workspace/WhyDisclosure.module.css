@@ -75,7 +75,7 @@
   padding: var(--app-space-md);
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius-md);
-  background: var(--app-surface-2, transparent);
+  background: var(--app-surface-sunken);
   animation: disclose var(--app-duration-base) var(--app-ease) both;
 }
 
