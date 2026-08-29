@@ -23,6 +23,14 @@ const DISMISS_KEY = 'dsg-save-notice-dismissed';
   now; a visitor who comes back next week and generates something new is a different moment
   and may well want the offer. Permanent dismissal would also mean writing a durable record
   of a decision the user made once, casually.
+
+  On a phone it collapses to a single line. The short copy is a TRUNCATION, not a different
+  claim: "Saves stay in this browser." is the same fact the long version opens with, minus the
+  consequence and the pitch. What it must never become is "Sign in to save", which would be
+  shorter, would read better, and would be false — saving works without an account.
+
+  Both strings are in the DOM and one is display:none per breakpoint. That removes it from the
+  accessibility tree too, so no reader gets the sentence twice.
 */
 export function SaveToAccountNotice() {
   const { status } = useAuth();
@@ -59,14 +67,30 @@ export function SaveToAccountNotice() {
             Systems you save now stay in this browser only — they do not sync, and clearing site
             data removes them. Sign in and they follow you between browsers and devices.
           </p>
+          <p className={styles.short}>Saves stay in this browser.</p>
         </div>
 
         <div className={styles.actions}>
           <Link to="/account" className={styles.signIn}>
             Sign in
           </Link>
+          {/*
+            "Not now" is always the accessible name, on both layouts — and it is NOT an
+            aria-label.
+
+            An aria-label reading "Dismiss" was the first attempt, and it fails WCAG 2.5.3
+            (Label in Name): on desktop the button visibly says "Not now", so a speech-input
+            user saying "click Not now" would find nothing to match. The accessible name has to
+            contain the visible label.
+
+            So on a phone the words are hidden VISUALLY rather than removed, and the glyph that
+            replaces them is aria-hidden. Same name in both layouts, no override.
+          */}
           <button type="button" className={styles.dismiss} onClick={dismiss}>
-            Not now
+            <span className={styles.dismissLong}>Not now</span>
+            <span className={styles.dismissShort} aria-hidden="true">
+              ×
+            </span>
           </button>
         </div>
       </div>

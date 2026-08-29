@@ -54,6 +54,12 @@
   color: var(--app-ink-muted);
 }
 
+/* The one-line form is a phone-only layout; everything above is the full card. */
+.short,
+.dismissShort {
+  display: none;
+}
+
 .actions {
   display: flex;
   align-items: center;
@@ -95,4 +101,79 @@
 
 .dismiss:hover {
   color: var(--app-ink);
+}
+
+/*
+  One line on a phone.
+
+  The full card ran heading + three lines + two buttons, which on a 375px workspace pushed the
+  section nav most of a screen down — a persuasion block sitting between the system and the
+  thing you navigate it with.
+
+  Collapsed it is: short sentence, Sign in, dismiss. The row must not wrap, so `nowrap` on the
+  container is paired with `min-width: 0` and ellipsis on the text — if the copy is ever
+  lengthened past the space, it truncates instead of silently becoming two lines again.
+
+  The dismiss stays 44px in both axes even as a glyph. It is the smallest control here and the
+  easiest to shrink by accident.
+*/
+@media (max-width: 640px) {
+  .notice {
+    flex-wrap: nowrap;
+    gap: var(--app-space-2xs);
+    padding: var(--app-space-2xs) var(--app-space-sm);
+  }
+
+  .body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .title,
+  .text {
+    display: none;
+  }
+
+  /*
+    Hidden from view, kept for the accessibility tree — `display: none` here would strip the
+    button's only real name and leave it announced as the glyph. See the note in the component.
+  */
+  .dismissLong {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .short {
+    display: block;
+    font-size: var(--app-text-sm);
+    color: var(--app-ink-muted);     /* 6.02:1 on periwinkle — faint fails here */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dismissShort {
+    display: inline;
+    font-size: var(--app-text-lg);
+    line-height: 1;
+  }
+
+  .signIn {
+    padding: 0 var(--app-space-sm);
+    white-space: nowrap;
+  }
+
+  .dismiss {
+    position: relative;
+    justify-content: center;
+    min-width: 44px;
+    padding: 0;
+  }
 }
