@@ -18,5 +18,5 @@
 .primary { background: var(--app-ink); color: var(--app-paper); border-color: var(--app-ink); }
 .size { font-size: var(--app-text-xs); color: var(--app-ink-faint); font-variant-numeric: tabular-nums; }
 
-.output { margin: 0; padding: var(--app-space-md); border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); overflow-x: auto; max-height: 560px; overflow-y: auto; background: var(--app-surface-2, transparent); }
+.output { margin: 0; padding: var(--app-space-md); border: 1px solid var(--app-border); border-radius: var(--app-radius-sm, 4px); overflow-x: auto; max-height: 560px; overflow-y: auto; background: var(--app-surface-sunken); }
 .output code { font-family: var(--app-font-mono, ui-monospace, monospace); font-size: var(--app-text-xs); line-height: 1.6; white-space: pre; }

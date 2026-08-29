@@ -24,7 +24,7 @@
 .table thead th { font-size: var(--app-text-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--app-ink-faint); font-weight: 500; }
 .table tbody tr:last-child th, .table tbody tr:last-child td { border-bottom: none; }
 .rowLabel { font-weight: 500; }
-.rowFail { background: var(--app-warning-wash, rgba(180, 83, 9, 0.06)); }
+.rowFail { background: var(--app-warning-wash); }
 .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .table code { font-family: var(--app-font-mono, ui-monospace, monospace); font-size: var(--app-text-xs); }
 

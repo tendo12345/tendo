@@ -67,6 +67,23 @@
     Defining them here fixes all fourteen at once and, unlike editing each call site, cannot
     miss one. It also means dark mode picks them up, which the literal fallbacks never did.
   */
+  /*
+    A warning-tinted row background, and the one token here whose light and dark values move in
+    OPPOSITE directions.
+
+    Light tints warmer and slightly darker (#F3ECDE): faint #686665 reads 4.86:1 on it.
+
+    Dark tints warmer and DARKER than the surface (#181309), not lighter, and that is forced
+    rather than stylistic. `--app-dark-ink-faint` reads 4.67:1 on the raised surface already, so
+    there is no headroom to lighten anything beneath it — every warm tint above the surface
+    measured 3.7-4.5:1 and failed. Going darker tints the row and raises faint to 5.02:1.
+
+    Four files referenced --app-warning-wash while it did not exist, falling back to
+    rgba(180, 83, 9, …) — the amber from the palette before Monad, which a token remap can never
+    reach.
+  */
+  --app-warning-wash: #f3ecde;
+
   --app-positive-ink: var(--app-success);
   --app-warning-ink: var(--app-warning);
   --app-negative-ink: var(--app-error);
@@ -98,6 +115,7 @@
   --app-dark-warning-soft: #2e2716;
   --app-dark-error: #ff9473;         /* 8.74:1 */
   --app-dark-error-soft: #331a12;
+  --app-dark-warning-wash: #181309;   /* darker than the surface — see the light note above */
 
   /* ---- grounds ----
      Monad's atmospheric wash: soft, heavily diffused coral / sky / gold radials, never
@@ -257,6 +275,7 @@
     --app-warning-soft: var(--app-dark-warning-soft);
     --app-error: var(--app-dark-error);
     --app-error-soft: var(--app-dark-error-soft);
+    --app-warning-wash: var(--app-dark-warning-wash);
     --app-positive-ink: var(--app-dark-success);
     --app-warning-ink: var(--app-dark-warning);
     --app-negative-ink: var(--app-dark-error);

@@ -22,5 +22,14 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  /*
+    Tests are excluded and compiled by tsconfig.test.json instead, which adds node types.
+
+    They read files from disk to assert things the type system cannot — that every --app-* a
+    stylesheet references is defined, and that the palette still clears its contrast floor. This
+    project stays free of node types on purpose: it is the type-level half of the rule that
+    src/engine must be importable without a browser.
+  */
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__tests__/**"]
 }
