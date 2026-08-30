@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useGeneratedSystem } from '../context/GeneratedSystemContext';
-import { clearPendingGeneration, readPendingGeneration } from '../lib/pendingGeneration';
 import { useSystemStore } from '../context/SystemStoreContext';
 import { localSystemStore } from '../lib/localSystemStore';
 import { createRemoteSystemStore, uploadLocalSystems } from '../lib/remoteSystemStore';
@@ -26,9 +24,21 @@ const PROVIDER_LABELS: Record<OAuthProvider, string> = {
  */
 export default function AccountPage() {
   const { status, user, enabled, signInWithEmail, signInWithProvider, signOut } = useAuth();
-  const { generate } = useGeneratedSystem();
   const navigate = useNavigate();
-  const [pending] = useState(() => readPendingGeneration());
+  const location = useLocation();
+  /*
+    Where the guard turned them away from, captured ONCE on mount.
+
+    Read into state rather than off `location` at redirect time because the effect below
+    navigates, which replaces location.state — re-reading it would see the new empty state and
+    the return path would vanish mid-flight.
+  */
+  const [returnTo] = useState<string | null>(() => {
+    const from = (location.state as { from?: unknown } | null)?.from;
+    // Only same-origin paths. A value from history state is attacker-influenceable, and
+    // navigating to an absolute URL from it is an open redirect.
+    return typeof from === 'string' && from.startsWith('/') && !from.startsWith('//') ? from : null;
+  });
   const { systems, info, refresh } = useSystemStore();
   const { showToast } = useToast();
   const [email, setEmail] = useState('');
@@ -53,15 +63,12 @@ export default function AccountPage() {
   }, []);
 
   /*
-    Finish the generation the visitor was sent here to sign in for.
+    Send them back where the guard stopped them.
 
-    They filled in the form, the gate redirected them, and they signed in. Landing on an account
-    page at that point is a dead end — the sign-in was a step in their task, not the task. This
-    runs it and moves them on.
+    Signing in is a step in the visitor's task, not the task. Without this they authenticate and
+    land on an account page, with the thing they actually wanted still one navigation away.
 
-    Cleared BEFORE generating, not after: a stored input that survives a failure would re-fire
-    this effect on every subsequent visit to /account, redirecting the user away from their own
-    account page with no way to stay on it.
+    `replace` so Back does not return to this page and immediately forward again.
 
     Placed above every early return on purpose. It first sat next to the signed-in branch, below
     `if (!enabled)`, which makes it a CONDITIONAL hook — the render order changes the moment
@@ -69,11 +76,9 @@ export default function AccountPage() {
     render". Same class of crash this app already took once from a hot-swapped hook list.
   */
   useEffect(() => {
-    if (status !== 'signed-in' || !pending) return;
-    clearPendingGeneration();
-    generate(pending);
-    navigate('/system/overview', { replace: true });
-  }, [status, pending, generate, navigate]);
+    if (status !== 'signed-in' || !returnTo) return;
+    navigate(returnTo, { replace: true });
+  }, [status, returnTo, navigate]);
 
   if (!enabled) {
     return (
@@ -182,15 +187,15 @@ export default function AccountPage() {
       </p>
 
       {/*
-        Says why they are here, and names the thing they asked for, so the redirect reads as a
-        step in their task rather than the app losing their place.
+        Says why they are here. Arriving at a sign-in page you did not ask for, with no
+        explanation, reads as the app losing your place rather than protecting something.
       */}
-      {pending && (
+      {returnTo && (
         <div className={styles.notice} role="status">
-          <p className={styles.noticeTitle}>Your system is ready to generate</p>
+          <p className={styles.noticeTitle}>Sign in to continue</p>
           <p className={styles.noticeBody}>
-            Sign in and <strong>{pending.productType}</strong> generates straight away — you will
-            not have to fill the form again.
+            Generating a design system needs an account. You will be taken straight back once you
+            are signed in.
           </p>
         </div>
       )}

@@ -1,8 +1,5 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { accountsEnabled } from '../lib/supabase';
-import { storePendingGeneration } from '../lib/pendingGeneration';
 import { ExamplePrompts } from '../components/generator/ExamplePrompts';
 import { IndustryInput } from '../components/generator/IndustryInput';
 import { KeywordChips } from '../components/generator/KeywordChips';
@@ -21,24 +18,14 @@ export default function GeneratorPage() {
   const [error, setError] = useState<string | undefined>();
 
   const { generate } = useGeneratedSystem();
-  const { status } = useAuth();
   const navigate = useNavigate();
 
   /*
-    Generation is gated behind an account.
-
-    Two conditions, and the second is not optional. `accountsEnabled()` is false whenever the
-    deployment has no Supabase project — the documented, supported state this repo keeps working
-    on purpose. Gating on `signed-out` alone would make the generator unreachable there: no auth
-    to complete, no way past the redirect, and the core product dead in a configuration the
-    codebase explicitly supports. So the gate only exists where there is an account to sign in
-    to.
-
-    `status` is 'loading' until the session resolves, and loading is not signed-out. Treating it
-    as such would bounce a signed-in visitor to /account for the moment before their session
-    arrives.
+    No gate here. Reaching this page at all requires an account — RequireAccount wraps the
+    route, so a signed-out visitor never sees this form. An earlier version also checked at
+    submit time, which was a second mechanism for one rule and left a "Sign In to Generate"
+    label that could no longer be reached.
   */
-  const requiresSignIn = accountsEnabled() && status === 'signed-out';
 
   /*
     Generate and go, with no interstitial.
@@ -62,18 +49,6 @@ export default function GeneratorPage() {
       return;
     }
     setError(undefined);
-
-    /*
-      Hold the input across the redirect, so signing in finishes the job the visitor started
-      rather than dropping them on an account page with an empty form waiting behind it.
-      Account picks it up and continues to the workspace.
-    */
-    if (requiresSignIn) {
-      storePendingGeneration(result.input);
-      navigate('/account');
-      return;
-    }
-
     generate(result.input);
     navigate('/system/overview');
   };
@@ -96,17 +71,8 @@ export default function GeneratorPage() {
 
         <div className={styles.submitRow}>
           <Button type="submit" variant="primary">
-            {requiresSignIn ? 'Sign In to Generate' : 'Generate Design System'}
+            Generate Design System
           </Button>
-          {/*
-            Say where the button goes before it goes there. A control labelled "Generate" that
-            navigates to a sign-in page is a small lie, and it is the kind users remember.
-          */}
-          {requiresSignIn && (
-            <p className={styles.gateNote}>
-              You will come straight back to your system after signing in.
-            </p>
-          )}
         </div>
       </form>
     </div>
