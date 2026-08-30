@@ -34,3 +34,10 @@
   justify-content: flex-end;
   margin-top: var(--app-space-lg);
 }
+
+/* Sits under the gated submit button, explaining where it goes before it goes there. */
+.gateNote {
+  margin-top: var(--app-space-2xs);
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);
+}

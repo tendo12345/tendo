@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useGeneratedSystem } from '../context/GeneratedSystemContext';
+import { clearPendingGeneration, readPendingGeneration } from '../lib/pendingGeneration';
 import { useSystemStore } from '../context/SystemStoreContext';
 import { localSystemStore } from '../lib/localSystemStore';
 import { createRemoteSystemStore, uploadLocalSystems } from '../lib/remoteSystemStore';
@@ -24,6 +26,9 @@ const PROVIDER_LABELS: Record<OAuthProvider, string> = {
  */
 export default function AccountPage() {
   const { status, user, enabled, signInWithEmail, signInWithProvider, signOut } = useAuth();
+  const { generate } = useGeneratedSystem();
+  const navigate = useNavigate();
+  const [pending] = useState(() => readPendingGeneration());
   const { systems, info, refresh } = useSystemStore();
   const { showToast } = useToast();
   const [email, setEmail] = useState('');
@@ -46,6 +51,29 @@ export default function AccountPage() {
       live = false;
     };
   }, []);
+
+  /*
+    Finish the generation the visitor was sent here to sign in for.
+
+    They filled in the form, the gate redirected them, and they signed in. Landing on an account
+    page at that point is a dead end — the sign-in was a step in their task, not the task. This
+    runs it and moves them on.
+
+    Cleared BEFORE generating, not after: a stored input that survives a failure would re-fire
+    this effect on every subsequent visit to /account, redirecting the user away from their own
+    account page with no way to stay on it.
+
+    Placed above every early return on purpose. It first sat next to the signed-in branch, below
+    `if (!enabled)`, which makes it a CONDITIONAL hook — the render order changes the moment
+    accounts are unconfigured, and React throws "rendered more hooks than during the previous
+    render". Same class of crash this app already took once from a hot-swapped hook list.
+  */
+  useEffect(() => {
+    if (status !== 'signed-in' || !pending) return;
+    clearPendingGeneration();
+    generate(pending);
+    navigate('/system/overview', { replace: true });
+  }, [status, pending, generate, navigate]);
 
   if (!enabled) {
     return (
@@ -142,10 +170,30 @@ export default function AccountPage() {
   return (
     <div className={`container ${styles.wrap}`}>
       <h1 className={styles.title}>Sign In</h1>
+      {/*
+        This line used to read "Basis works without one — everything generates and exports
+        either way." Gating generation made that false, and a sign-in page that misstates why
+        you are on it is exactly the dishonesty this product is built to avoid. Changed with the
+        gate rather than after it.
+      */}
       <p className={styles.meta}>
-        Accounts let your saved systems follow you between browsers. Basis works without one —
-        everything generates and exports either way.
+        Generating a system needs an account. Signing in also keeps your saved systems with you
+        between browsers and devices.
       </p>
+
+      {/*
+        Says why they are here, and names the thing they asked for, so the redirect reads as a
+        step in their task rather than the app losing their place.
+      */}
+      {pending && (
+        <div className={styles.notice} role="status">
+          <p className={styles.noticeTitle}>Your system is ready to generate</p>
+          <p className={styles.noticeBody}>
+            Sign in and <strong>{pending.productType}</strong> generates straight away — you will
+            not have to fill the form again.
+          </p>
+        </div>
+      )}
 
       {sent ? (
         <div className={styles.notice} role="status">
