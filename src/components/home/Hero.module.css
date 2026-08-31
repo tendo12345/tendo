@@ -248,3 +248,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Sits under the hero actions: says the primary CTA leads to sign-in, before it is pressed. */
+.accountNote {
+  margin-top: var(--app-space-sm);
+  font-size: var(--app-text-sm);
+  color: var(--app-ink-muted);   /* 7.63:1 on parchment */
+}
