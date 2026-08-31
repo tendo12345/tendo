@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { useSectionProgress } from '../../hooks/useScrollMotion';
+import { accountsEnabled } from '../../lib/supabase';
 import { SAMPLE_SYSTEM as SAMPLE } from '../../lib/sampleSystem';
 import { BlockSculpture } from './BlockSculpture';
 import { Parallax } from '../motion/Parallax';
@@ -44,6 +46,21 @@ export function Hero() {
   /* Drives the sculpture's recede-on-scroll. The text bands use Parallax and move faster,
      which is what puts the object behind them in depth. */
   const heroRef = useSectionProgress<HTMLElement>();
+  const { status } = useAuth();
+
+  /*
+    Say that generating needs an account BEFORE the button is pressed.
+
+    The primary CTA reads "Generate a Design System" and, signed out, lands on a sign-in page.
+    That is the same small lie the submit button carried before the gate moved to the route —
+    a control that promises one thing and does another — and it reappeared at the top of the
+    funnel where it costs the most.
+
+    Only shown where it is true: nothing to sign in to when accounts are unconfigured, and
+    nothing to warn a signed-in visitor about. 'loading' stays quiet rather than flashing a
+    notice that may not apply.
+  */
+  const showsAccountNote = accountsEnabled() && status === 'signed-out';
 
   return (
     <section ref={heroRef} className={`container ${styles.hero}`}>
@@ -75,6 +92,13 @@ export function Hero() {
               </Button>
             </div>
           </Parallax>
+          {showsAccountNote && (
+            <Parallax speed={-12}>
+              <p className={`${styles.accountNote} app-enter`} style={enterAt(280)}>
+                Generating needs an account — one email, no password.
+              </p>
+            </Parallax>
+          )}
 
         </div>
 

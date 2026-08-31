@@ -181,9 +181,15 @@ export default function AccountPage() {
         you are on it is exactly the dishonesty this product is built to avoid. Changed with the
         gate rather than after it.
       */}
+      {/*
+        Two versions, because the notice below carries the reason when the guard sent them here.
+        Showing both produced "Generating a system needs an account." twice, stacked — written in
+        separate commits and never seen together until the flow was walked end to end.
+      */}
       <p className={styles.meta}>
-        Generating a system needs an account. Signing in also keeps your saved systems with you
-        between browsers and devices.
+        {returnTo
+          ? 'Signing in also keeps your saved systems with you between browsers and devices.'
+          : 'Generating a system needs an account. Signing in also keeps your saved systems with you between browsers and devices.'}
       </p>
 
       {/*
