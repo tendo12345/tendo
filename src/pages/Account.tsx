@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSystemStore } from '../context/SystemStoreContext';
 import { localSystemStore } from '../lib/localSystemStore';
@@ -24,6 +24,21 @@ const PROVIDER_LABELS: Record<OAuthProvider, string> = {
  */
 export default function AccountPage() {
   const { status, user, enabled, signInWithEmail, signInWithProvider, signOut } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  /*
+    Where the guard turned them away from, captured ONCE on mount.
+
+    Read into state rather than off `location` at redirect time because the effect below
+    navigates, which replaces location.state — re-reading it would see the new empty state and
+    the return path would vanish mid-flight.
+  */
+  const [returnTo] = useState<string | null>(() => {
+    const from = (location.state as { from?: unknown } | null)?.from;
+    // Only same-origin paths. A value from history state is attacker-influenceable, and
+    // navigating to an absolute URL from it is an open redirect.
+    return typeof from === 'string' && from.startsWith('/') && !from.startsWith('//') ? from : null;
+  });
   const { systems, info, refresh } = useSystemStore();
   const { showToast } = useToast();
   const [email, setEmail] = useState('');
@@ -46,6 +61,24 @@ export default function AccountPage() {
       live = false;
     };
   }, []);
+
+  /*
+    Send them back where the guard stopped them.
+
+    Signing in is a step in the visitor's task, not the task. Without this they authenticate and
+    land on an account page, with the thing they actually wanted still one navigation away.
+
+    `replace` so Back does not return to this page and immediately forward again.
+
+    Placed above every early return on purpose. It first sat next to the signed-in branch, below
+    `if (!enabled)`, which makes it a CONDITIONAL hook — the render order changes the moment
+    accounts are unconfigured, and React throws "rendered more hooks than during the previous
+    render". Same class of crash this app already took once from a hot-swapped hook list.
+  */
+  useEffect(() => {
+    if (status !== 'signed-in' || !returnTo) return;
+    navigate(returnTo, { replace: true });
+  }, [status, returnTo, navigate]);
 
   if (!enabled) {
     return (
@@ -142,10 +175,30 @@ export default function AccountPage() {
   return (
     <div className={`container ${styles.wrap}`}>
       <h1 className={styles.title}>Sign In</h1>
+      {/*
+        This line used to read "Basis works without one — everything generates and exports
+        either way." Gating generation made that false, and a sign-in page that misstates why
+        you are on it is exactly the dishonesty this product is built to avoid. Changed with the
+        gate rather than after it.
+      */}
       <p className={styles.meta}>
-        Accounts let your saved systems follow you between browsers. Basis works without one —
-        everything generates and exports either way.
+        Generating a system needs an account. Signing in also keeps your saved systems with you
+        between browsers and devices.
       </p>
+
+      {/*
+        Says why they are here. Arriving at a sign-in page you did not ask for, with no
+        explanation, reads as the app losing your place rather than protecting something.
+      */}
+      {returnTo && (
+        <div className={styles.notice} role="status">
+          <p className={styles.noticeTitle}>Sign in to continue</p>
+          <p className={styles.noticeBody}>
+            Generating a design system needs an account. You will be taken straight back once you
+            are signed in.
+          </p>
+        </div>
+      )}
 
       {sent ? (
         <div className={styles.notice} role="status">

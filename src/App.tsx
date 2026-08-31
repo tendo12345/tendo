@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { RequireAccount } from './components/layout/RequireAccount';
 import { AppLayout } from './layouts/AppLayout';
 import HomePage from './pages/Home';
 import AboutPage from './pages/About';
@@ -43,12 +44,26 @@ function App() {
         {/* Eager like Home and NotFound: it never touches the engine, so lazy-loading it
             would add a chunk request without saving anything. */}
         <Route path="about" element={<AboutPage />} />
+        {/*
+          Sign in before use — on the generator, which is where a system gets CREATED.
+
+          The workspace is deliberately NOT guarded, and that is the whole of the difference.
+          Guarding it too was tried and it breaks share links: /s regenerates from the query
+          string and lands on /system/overview, so every link already sent would bounce its
+          recipient to a sign-in page and show them nothing. Share links exist to show someone a
+          result without an account — gating the viewer makes the feature pointless.
+
+          Signed out, the only way to reach the workspace is a share link or a system already in
+          this browser's session. Neither can be created without signing in first.
+        */}
         <Route
           path="generator"
           element={
-            <Suspense fallback={<RouteFallback />}>
-              <GeneratorPage />
-            </Suspense>
+            <RequireAccount>
+              <Suspense fallback={<RouteFallback />}>
+                <GeneratorPage />
+              </Suspense>
+            </RequireAccount>
           }
         />
         {/* Share links carry the input in the query string and regenerate on arrival. */}

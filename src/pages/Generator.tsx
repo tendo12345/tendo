@@ -21,6 +21,13 @@ export default function GeneratorPage() {
   const navigate = useNavigate();
 
   /*
+    No gate here. Reaching this page at all requires an account — RequireAccount wraps the
+    route, so a signed-out visitor never sees this form. An earlier version also checked at
+    submit time, which was a second mechanism for one rule and left a "Sign In to Generate"
+    label that could no longer be reached.
+  */
+
+  /*
     Generate and go, with no interstitial.
 
     This used to hold a `pendingInput` and run a six-step progress list for about 1.3s —
