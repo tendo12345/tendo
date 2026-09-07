@@ -33,3 +33,7 @@ dist-ssr
 .data-fingerprints.json
 
 .vercel
+
+# scripts/build-brand.py and capture-ground-truth.py are run directly, never imported, but
+# Python still writes bytecode next to them the moment anything does import one.
+__pycache__/
