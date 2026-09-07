@@ -21,17 +21,19 @@
   padding-block: var(--app-space-sm);
 }
 
+/*
+  Layout only. Typography, spacing between mark and word, hover, focus and the entrance all
+  live in BasisLogo.module.css, so the bar cannot style the brand differently from the footer.
+  `flex: none` keeps the mark at its intrinsic width: it is a flex item next to a links row
+  that can grow, and without it a narrow bar would shrink the logo before it wrapped anything
+  else — an image squeezed off its aspect ratio, which §26 rules out.
+*/
 .logo {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  font-family: var(--app-font-display);
-  font-size: var(--app-text-lg);
-  color: var(--app-ink);
-}
-
-.logoMark {
-  color: var(--app-accent);
+  flex: none;
+  /* The reference's breathing room between the brand and the first link. The bar's own gap
+     is 24px; this takes the pair to 40px, which is what stops the wordmark and "Generator"
+     reading as one run of text. */
+  margin-inline-end: var(--app-space-sm);
 }
 
 .links {

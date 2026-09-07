@@ -1,0 +1,161 @@
+/*
+  Everything here derives from --logo-h, the mark's height, set once by the component.
+
+  The three ratios below are measured off brand/basis-logo-master.png and are the lockup: the
+  wordmark's size, its distance from the mark, and how far its optical centre sits above the
+  mark's. Reproducing them in CSS is what makes "do not alter its proportions" true at every
+  size, rather than true at whichever size someone last exported.
+*/
+.logo {
+  --word-scale: 0.5612;
+  --word-gap: 0.1339;
+  --word-rise: 0.03;
+
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--logo-h) * var(--word-gap));
+  color: var(--app-ink);
+  text-decoration: none;
+}
+
+/*
+  Height drives the mark; the intrinsic width/height attributes supply the ratio.
+
+  `width: auto` rather than a fixed pair, so the mark can never be stretched by a caller who
+  sets only one dimension — §26's "always preserve aspect-ratio" enforced by the layout
+  instead of by review.
+*/
+.mark {
+  display: block;
+  height: var(--logo-h);
+  width: auto;
+  flex: none;
+  transition: transform var(--app-duration-base) var(--app-ease);
+}
+
+/*
+  <picture> is an inline wrapper with no box of its own worth styling, so it becomes the flex
+  item and the image inside it needs a parent that does not add a line box. A flex container
+  is the least surprising way to get that.
+*/
+.wordPic {
+  display: flex;
+  align-items: center;
+  flex: none;
+  /* The master sets the word slightly high against the cluster's centre of mass. Negative,
+     because the mark's visual weight sits low — the block that grounds it is the bottom one. */
+  transform: translateY(calc(var(--logo-h) * var(--word-rise) * -1));
+  transition: opacity var(--app-duration-base) var(--app-ease);
+}
+
+.word {
+  display: block;
+  height: calc(var(--logo-h) * var(--word-scale));
+  width: auto;
+}
+
+/*
+  Hover, at the edge of perceptible and deliberately kept there.
+
+  A logo is a wayfinding anchor. It should acknowledge the pointer and do nothing else — the
+  brief rules out glow, rotation, bounce and colour cycling, and this is what is left: two
+  percent of scale on the mark and a small drop in the word's presence.
+*/
+@media (hover: hover) and (pointer: fine) {
+  .logo:hover .mark {
+    transform: scale(1.02);
+  }
+
+  .logo:hover .wordPic {
+    opacity: 0.82;
+  }
+}
+
+/*
+  Focus.
+
+  A 4px offset rather than the global 2px: the ring has to clear the cluster's silhouette,
+  and at 2px it cuts across the blocks that overhang the mark's box. Lake Blue on parchment
+  is 5.51:1 and on off-black 4.34:1 — both clear the 3:1 WCAG 1.4.11 asks of a non-text
+  indicator, in either theme.
+*/
+.logo:focus-visible {
+  outline: 2px solid var(--app-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--app-radius-sm);
+}
+
+/*
+  Entrance: placed, not introduced.
+
+  4px of travel over 380ms. The easing overshoots slightly and settles, which is what makes a
+  move this small legible at all — a linear 4px is indistinguishable from a repaint.
+
+  Keyframes defined in this module and referenced from this module. CSS Modules hashes
+  keyframe names, so a rule here naming a keyframe from global.css would compile silently and
+  animate nothing; that has happened in this repo before.
+*/
+@keyframes logo-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.entrance {
+  animation: logo-enter 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/*
+  Narrow viewports: the mark alone.
+
+  Measured before deciding, because §24 says not to drop the wordmark just because a
+  breakpoint was crossed. It is not a fit problem: forcing the full lockup on leaves 47px of
+  slack between it and the auth pair at 360px and 40px at 320px, with no horizontal overflow
+  at either. The lockup fits.
+
+  The mark is used anyway. 40px is the margin at rest, and the bar has to absorb a longer
+  auth label, a wider system font, or a translated string without the brand and the actions
+  colliding — and the mark carries the same identity in 24.5px where the lockup needs 82.5px.
+  Given a choice between the two, the brief's default is the mark.
+
+  It also steps down to 28px here. The bar's own padding is unchanged, so this is the logo
+  giving room back rather than the chrome shrinking, which §11 rules out.
+*/
+@media (max-width: 767px) {
+  .responsive {
+    --logo-h: 28px;
+  }
+
+  .responsive .wordPic {
+    display: none;
+  }
+}
+
+/*
+  Reduced motion removes the movement, not the logo.
+
+  The resting values are restated rather than left to the keyframes' `both` fill, so a future
+  change to those keyframes cannot leave this branch invisible.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .entrance {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .mark,
+  .wordPic {
+    transition: none;
+  }
+
+  .logo:hover .mark {
+    transform: none;
+  }
+}

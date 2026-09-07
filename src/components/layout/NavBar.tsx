@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { Avatar } from '../ui/Avatar';
 import { NavMenu } from './NavMenu';
+import { BasisLogo } from '../brand/BasisLogo';
 import { accountsEnabled } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import styles from './NavBar.module.css';
@@ -50,9 +51,18 @@ export function NavBar() {
         {/* Mobile only. First in source order so it is also first for a keyboard. */}
         <NavMenu />
 
-        <NavLink to="/" className={styles.logo}>
-          <span className={styles.logoMark}>◆</span> Basis
-        </NavLink>
+        {/*
+          The brand, from the shared logo component rather than a glyph and a word.
+
+          What stood here was `◆ Basis` — a black diamond from the text stream, which is not a
+          mark: it inherits whatever the font stack supplies, renders differently on every
+          platform, and had nothing to do with the sculpture the hero animates.
+
+          `responsive` drops the wordmark under 768px in CSS. `entrance` plays once when the
+          bar mounts, and the bar is mounted above the router, so it plays on arrival and not
+          again on every route change.
+        */}
+        <BasisLogo href="/" variant="full" size="md" responsive entrance className={styles.logo} />
 
         <nav className={styles.links} aria-label="Primary">
           <NavLink to="/generator" className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}>

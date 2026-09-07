@@ -234,6 +234,46 @@ rather than show-and-reject), not the security boundary — that is the RLS poli
 `comments`. Treat any change to who can read/write a comment as a `schema.sql` change first,
 a UI change second.
 
+### The logo is one component and one generated asset set
+
+`brand/basis-logo-master.png` is the supplied render, byte-for-byte, and it is the only place
+the brand exists. Everything the interface draws is cut from it by `scripts/build-brand.py`:
+
+```bash
+python scripts/build-brand.py           # regenerate public/brand/* and public/favicon-*.png
+python scripts/build-brand.py --check   # fail if a checked-in asset is stale
+```
+
+That needs Python and Pillow, which is why there is **no npm script for it** — the outputs are
+checked in, so building and deploying need neither. Run it only when the master changes.
+
+`BasisLogo` (`components/brand/`) is the single implementation: `variant` full | mark |
+wordmark, `size` sm | md | lg, `theme` default | light | dark, plus `href`, `entrance` and
+`responsive`. Never inline a logo anywhere else — that is how a product ends up with four
+slightly different lockups.
+
+Four things here are decisions, not defaults:
+
+- **The art stays raster.** The mark is a shaded 3D cluster with soft bevels and per-face
+  gradients. Tracing it to SVG produces a flat approximation — a different logo with the same
+  silhouette — so the crispness is not worth it.
+- **`full` is composed, not a third image.** The wordmark is 0.5612 of the mark's height, set
+  0.1339 of that height away, with its optical centre 0.030 above the mark's. Those three
+  ratios are measured off the master and live in `BasisLogo.module.css`; reproducing them in
+  CSS is what keeps the lockup's proportions true at every size rather than at whichever size
+  someone last exported.
+- **The mark's contact shadow is removed and its colours never change.** The shadow reads as
+  grounding on parchment and as a pale smudge on off-black, and it is separable because it is
+  purely low alpha (blocks sit at 251-253, shadow under 60). The wordmark is the only part
+  that gets a light variant, swapped by `<picture>` on `prefers-color-scheme` so exactly one
+  file is fetched. A mark that repaints itself per surface is a decoration, not an identity.
+- **The tagline is not in the UI lockup.** "GENERATE / REFINE / SHIP" would be a third of a
+  pixel tall in a 32px bar. It stays in the master for anywhere the brand is presented large.
+
+`brand.test.ts` reads the real PNG headers and fails if they drift from the sizes `assets.ts`
+hands the browser — without that, a regenerated asset silently reflows the bar on every cold
+load, since those numbers are what reserve the box before the image arrives.
+
 ### Two CSS variable namespaces that must never mix
 
 - `--app-*` — the application's own chrome, defined once in `src/styles/tokens.css`
