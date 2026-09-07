@@ -19,6 +19,24 @@
 }
 
 /*
+  The size scale. Classes rather than an inline custom property, so the narrow-viewport
+  override at the bottom of this file can beat them through ordinary source order — an inline
+  --logo-h wins against any stylesheet rule, which is exactly how the mobile step-down was
+  silently dead on production once.
+*/
+.sm {
+  --logo-h: 28px;
+}
+
+.md {
+  --logo-h: 32px;
+}
+
+.lg {
+  --logo-h: 40px;
+}
+
+/*
   Height drives the mark; the intrinsic width/height attributes supply the ratio.
 
   `width: auto` rather than a fixed pair, so the mark can never be stretched by a caller who
@@ -124,8 +142,9 @@
   colliding — and the mark carries the same identity in 24.5px where the lockup needs 82.5px.
   Given a choice between the two, the brief's default is the mark.
 
-  It also steps down to 28px here. The bar's own padding is unchanged, so this is the logo
-  giving room back rather than the chrome shrinking, which §11 rules out.
+  It also steps down to 28px here, overriding whichever size class the caller set. The bar's
+  own padding is unchanged, so this is the logo giving room back rather than the chrome
+  shrinking, which §11 rules out.
 */
 @media (max-width: 767px) {
   .responsive {
