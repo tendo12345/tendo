@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import type { CSSProperties } from 'react';
 import { MARK_INTRINSIC, MARK_SRC, WORD_INTRINSIC, WORD_LIGHT_SRC, WORD_SRC } from './assets';
 import styles from './BasisLogo.module.css';
 
@@ -36,7 +35,19 @@ interface BasisLogoProps {
   className?: string;
 }
 
-const HEIGHT: Record<LogoSize, string> = { sm: '28px', md: '32px', lg: '40px' };
+/*
+  Size is a CLASS, not an inline custom property, and that distinction is load-bearing.
+
+  `style={{ '--logo-h': '32px' }}` shipped first and looked right everywhere except the one
+  place it mattered: an inline custom property beats a stylesheet rule at any specificity, so
+  the `@media (max-width: 767px)` step-down to 28px never applied and the bar kept a 32px mark
+  on phones. Nothing errored — the wordmark still hid, because that rule targets a descendant
+  — so the only symptom was a number quietly disagreeing with the comment describing it.
+
+  As a class it lives in the same cascade as the media query, which is later in the file and
+  therefore wins.
+*/
+const SIZE_CLASS: Record<LogoSize, string> = { sm: styles.sm, md: styles.md, lg: styles.lg };
 
 /**
  * The Basis logo. One implementation, three variants, used everywhere the brand appears.
@@ -64,14 +75,13 @@ export function BasisLogo({
 }: BasisLogoProps) {
   const classes = [
     styles.logo,
+    SIZE_CLASS[size],
     entrance ? styles.entrance : '',
     responsive ? styles.responsive : '',
     className ?? '',
   ]
     .filter(Boolean)
     .join(' ');
-
-  const style = { '--logo-h': HEIGHT[size] } as CSSProperties;
 
   /*
     The wordmark is alt="" whenever the logo is a link, because the link is already named
@@ -120,7 +130,7 @@ export function BasisLogo({
 
   if (!href) {
     return (
-      <span className={classes} style={style}>
+      <span className={classes}>
         {mark}
         {word}
       </span>
@@ -136,7 +146,7 @@ export function BasisLogo({
     from an aria-label that replaced a visible label instead of extending it.
   */
   return (
-    <Link to={href} className={classes} style={style} aria-label="Basis home">
+    <Link to={href} className={classes} aria-label="Basis home">
       {mark}
       {word}
     </Link>
