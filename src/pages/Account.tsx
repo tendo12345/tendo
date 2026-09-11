@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { useSystemStore } from '../context/SystemStoreContext';
 import { localSystemStore } from '../lib/localSystemStore';
 import { createRemoteSystemStore, uploadLocalSystems } from '../lib/remoteSystemStore';
-import { supabase } from '../lib/supabase';
 import { enabledOAuthProviders, type OAuthProvider } from '../lib/authProviders';
 import { useToast } from '../context/ToastContext';
 import { Avatar } from '../components/ui/Avatar';
@@ -23,7 +22,7 @@ const PROVIDER_LABELS: Record<OAuthProvider, string> = {
  * "register" and no second flow to keep consistent.
  */
 export default function AccountPage() {
-  const { status, user, enabled, signInWithEmail, signInWithProvider, signOut } = useAuth();
+  const { status, user, enabled, client, ensureClient, signInWithEmail, signInWithProvider, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   /*
@@ -80,6 +79,17 @@ export default function AccountPage() {
     navigate(returnTo, { replace: true });
   }, [status, returnTo, navigate]);
 
+  /*
+    Load the sign-in library while they type, not when they press the button.
+
+    supabase-js is no longer on first load (lib/supabase.ts), so a signed-out visitor reaching
+    this page has not downloaded it yet. Starting now means sending the link does not wait on
+    a 50 kB fetch. Above the early returns for the same reason as the effect before it.
+  */
+  useEffect(() => {
+    if (enabled && status === 'signed-out') void ensureClient();
+  }, [enabled, status, ensureClient]);
+
   if (!enabled) {
     return (
       <div className={`container ${styles.wrap}`}>
@@ -108,11 +118,11 @@ export default function AccountPage() {
   };
 
   const migrate = async () => {
-    if (!supabase || !user) return;
+    if (!client || !user) return;
     setBusy(true);
     try {
       const local = await localSystemStore.list();
-      const remote = createRemoteSystemStore(supabase, user.id);
+      const remote = createRemoteSystemStore(client, user.id);
       const { uploaded, skipped } = await uploadLocalSystems(remote, local);
       await refresh();
       showToast(

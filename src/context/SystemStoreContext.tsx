@@ -11,7 +11,6 @@ import { ENGINE_VERSION, hashOutput, normalizeInput } from '../engine/version';
 import type { DesignSystemOutput, GenerateInput } from '../engine/types';
 import { localStoreInfo, localSystemStore, migrateLegacySnapshots } from '../lib/localSystemStore';
 import { accountStoreInfo, createRemoteSystemStore } from '../lib/remoteSystemStore';
-import { supabase } from '../lib/supabase';
 import { useAuth } from './AuthContext';
 import type { SavedSystem, SystemStore, SystemStoreInfo } from '../lib/systemStore';
 
@@ -43,15 +42,16 @@ const SystemStoreContext = createContext<SystemStoreContextValue | null>(null);
  * place in the app that knows the difference; every screen below reads the port.
  */
 function useActiveStore(overrides: { store?: SystemStore; info?: SystemStoreInfo }) {
-  const { user } = useAuth();
+  // `client` is always loaded when `user` is set: the session came from it.
+  const { user, client } = useAuth();
 
   return useMemo(() => {
     if (overrides.store) return { store: overrides.store, info: overrides.info ?? localStoreInfo };
-    if (supabase && user) {
-      return { store: createRemoteSystemStore(supabase, user.id), info: accountStoreInfo };
+    if (client && user) {
+      return { store: createRemoteSystemStore(client, user.id), info: accountStoreInfo };
     }
     return { store: localSystemStore, info: localStoreInfo };
-  }, [overrides.store, overrides.info, user]);
+  }, [overrides.store, overrides.info, user, client]);
 }
 
 export function SystemStoreProvider({

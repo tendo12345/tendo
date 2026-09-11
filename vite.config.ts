@@ -30,6 +30,8 @@ export default defineConfig({
           // must stay OUT of the dataset chunk or the landing page pulls all of src/data in.
           if (id.includes('coverage.json')) return undefined
           if (id.includes('/src/data/')) return 'design-data'
+          // Loaded on demand by lib/supabase.ts's loadSupabase(), never on first load — a
+          // signed-out visitor does not download it at all. See CLAUDE.md.
           if (id.includes('node_modules/@supabase')) return 'supabase'
           // Blog post content, same reasoning as design-data: it changes on its own schedule
           // and should not invalidate (or bloat) the app chunk on every unrelated deploy.
