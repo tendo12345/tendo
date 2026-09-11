@@ -274,6 +274,22 @@ Four things here are decisions, not defaults:
 hands the browser — without that, a regenerated asset silently reflows the bar on every cold
 load, since those numbers are what reserve the box before the image arrives.
 
+**The hero animates a 3D model of the mark, and that is not a second logo.** `BlockSculpture`
+builds the master's ten pieces in CSS 3D (`components/home/logoPieces.ts`) so the gather-and-
+loosen motion plays on the logo itself; gathered, it is the mark in the master's pose. It is
+never used as an identifier — nav, footer and favicon stay the raster. Piece positions are
+*solved* from the master's camera (rotateX -20, rotateY -40) rather than placed by eye, so move
+one only with that in mind; `logoPieces.test.ts` fails if any two pieces intersect, because
+CSS 3D z-fights interpenetrating planes without reporting anything.
+
+**No opacity inside a `preserve-3d` chain.** Chromium treats an active opacity animation as a
+grouping property — and a `both` fill keeps it active forever, even at opacity 1 — which forces
+`transform-style: flat`. The first hero cube shipped with a fade on every block and rendered
+as flat tiles on production for its entire life; computed style reported `preserve-3d`
+throughout, and freezing animations for a screenshot hid it by removing the cause. Fade the
+3D context's root instead, and assemble pieces by transform. `logoPieces.test.ts` enforces this
+against the stylesheet.
+
 ### Two CSS variable namespaces that must never mix
 
 - `--app-*` — the application's own chrome, defined once in `src/styles/tokens.css`
