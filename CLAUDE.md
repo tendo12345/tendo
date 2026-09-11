@@ -163,10 +163,26 @@ strip.
 
 Column stripping is worth ~9 kB gzipped, not more: gzip already collapses the redundancy.
 The dataset lives in its own `design-data` chunk (see `vite.config.ts`) so app deploys do
-not invalidate it, and it is no longer part of first load: every route that reaches the
-engine is lazily imported in `App.tsx`, and the landing page renders from a build-time
-precomputed sample instead of importing the engine to generate one. First load is ~98 kB
-gzipped, down from ~224 kB.
+not invalidate it, and it is not part of first load: every route that reaches the engine is
+lazily imported in `App.tsx`, and the landing page renders from a build-time precomputed
+sample instead of importing the engine to generate one.
+
+**That claim was false until September 2026, and nothing noticed.** `GeneratedSystemContext`
+is mounted at the root in `main.tsx`, and it imported `generateDesignSystem` — so the entry
+chunk pulled in the engine and all of `src/data`, and `index.html` preloaded it for every
+visitor. Lazy routes cannot help when a root provider imports the thing they defer. The
+provider now only holds the current system; generation lives in `hooks/useGenerate.ts`, which
+only the lazy routes import. **Never import the engine from anything mounted in `main.tsx` or
+rendered by the landing page.** `src/firstLoad.test.ts` walks the static import graph from
+`main.tsx` and fails with the offending import chain if `src/data` becomes reachable.
+
+Measured like for like (production build with Supabase configured, gzip -9): first load went
+from 257.5 kB to 153.6 kB. What remains is the entry (77.7 kB), supabase-js (51.8 kB), the JSX
+runtime (16.1 kB) and CSS (7.9 kB). supabase-js is there because `AuthProvider` sits at the
+root to decide the nav's signed-in state; deferring it would move it off the critical path but
+not remove it, since every page needs the session. A local build without
+`VITE_SUPABASE_URL` tree-shakes supabase-js away entirely, so measure with the variables set
+or the number understates production by ~52 kB.
 
 Two things keep that saving from silently unwinding: `sampleSystem.ts` must import the
 engine **type-only** (a value import drags the dataset back into the landing chunk), and
@@ -344,6 +360,7 @@ independently in `ground.test.ts` rather than trusting the solver.
 ## Known gaps
 
 - The dataset still loads in full once someone generates; it is deferred, not reduced.
+- supabase-js (~52 kB gzipped) is on first load for the root `AuthProvider`. See above.
 
 ## Settled, not gaps
 

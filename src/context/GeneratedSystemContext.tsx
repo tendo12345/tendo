@@ -1,6 +1,21 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { generateDesignSystem } from '../engine';
-import type { DesignSystemOutput, GenerateInput } from '../engine/types';
+import type { DesignSystemOutput } from '../engine/types';
+
+/*
+  This provider holds the current system. It does NOT generate one, and it must never import
+  the engine.
+
+  It is mounted at the root (main.tsx), so everything it imports ships on first load. It used
+  to import `generateDesignSystem`, which pulled the engine and the whole ~100 kB gzipped
+  dataset into the entry chunk for every visitor — including the ones who read the landing
+  page and leave. CLAUDE.md said the dataset was not part of first load; from the initial
+  commit until this was fixed, it always was.
+
+  Generation lives in hooks/useGenerate.ts instead, imported only by the routes that generate
+  (Generator, Share, Workspace), which are lazily loaded — so the engine arrives with them.
+  firstLoad.test.ts walks the static import graph from main.tsx and fails if the dataset
+  becomes reachable again.
+*/
 
 const STORAGE_KEY = 'dsg-current-system';
 const STORAGE_KEY_TIME = 'dsg-current-system-time';
@@ -20,9 +35,8 @@ interface GeneratedSystemContextValue {
   output: DesignSystemOutput | null;
   /** When `output` was produced, UI-only (not part of the engine's output shape). */
   generatedAt: string | null;
-  generate: (input: GenerateInput) => DesignSystemOutput;
-  /** Re-runs the engine on the same input. The engine is deterministic (BM25, no randomness), so this returns an identical result unless the input changed. */
-  regenerate: () => DesignSystemOutput | null;
+  /** Make `system` the current one. Called by useGenerate with fresh engine output. */
+  show: (system: DesignSystemOutput) => void;
   clear: () => void;
 }
 
@@ -89,17 +103,10 @@ export function GeneratedSystemProvider({ children }: { children: ReactNode }) {
     }
   }, [output, generatedAt]);
 
-  const generate = useCallback((input: GenerateInput) => {
-    const result = generateDesignSystem(input);
-    setOutput(result);
+  const show = useCallback((system: DesignSystemOutput) => {
+    setOutput(system);
     setGeneratedAt(new Date().toISOString());
-    return result;
   }, []);
-
-  const regenerate = useCallback(() => {
-    if (!output) return null;
-    return generate(output.input);
-  }, [output, generate]);
 
   const clear = useCallback(() => {
     setOutput(null);
@@ -107,8 +114,8 @@ export function GeneratedSystemProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ output, generatedAt, generate, regenerate, clear }),
-    [output, generatedAt, generate, regenerate, clear],
+    () => ({ output, generatedAt, show, clear }),
+    [output, generatedAt, show, clear],
   );
 
   return <GeneratedSystemContext.Provider value={value}>{children}</GeneratedSystemContext.Provider>;

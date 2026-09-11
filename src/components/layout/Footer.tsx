@@ -1,7 +1,23 @@
 import { BasisLogo } from '../brand/BasisLogo';
+import { accountsEnabled } from '../../lib/supabase';
 import styles from './Footer.module.css';
 
 export function Footer() {
+  /*
+    The access line depends on the deployment, because the truth does.
+
+    It used to say "no account required" everywhere. That stopped being true when the
+    generator went behind sign-in, and stayed on the page for every visitor. Where a Supabase
+    project is configured, generating needs an account; where none is, Basis runs with no
+    backend and genuinely needs none — RequireAccount lets everyone through. One fixed
+    sentence is false in one of those two, so this reads the same switch the gate reads.
+
+    The wording matches the hero's note, so a signed-out visitor meets one claim, not two.
+  */
+  const access = accountsEnabled()
+    ? 'Free to use — generating needs an account, one email and no password.'
+    : 'Free to use, no account required.';
+
   return (
     <footer className={styles.footer}>
       <div className={`${styles.inner} container`}>
@@ -16,7 +32,7 @@ export function Footer() {
         <BasisLogo href="/" variant="full" size="md" className={styles.brand} />
         <p className={styles.note}>
           Every palette, pairing, and pattern comes from matched design data and rules — not a
-          model improvising. Free to use, no account required.
+          model improvising. {access}
         </p>
       </div>
     </footer>

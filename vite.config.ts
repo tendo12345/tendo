@@ -15,9 +15,11 @@ export default defineConfig({
           means a deploy invalidates the app chunk while returning visitors keep the data
           from cache, rather than re-downloading ~480 kB because a button colour moved.
 
-          This does NOT reduce first load — all of it is still needed before the first
-          generation. Cutting first load means not shipping the data up front at all, which
-          needs an async boundary the engine does not currently have.
+          It is also not on first load. Nothing mounted at the root imports the engine —
+          generation lives in hooks/useGenerate.ts, used only by lazily loaded routes — so
+          this chunk arrives with the first route that generates, and a visitor who reads
+          the landing page and leaves never downloads it. src/firstLoad.test.ts enforces
+          that; a root-level engine import silently undid it from the initial commit on.
         */
         manualChunks(id) {
           // The precomputed landing-page sample lives in src/data but must NOT join the
