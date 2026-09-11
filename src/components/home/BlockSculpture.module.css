@@ -1,19 +1,18 @@
 /*
-  Sizing is driven by one custom property so the whole mark scales from one place: --unit is
-  the edge of the white core, and every piece is sized and placed in multiples of it.
+  One custom property sizes the whole cube: --unit is a cubie's edge. The rig reads it to
+  place cubies in px, and the faces are drawn from it here, so changing it at a breakpoint
+  rescales everything together.
 */
 .stage {
   /*
     Sized against the column, not by eye.
 
-    The first sculpture rendered at 240px inside a 535px stage and read as an illustration
-    parked in the corner rather than the counterweight to the headline. At a 100px core the
-    mark spans roughly 3.2 units — about 60% of its column, as large as it goes before the
-    outer pieces clip at the loosened end of the cycle.
+    Tumbling, the cube shows its full space diagonal: 3 edges plus seams times root 3 — about
+    440px at an 80px edge. The stage is 544px tall and the column wider, so the cube never
+    clips at any angle it passes through, while still filling the column as the
+    counterweight to the headline.
   */
-  --unit: 100px;
-  /* One period for every piece. See the note on `group` in BlockSculpture.tsx. */
-  --cycle: 9s;
+  --unit: 80px;
 
   position: relative;
   display: grid;
@@ -27,7 +26,7 @@
 /*
   Atmospheric field behind the object.
 
-  Confined to this column and sitting BEHIND the sculpture, never behind hero text — the text
+  Confined to this column and sitting BEHIND the cube, never behind hero text — the text
   lives in the other grid column. That containment is what keeps it out of the contrast
   budget: no measured foreground pair is drawn over it, so it cannot pull any role off its
   ratio the way a page-wide wash would. If this ever moves under the copy, re-measure.
@@ -56,66 +55,19 @@
 }
 
 /*
-  Perspective lives on the scene, the rotation on the lattice inside it.
+  The root of the 3D context: perspective, and the one fade-in.
 
-  Separating them matters: perspective must not be part of the animated transform, or the
-  vanishing point travels with the object and the depth cue collapses.
-
-  --tilt-x / --tilt-y are written by the pointer handler and default to zero, so the object is
-  correct with no JS at all.
+  Perspective is set against the cube's size — about 3.5 times its width — which is the ratio
+  that makes far cubies recede the way the reference's do without distorting the near corner.
 */
 .scene {
-  --tilt-x: 0deg;
-  --tilt-y: 0deg;
-  /* The master's camera. See .entranceStill. */
-  --pose-x: -20deg;
-  --pose-y: -40deg;
-
-  /*
-    Strong perspective, deliberately. Depth in CSS 3D comes from the ratio of perspective to
-    object size, and ~760px against a ~320px object is what makes the far pieces recede.
-
-    Correction to this file's history: the lattice once shipped at 1400px and "read as a flat
-    grid of rounded squares", and the perspective was blamed. It was not the cause. The flat
-    grid was the opacity-flattening bug described under NO OPACITY INSIDE THE 3D CHAIN, which
-    no perspective value can fix — production rendered flat tiles at 760px too.
-  */
-  perspective: 760px;
-  perspective-origin: 50% 42%;
+  perspective: 900px;
+  perspective-origin: 50% 45%;
   transform-style: preserve-3d;
   /* The only opacity anywhere in the object. See NO OPACITY INSIDE THE 3D CHAIN, below. */
   animation: scene-fade 700ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
 }
 
-/*
-  Entrance only. Kept on its own element because it and the turn both animate `transform`:
-  sharing a node, this one's `both` fill-mode pins the final frame and the turn never runs —
-  silently, with a perfectly valid computed style.
-*/
-.entrance {
-  transform-style: preserve-3d;
-  animation: lattice-enter 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/*
-  NO OPACITY INSIDE THE 3D CHAIN. This is the rule the whole object depends on.
-
-  Chromium treats an opacity animation as a grouping property for as long as it is active,
-  and a `both` fill keeps it active forever — even resting at opacity 1. A grouping property
-  forces `transform-style: flat`, so the element's subtree is rendered flat into its plane.
-
-  Both the lattice and the mark shipped with that bug. The entrance faded in, so the whole
-  object was flattened into one card and THEN rotated to the pose — a sheared, head-on
-  picture. Each piece faded in too, so every box collapsed to a single face. Computed style
-  still reported `preserve-3d` on every element, which is why it survived inspection; it only
-  shows as a rendered frame, and freezing the animations for a screenshot hid it by removing
-  the very thing that caused it.
-
-  So the fade lives on .scene (declared with it, above), the root of the 3D context, where flattening costs nothing —
-  the scene is not itself transformed in 3D. Pieces assemble by TRANSFORM on an inner .body,
-  which never groups. Do not add opacity, filter, clip-path, mask or overflow to .entrance,
-  .lattice, .piece, .body or a face.
-*/
 @keyframes scene-fade {
   from {
     opacity: 0;
@@ -127,298 +79,121 @@
 }
 
 /*
-  The resting pose is the master's camera: above the object and off to its left, so every
-  piece shows its top, its front and its right side. That is the angle the logo is drawn
-  from, and the only angle at which this reads as the logo rather than as blocks that happen
-  to share its colours.
-*/
-.entranceStill {
-  animation: none;
-  transform: rotateX(var(--pose-x)) rotateY(var(--pose-y));
-}
+  NO OPACITY INSIDE THE 3D CHAIN. The whole object depends on this rule.
 
-.lattice {
+  Chromium treats an opacity animation as a grouping property for as long as it is active,
+  and a `both` fill keeps it active forever — even resting at opacity 1. A grouping property
+  forces `transform-style: flat`, so the element's subtree is rendered flat into its plane.
+
+  The first hero cube shipped with a fade on its entrance and on every block, and rendered as
+  a flat grid of tiles on production for its entire life. Computed style still reported
+  `preserve-3d` on every element, which is why it survived inspection; it shows only in a
+  rendered frame, and freezing animations for a screenshot hides it by removing the cause.
+
+  So the fade lives on .scene, the root of the 3D context, where flattening costs nothing: the
+  scene is not itself transformed in 3D. Never add opacity, filter, clip-path, mask or
+  overflow to .cube, .cubie or a face. BlockSculpture.test.ts enforces this.
+*/
+
+/* The whole cube. Its transform — tilt, tumble, pointer lean — is written by the rig. */
+.cube {
   position: relative;
-  width: calc(var(--unit) * 3.2);
-  height: calc(var(--unit) * 3.2);
-  transform-style: preserve-3d;
-  animation: lattice-turn 16s ease-in-out infinite alternate;
-}
-
-/*
-  The global turn: a sculptural object changing its weight, not a product model spinning.
-  Never completes a revolution, so the same three faces stay toward the viewer and the fixed
-  face tones keep reading as light.
-*/
-@keyframes lattice-turn {
-  from {
-    transform: rotateX(calc(3deg + var(--tilt-x))) rotateY(calc(-7deg + var(--tilt-y)));
-  }
-
-  to {
-    transform: rotateX(calc(-3deg + var(--tilt-x))) rotateY(calc(7deg + var(--tilt-y)));
-  }
-}
-
-/* The mark arrives off-axis and settles into the master's pose. */
-@keyframes lattice-enter {
-  from {
-    transform: scale(0.88) rotateX(calc(var(--pose-x) + 12deg)) rotateY(calc(var(--pose-y) + 16deg))
-      translateY(30px);
-  }
-
-  to {
-    transform: rotateX(var(--pose-x)) rotateY(var(--pose-y));
-  }
-}
-
-.latticeStill {
-  animation: none;
-}
-
-/*
-  Gathered and loosened.
-
-  Every piece shares one period and differs only by phase, in four groups. That is the part
-  that has to be right: different periods let the pieces average each other out and the
-  object never changes state (measured once — the old lattice's mean radius moved 2px), while
-  one phase for all makes it pulse like a heartbeat.
-
-  Gathered is the resting position, exactly — so the object IS the logo at one end of every
-  cycle, and under reduced motion it is the logo permanently. Loosened adds each piece's own
-  outward offset, which is why those offsets point away from the core.
-
-  The keyframes restate the whole translate3d because a transform animation replaces the
-  property outright; animating only the offset would snap every piece to the origin.
-
-  A piece is a zero-size point at its centre. Faces and slices are centred on it with
-  negative margins, so every transform below rotates about the piece's own middle.
-*/
-.piece {
-  position: absolute;
-  top: 50%;
-  left: 50%;
   width: 0;
   height: 0;
   transform-style: preserve-3d;
-  transform: translate3d(
-      calc(var(--x) * var(--unit)),
-      calc(var(--y) * var(--unit)),
-      calc(var(--z) * var(--unit))
-    )
-    rotateY(var(--turn));
-  animation: piece-drift var(--cycle) ease-in-out var(--drift-delay) infinite alternate;
-}
-
-@keyframes piece-drift {
-  from {
-    transform: translate3d(
-        calc(var(--x) * var(--unit)),
-        calc(var(--y) * var(--unit)),
-        calc(var(--z) * var(--unit))
-      )
-      rotateY(var(--turn));
-  }
-
-  to {
-    transform: translate3d(
-        calc(var(--x) * var(--unit) + var(--fx) * var(--drift-scale, 1)),
-        calc(var(--y) * var(--unit) + var(--fy) * var(--drift-scale, 1)),
-        calc(var(--z) * var(--unit) + var(--fz) * var(--drift-scale, 1))
-      )
-      rotateY(var(--turn))
-      rotateZ(calc(var(--rot) * var(--drift-scale, 1)));
-  }
 }
 
 /*
-  Assembly. Each piece arrives from three times its loosened offset — out along its own seam —
-  and settles into place in build order, so the mark is put together rather than faded up.
-
-  On an inner element because .piece already animates `transform` for the drift, and two
-  transform animations on one node do not compose: the later one wins outright. That is the
-  bug the entrance/turn split exists for, one level down. `backwards` rather than `both`, so
-  once assembly ends it contributes nothing at all.
+  A cubie is a zero-size point at its centre, and its six faces are centred on it. The rig
+  writes one matrix3d per cubie, and only while that cubie is moving.
 */
-.body {
+.cubie {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
   transform-style: preserve-3d;
-  animation: body-enter 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--enter-delay) backwards;
-}
-
-@keyframes body-enter {
-  from {
-    transform: translate3d(calc(var(--fx) * 3), calc(var(--fy) * 3), calc(var(--fz) * 3)) scale(0.72);
-  }
-
-  to {
-    transform: none;
-  }
-}
-
-.pieceStill,
-.pieceStill .body {
-  animation: none;
 }
 
 /*
-  Boxes: three faces, not six.
+  All six faces, because a turning layer shows faces that are hidden at rest — the ones
+  inside the seam. `backface-visibility: hidden` culls whichever three face away, so a cubie
+  costs three drawn planes, not six.
 
-  Only the top, the front and the right side are ever visible inside the turn, so the other
-  three are not built. Each face is sized from the piece's own extents — the pieces are not
-  cubes: the slab is long, the column tall, the tile flat.
-
-  The radius scales with the unit so the bevel keeps its proportion at every breakpoint. The
-  master's pieces are soft; a fixed 11px corner that suited a 100px cube reads as sharp once
-  the pieces shrink on a phone.
+  The background colour is lighting, written per frame by the rig from the face's real
+  direction; this sheen is the part fixed to the face, a soft gloss across the upper left.
+  The hairline defines each cubie's edge the way the reference's seams do, and keeps a white
+  cubie readable against the parchment.
 */
 .face {
   position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: calc(var(--unit) * 0.14);
-  background: var(--face);
+  left: calc(var(--unit) / -2);
+  top: calc(var(--unit) / -2);
+  width: var(--unit);
+  height: var(--unit);
+  border-radius: calc(var(--unit) * 0.12);
+  backface-visibility: hidden;
+  background-image: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.22),
+    rgb(255 255 255 / 0) 46%,
+    rgb(0 0 0 / 0.06)
+  );
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.07);
 }
 
 .front {
-  --face: var(--tone);
-  width: calc(var(--w) * var(--unit));
-  height: calc(var(--h) * var(--unit));
-  margin: calc(var(--h) * var(--unit) / -2) 0 0 calc(var(--w) * var(--unit) / -2);
-  transform: translateZ(calc(var(--d) * var(--unit) / 2));
-  /*
-    A single directional highlight, faked. CSS 3D has no lighting model, so a flat fill looks
-    like coloured paper; the same sheen across every front face is what sells one light.
-  */
-  background-image: linear-gradient(
-    145deg,
-    rgb(255 255 255 / 0.26),
-    rgb(255 255 255 / 0.05) 42%,
-    rgb(0 0 0 / 0.07) 80%
-  );
+  transform: translateZ(calc(var(--unit) / 2));
 }
 
-/* Fixed tonal offsets stand in for the light: the top catches it, the side falls away. */
+.back {
+  transform: rotateY(180deg) translateZ(calc(var(--unit) / 2));
+}
+
+.right {
+  transform: rotateY(90deg) translateZ(calc(var(--unit) / 2));
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(calc(var(--unit) / 2));
+}
+
 .top {
-  --face: color-mix(in srgb, var(--tone) 82%, #ffffff);
-  width: calc(var(--w) * var(--unit));
-  height: calc(var(--d) * var(--unit));
-  margin: calc(var(--d) * var(--unit) / -2) 0 0 calc(var(--w) * var(--unit) / -2);
-  transform: rotateX(90deg) translateZ(calc(var(--h) * var(--unit) / 2));
-  background-image: linear-gradient(160deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0));
+  transform: rotateX(90deg) translateZ(calc(var(--unit) / 2));
 }
 
+.bottom {
+  transform: rotateX(-90deg) translateZ(calc(var(--unit) / 2));
+}
+
+/* Perspective scales with the cube, so the depth reads the same at every size. */
 /*
-  The side falls away gently. The master's right faces are only a step darker than its fronts;
-  a 20% mix toward black turned the white core's side grey and the gold's olive, which read
-  as different materials rather than one material turning from the light.
+  The stage heights below are measured, not chosen. Tumbling under perspective, the cube's
+  nearest corners pass low and to the left, so over a full loop its footprint reaches about a
+  third of an edge further down than up — at 26rem and 21rem it crossed the stage's bottom
+  edge by 5px and 7px, six pixels from the preview card on a phone. One more rem keeps the
+  whole sweep inside the stage.
 */
-.side {
-  --face: color-mix(in srgb, var(--tone) 89%, #000000);
-  width: calc(var(--d) * var(--unit));
-  height: calc(var(--h) * var(--unit));
-  margin: calc(var(--h) * var(--unit) / -2) 0 0 calc(var(--d) * var(--unit) / -2);
-  transform: rotateY(90deg) translateZ(calc(var(--w) * var(--unit) / 2));
-  background-image: linear-gradient(200deg, rgb(0 0 0 / 0.02), rgb(0 0 0 / 0.12));
-}
-
-/*
-  Discs: a cylinder is a stack of circular slices.
-
-  The body slices take the edge tone and the last one — the flat face — takes the lit tone,
-  so the stack reads as a solid with a rim rather than as a pile of coins. --k is the slice's
-  offset along the disc's axis, in units, set per slice by the component.
-*/
-.slice {
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--tone) 86%, #000000);
-}
-
-.sliceFace {
-  background: var(--tone);
-  background-image: radial-gradient(
-    circle at 34% 30%,
-    rgb(255 255 255 / 0.3),
-    rgb(255 255 255 / 0.04) 55%,
-    rgb(0 0 0 / 0.06)
-  );
-}
-
-/* Face toward the viewer: the circle spans w x h and the stack runs along z. */
-.axisZ {
-  width: calc(var(--w) * var(--unit));
-  height: calc(var(--h) * var(--unit));
-  margin: calc(var(--h) * var(--unit) / -2) 0 0 calc(var(--w) * var(--unit) / -2);
-  transform: translateZ(calc(var(--k) * var(--unit)));
-}
-
-/* Face to the right: the circle spans d x h, turned to face +x. */
-.axisX {
-  width: calc(var(--d) * var(--unit));
-  height: calc(var(--h) * var(--unit));
-  margin: calc(var(--h) * var(--unit) / -2) 0 0 calc(var(--d) * var(--unit) / -2);
-  transform: rotateY(90deg) translateZ(calc(var(--k) * var(--unit)));
-}
-
-/* Face up: the circle spans w x d, laid flat. */
-.axisY {
-  width: calc(var(--w) * var(--unit));
-  height: calc(var(--d) * var(--unit));
-  margin: calc(var(--d) * var(--unit) / -2) 0 0 calc(var(--w) * var(--unit) / -2);
-  transform: rotateX(90deg) translateZ(calc(var(--k) * var(--unit)));
-}
-
-/*
-  Palette, sampled from brand/basis-logo-master.png and fixed.
-
-  Not --app-* tokens, deliberately. Those repaint in dark mode — --app-paper turns near-black,
-  --app-ink turns light — and the mark never repaints anywhere else. A hero model whose white
-  core went dark in dark mode would be showing a different logo from the one in the bar above
-  it. These are also never --ds-* values: nothing here is generated output.
-*/
-.core { --tone: #f8f5f3; }
-.blue { --tone: #2b59d1; }
-.peri { --tone: #b4c5f7; }
-.gold { --tone: #ecd592; }
-.ink { --tone: #2c2b2e; }
-.coral { --tone: #f9a582; }
-.mint { --tone: #9ae6c0; }
-
-/*
-  The core is near-white on a near-white page and would vanish at rest, so it alone carries a
-  hairline. It reads as the edge of the object, not as a border on a card.
-*/
-.core .face {
-  box-shadow: inset 0 0 0 1px rgb(36 36 36 / 0.08);
-}
-
 @media (max-width: 1023px) {
   .stage {
-    --unit: 74px;
-    min-height: 26rem;
-  }
-}
-
-/*
-  Mobile: smaller unit, and the drift is scaled down with it.
-
-  Roughly half the displacement on small screens. Rather than a second set of per-piece
-  numbers, the offsets are multiplied down here — one place to change, and it cannot drift
-  out of step with the values in the component.
-*/
-@media (max-width: 767px) {
-  .stage {
     --unit: 62px;
-    --drift-scale: 0.5;
-    min-height: 21rem;
+    min-height: 27rem;
   }
 
   .scene {
-    perspective: 1000px;
+    perspective: 700px;
+  }
+}
+
+@media (max-width: 767px) {
+  .stage {
+    --unit: 52px;
+    min-height: 22rem;
+  }
+
+  .scene {
+    perspective: 590px;
   }
 
   .field {
@@ -429,27 +204,13 @@
 /*
   Reduced motion.
 
-  The object stays — it is the composition, not decoration — but nothing moves: no turn, no
-  drift, no field animation, and the pointer listener is never attached in the first place.
-  What remains is the logo, gathered, in the master's pose.
+  The cube stays — it is the composition, not decoration — but nothing moves: the rig never
+  starts, so there is no loop and no pointer listener, and what remains is the solved cube at
+  its resting pose, lit, from first paint.
 */
 @media (prefers-reduced-motion: reduce) {
-  .field {
+  .field,
+  .scene {
     animation: none;
-  }
-
-  .lattice {
-    animation: none;
-  }
-
-  .scene,
-  .piece,
-  .body {
-    animation: none;
-  }
-
-  .entrance {
-    animation: none;
-    transform: rotateX(var(--pose-x)) rotateY(var(--pose-y));
   }
 }
