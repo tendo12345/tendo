@@ -274,6 +274,33 @@ Four things here are decisions, not defaults:
 hands the browser — without that, a regenerated asset silently reflows the bar on every cold
 load, since those numbers are what reserve the box before the image arrives.
 
+**The hero is a working 3x3x3 cube in the mark's colours, and it is not a second logo.**
+`BlockSculpture` builds 27 cubies in CSS 3D and runs them as a real puzzle: each twist turns
+one layer a quarter turn about the cube's axis and then *commits* — positions permuted,
+orientations multiplied — so the nine cubies in a layer differ every move. That is why it is
+driven by one rAF loop (`cubeRig.ts`) over pure math (`cubeMechanics.ts`) rather than
+keyframes, and why every face is lit from its real direction each frame: once cubies turn, a
+baked "top is lighter" tone would leave one face of the cube patchwork. The loop writes
+transforms and colours straight to the DOM, never React state, and stops while off screen.
+Solved, the visible faces carry the mark's composition; nav, footer and favicon stay the
+raster.
+
+The choreography is a scramble that comes home to solved. A scramble plus its plain inverse
+turns a layer straight back at the midpoint and at the loop seam; the sequence uses commuting
+pairs at both ends to avoid it. `cubeMechanics.test.ts` proves the grid stays whole, every
+pass returns to solved, no layer turns twice in a row, and a finished twist draws exactly
+where its commit puts it (the snap you would otherwise see every move). The reduced-motion
+path — solved, lit, and no loop at all — is proven by `BlockSculpture.render.test.tsx`,
+because the preview tools cannot emulate that preference.
+
+**No opacity inside a `preserve-3d` chain.** Chromium treats an active opacity animation as a
+grouping property — and a `both` fill keeps it active forever, even at opacity 1 — which forces
+`transform-style: flat`. The first hero cube shipped with a fade on every block and rendered
+as flat tiles on production for its entire life; computed style reported `preserve-3d`
+throughout, and freezing animations for a screenshot hid it by removing the cause. Fade the
+3D context's root instead, and assemble pieces by transform. `BlockSculpture.test.ts` enforces
+this against the stylesheet.
+
 ### Two CSS variable namespaces that must never mix
 
 - `--app-*` — the application's own chrome, defined once in `src/styles/tokens.css`
