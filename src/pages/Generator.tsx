@@ -6,7 +6,7 @@ import { KeywordChips } from '../components/generator/KeywordChips';
 import { ProductTypeCombobox } from '../components/generator/ProductTypeCombobox';
 import { RegionInput } from '../components/generator/RegionInput';
 import { Button } from '../components/ui/Button';
-import { useGeneratedSystem } from '../context/GeneratedSystemContext';
+import { useGenerate } from '../hooks/useGenerate';
 import { buildGenerateInput } from '../lib/buildGenerateInput';
 import styles from './Generator.module.css';
 
@@ -17,7 +17,7 @@ export default function GeneratorPage() {
   const [region, setRegion] = useState('');
   const [error, setError] = useState<string | undefined>();
 
-  const { generate } = useGeneratedSystem();
+  const { generate } = useGenerate();
   const navigate = useNavigate();
 
   /*

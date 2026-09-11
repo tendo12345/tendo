@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { EmptyState } from '../components/ui/EmptyState';
-import { useGeneratedSystem } from '../context/GeneratedSystemContext';
+import { useGenerate } from '../hooks/useGenerate';
 import { decodeShareParams } from '../lib/shareLink';
 
 /**
@@ -15,7 +15,7 @@ import { decodeShareParams } from '../lib/shareLink';
 export default function SharePage() {
   const { search } = useLocation();
   const navigate = useNavigate();
-  const { generate } = useGeneratedSystem();
+  const { generate } = useGenerate();
   const input = decodeShareParams(search);
   const generated = useRef(false);
 

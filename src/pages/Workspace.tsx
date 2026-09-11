@@ -23,6 +23,7 @@ import { StatesPane } from '../components/workspace/StatesPane';
 import { SystemDnaPanel } from '../components/workspace/SystemDnaPanel';
 import { TokensPane } from '../components/workspace/TokensPane';
 import { useGeneratedSystem } from '../context/GeneratedSystemContext';
+import { useGenerate } from '../hooks/useGenerate';
 import { WORKSPACE_SECTIONS } from '../types/ui';
 import styles from './Workspace.module.css';
 
@@ -34,7 +35,8 @@ import styles from './Workspace.module.css';
  */
 export default function WorkspacePage() {
   const { section } = useParams<{ section: string }>();
-  const { output, generatedAt, regenerate } = useGeneratedSystem();
+  const { output, generatedAt } = useGeneratedSystem();
+  const { regenerate } = useGenerate();
 
   if (!output) {
     return (

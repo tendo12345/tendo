@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { DIRECTIONS, compareSystems, createVariation, type Variation } from '../../engine/variations';
 import type { DesignSystemOutput } from '../../engine/types';
-import { useGeneratedSystem } from '../../context/GeneratedSystemContext';
+import { useGenerate } from '../../hooks/useGenerate';
 import { useToast } from '../../context/ToastContext';
 import { fingerprint, useSystemStore } from '../../context/SystemStoreContext';
 import { detectDrift } from '../../lib/systemStore';
@@ -18,7 +18,7 @@ import styles from './ExplorePane.module.css';
  * changes nothing, that is reported plainly instead of being disguised.
  */
 export function ExplorePane({ output }: { output: DesignSystemOutput }) {
-  const { generate } = useGeneratedSystem();
+  const { generate } = useGenerate();
   const { showToast } = useToast();
   const [variations, setVariations] = useState<Variation[]>([]);
   const [compareWith, setCompareWith] = useState<DesignSystemOutput | null>(null);

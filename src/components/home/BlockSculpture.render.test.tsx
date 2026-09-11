@@ -10,7 +10,7 @@
  * half and fail the person who asked for stillness.
  */
 
-import { render } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { BlockSculpture } from './BlockSculpture';
 import { toMatrix3d, worldRotation } from './cubeMechanics';
@@ -57,6 +57,9 @@ describe('BlockSculpture under reduced motion', () => {
   });
 
   afterEach(() => {
+    // No vitest globals, so Testing Library does not unmount on its own; a cube left mounted
+    // from one test could hold a running rig into the next.
+    cleanup();
     vi.unstubAllGlobals();
   });
 
