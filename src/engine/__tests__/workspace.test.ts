@@ -46,7 +46,22 @@ describe('provenance', () => {
     const a = generateDesignSystem({ productType: 'fintech', keywords: ['mobile'] });
     const b = generateDesignSystem({ productType: 'fintech', keywords: ['mobile'] });
     expect(a).toEqual(b);
-    expect(a.provenance.colors.score).toBeGreaterThan(0);
+    expect(a.provenance.product.score).toBeGreaterThan(0);
+    expect(a.provenance.style.score).toBeGreaterThan(0);
+  });
+
+  /*
+    The palette is not ranked, so it reports no score.
+
+    It is read from the colours row named after the product category, and a score here would
+    describe a search that no longer decides anything — "matched 4.2" beside a row that was
+    never in the running. This asserted `colors.score > 0` before that change; the assertion
+    was true and the fact it stood for is gone.
+  */
+  it('reports how the palette was chosen rather than a score it did not earn', () => {
+    expect(fintech.provenance.colors.path).toBe('category');
+    expect(fintech.provenance.colors.matched).toBe(true);
+    expect(fintech.provenance.colors.score).toBeUndefined();
   });
 
   it('marks unmatched domains as not matched', () => {

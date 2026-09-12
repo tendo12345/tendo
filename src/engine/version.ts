@@ -19,8 +19,14 @@ import type { DesignSystemOutput, GenerateInput } from './types';
  * Not the package version, and not bumped for additive fields: this tracks *selection*.
  * Style matching, token derivation, palette or reasoning-data changes all move it.
  * Purely additive output (a new derived view) does not.
+ *
+ * A trailing revision number distinguishes two selection changes that ship on the same day.
+ * The date alone was enough until 2026.09.12, when the corroboration rule shipped in the
+ * morning and the palette and typography rules followed it — a saved system fingerprinted
+ * between the two would otherwise have regenerated differently under an unchanged version,
+ * which is the one thing this value exists to prevent.
  */
-export const ENGINE_VERSION = '2026.09.12';
+export const ENGINE_VERSION = '2026.09.12.2';
 
 /**
  * FNV-1a over the fields that constitute the design decisions.

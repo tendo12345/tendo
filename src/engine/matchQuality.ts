@@ -80,6 +80,53 @@ function fromScores(p: DomainProvenance): MatchAssessment {
   };
 }
 
+/**
+ * The palette is judged by how it was selected, not by a score.
+ *
+ * It is read from the colours row named after the product category — the two files share
+ * that key — so there is no ranking to report. Passing it through `fromScores` would have
+ * said "one row matched the query and nothing else scored at all", which is not what
+ * happened: nothing was searched.
+ */
+function colorAssessment(p: Provenance['colors']): MatchAssessment {
+  if (!p.matched || p.path === 'none') {
+    return {
+      level: 'fallback',
+      label: MATCH_LABELS.fallback,
+      basis: 'No palette was available for this category, so the neutral defaults were used.',
+      isFallback: true,
+    };
+  }
+  if (p.path === 'category') {
+    return {
+      level: 'strong',
+      label: MATCH_LABELS.strong,
+      basis: 'colors.csv holds a palette for this exact product category, so it was used as it stands.',
+      isFallback: false,
+    };
+  }
+  return fromScores(p);
+}
+
+/**
+ * Typography reports a refusal as a fallback, and says what was refused.
+ *
+ * A script-specific pairing that scored on an incidental word is not a match — it cannot
+ * render the product's language. Saying only "no pairing matched" would hide that something
+ * did score and was rejected for cause.
+ */
+function typographyAssessment(p: Provenance['typography']): MatchAssessment {
+  if (!p.matched && p.excluded && p.excluded.length > 0) {
+    return {
+      level: 'fallback',
+      label: MATCH_LABELS.fallback,
+      basis: `Nothing in the description matched a pairing. ${p.excluded.length === 1 ? 'One pairing scored' : `${p.excluded.length} pairings scored`} on an incidental word but ${p.excluded.length === 1 ? 'is' : 'are'} built for another script (${p.excluded.join(', ')}), so the documented default was used instead.`,
+      isFallback: true,
+    };
+  }
+  return fromScores(p);
+}
+
 /** Style is judged by how it was selected, which says more than its search rank. */
 function styleAssessment(p: Provenance['style']): MatchAssessment {
   if (!p.matched || p.path === 'none') {
@@ -161,8 +208,8 @@ export function assessMatchQuality(output: DesignSystemOutput): SystemMatchQuali
   return {
     product: fromScores(p.product),
     style: styleAssessment(p.style),
-    colors: fromScores(p.colors),
-    typography: fromScores(p.typography),
+    colors: colorAssessment(p.colors),
+    typography: typographyAssessment(p.typography),
     pattern: fromScores(p.pattern),
     radius: tokenAssessment(p.tokens.radius, 'corner radius', styleName),
     spacing: tokenAssessment(p.tokens.spacing, 'spacing density', styleName),

@@ -23,17 +23,19 @@ import products from '../../data/products.json';
 type Row = Record<string, string>;
 
 /**
- * Fingerprints captured at ENGINE_VERSION 2026.08.20, and unchanged at 2026.09.12.
+ * Fingerprints as of ENGINE_VERSION 2026.09.12.2.
  *
- * The corroboration rule (PORTING-NOTES judgment call 7) moved output for other inputs — a
- * category can no longer be named by a word that appears only in a row's notes — but none of
- * the five queries below, so these hashes are the originals rather than a rebaseline.
+ * Four are the originals from 2026.08.20: the corroboration rule (judgment call 7) changed
+ * neither their category nor anything derived from it. "ecommerce fashion luxury" was
+ * re-pinned when the palette began following the product category (judgment call 8) — its
+ * palette moved from the Wardrobe & Outfit Planner row, matched on the word "fashion", to
+ * E-commerce Luxury, the row named after its own category.
  */
 const PINNED: Record<string, string> = {
   'fintech mobile trustworthy': 'c679d12d',
   'saas dashboard dark': '245d4c5b',
   'portfolio minimal editorial': '5b85b67e',
-  'ecommerce fashion luxury': 'ccea878a',
+  'ecommerce fashion luxury': '1b287bdb',
   'general purpose app clean': 'aeab919d',
 };
 
@@ -44,7 +46,8 @@ function fromQuery(query: string) {
 
 describe('engine version', () => {
   it('is a dated string that sorts chronologically', () => {
-    expect(ENGINE_VERSION).toMatch(/^\d{4}\.\d{2}\.\d{2}$/);
+    // An optional revision number for a second selection change on the same day; see version.ts.
+    expect(ENGINE_VERSION).toMatch(/^\d{4}\.\d{2}\.\d{2}(\.\d+)?$/);
   });
 
   it.each(Object.keys(PINNED))('output for "%s" matches its pinned fingerprint', (query) => {

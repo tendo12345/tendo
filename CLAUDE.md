@@ -106,11 +106,12 @@ Adding a feature almost always means adding another derived view, not editing th
 ### Parity is a contract, not a vibe
 
 The engine is validated field-by-field against captured output from the Python original
-(`src/engine/__tests__/fixtures/python-*.json`). Palettes and fonts must match exactly. Style
-selection deliberately differs on 16 queries, and the product category on 1 (carrying that
-query's pattern, anti-patterns and decision rules with it, because the category picks the
-reasoning row). Each is pinned with the Python's value and the engine's in
-`fixtures/intended-divergence.json`, so an unreviewed matcher change fails the suite.
+(`src/engine/__tests__/fixtures/python-*.json`). Four deliberate fixes diverge from it, each
+pinned per field with the Python's value and the engine's in
+`fixtures/intended-divergence.json`, so an unreviewed matcher change fails the suite: style on
+17 queries, palette on 22, typography on 2 and the product category on 2 (carrying those
+queries' pattern, anti-patterns and decision rules, because the category picks the reasoning
+row). See PORTING-NOTES judgment calls 1, 2, 7 and 8.
 
 **A category must be corroborated by the row's own name or keywords.** `searchCsv` takes
 `identity_cols`, and only the product domain sets it: prose columns still rank rows but cannot
@@ -118,6 +119,19 @@ name one alone. Without it, "A savings app for market traders in Lagos." resolve
 Agriculture/Farm Tech, on the word "market" appearing once in that row's implementation notes.
 Applying the same rule to style or colour measurably made those worse — see PORTING-NOTES
 judgment call 7, and `corroboration.test.ts`, which pins the cases that decided the scope.
+
+**The palette follows the category; it is not searched for separately.** `colors.csv` is keyed
+by the same 161 product types as `products.csv`, so the row is looked up by name
+(`rowNamed('color', category)`), with search as the fallback for `General`. The same query
+above produced the Educational App palette — matched on the word "app" — while the reasoning
+beside it promised the category's mood. `provenance.colors.path` records which way it went,
+and no score is reported when nothing was ranked.
+
+**A font pairing built for another script must be asked for.** The eight pairings in
+`SCRIPT_PAIRING` (region.ts) are eligible only when the query names their script; the region
+does not open that gate, because region never changes selection. Function words cannot pick a
+pairing either. Unmatched typography falls back to Inter and says what it refused —
+`provenance.typography.excluded`. Judgment call 8, `paletteAndFont.test.ts`.
 
 **Never run `capture-divergence.ts` to make a failing test pass.** A new entry there means
 the matcher changed behaviour on a query that used to agree with the Python. Review the diff,

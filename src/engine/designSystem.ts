@@ -8,7 +8,7 @@
  */
 
 import { COLOR_FALLBACKS, DEFAULT_REASONING, SHADOW_SCALE } from './constants';
-import { search } from './search';
+import { rowNamed, search } from './search';
 import { normalizeStylePriority } from './stylePriority';
 import { buildGround } from './ground';
 import { deriveStyleTokens } from './styleTokens';
@@ -21,6 +21,7 @@ import type {
   PythonParityOutput,
   Reasoning,
   Row,
+  PaletteSelectionPath,
 } from './types';
 
 import reasoningData from '../data/ui-reasoning.json';
@@ -237,13 +238,14 @@ export function generateDesignSystem(input: GenerateInput): DesignSystemOutput {
   const styleQuery = `${query} ${priorityQuery}`;
 
   const searchResults: Partial<Record<Domain, Row[]>> = {};
-  const searchMeta: Partial<Record<Domain, { score?: number; runnerUp?: number }>> = {};
+  const searchMeta: Partial<Record<Domain, { score?: number; runnerUp?: number; excluded?: string[] }>> = {};
   for (const [domain, maxResults] of SEARCH_CONFIG) {
     const q = domain === 'style' ? styleQuery : query;
     const res = search(q, domain, maxResults);
     searchResults[domain] = res.results;
-    searchMeta[domain] = { score: res.scores?.[0], runnerUp: res.runnerUpScore };
+    searchMeta[domain] = { score: res.scores?.[0], runnerUp: res.runnerUpScore, excluded: res.excluded };
   }
+  const typographyExcluded = searchMeta.typography?.excluded ?? [];
   searchResults.product = productResult.results;
   searchMeta.product = { score: productResult.scores?.[0], runnerUp: productResult.runnerUpScore };
 
@@ -256,7 +258,33 @@ export function generateDesignSystem(input: GenerateInput): DesignSystemOutput {
 
   const styleSelection = selectBestMatch(styleResults, stylePriority);
   const bestStyle = styleSelection.row;
-  const bestColor = colorResults[0] ?? {};
+
+  /*
+    The palette follows the category, because colours.csv is keyed by the same 161 product
+    types that products.csv is — every category has a row named exactly after it.
+
+    It used to be a separate BM25 search over the raw query, which meant the palette and the
+    category were decided independently and could disagree: "A savings app for market traders
+    in Lagos." produced the Educational App palette (playful indigo, matched on the word
+    "app") under the heading Personal Finance Tracker, while the reasoning printed beside it
+    promised "Calm blue + success green + alert red". The row named Personal Finance Tracker
+    was right there: trust blue and profit green on dark.
+
+    The cost is that a wrong category now takes the palette with it — "fin-tech" resolves to
+    Space Tech / Aerospace (it tokenises to `fin` + `tech`) and gets that palette instead of
+    Fintech/Crypto's. That is the honest outcome: if the category is wrong the system is
+    wrong, and a palette that happened to be right made the error harder to see, not smaller.
+
+    Search remains the fallback for a category with no row of its own — `General`, which is
+    what an unmatched query resolves to.
+  */
+  const categoryPalette = category !== 'General' ? rowNamed('color', category) : undefined;
+  const bestColor = categoryPalette ?? colorResults[0] ?? {};
+  const palettePath: PaletteSelectionPath = categoryPalette
+    ? 'category'
+    : colorResults.length > 0
+      ? 'search'
+      : 'none';
   const bestTypography = typographyResults[0] ?? {};
   const bestLanding = landingResults[0] ?? {};
 
@@ -343,8 +371,18 @@ export function generateDesignSystem(input: GenerateInput): DesignSystemOutput {
 
   const provenance: Provenance = {
     product: domainProvenance('product', productResult.results.length > 0),
-    colors: domainProvenance('color', colorResults.length > 0),
-    typography: domainProvenance('typography', typographyResults.length > 0),
+    colors: {
+      ...domainProvenance('color', Boolean(categoryPalette) || colorResults.length > 0),
+      path: palettePath,
+      // A score describes the search that no longer decides this, so it is dropped when the
+      // palette came from the category. Reporting it would invite "matched 4.2" beside a row
+      // that was never ranked.
+      ...(palettePath === 'category' ? { score: undefined, runnerUp: undefined } : {}),
+    },
+    typography: {
+      ...domainProvenance('typography', typographyResults.length > 0),
+      ...(typographyExcluded.length > 0 ? { excluded: typographyExcluded } : {}),
+    },
     pattern: domainProvenance('landing', landingResults.length > 0),
     style: {
       ...domainProvenance('style', styleResults.length > 0),
@@ -395,9 +433,11 @@ export function generateDesignSystem(input: GenerateInput): DesignSystemOutput {
       }),
       colors: reason(
         parity.colors.primary,
-        bestColor['Product Type']
-          ? `The palette is the curated set for "${bestColor['Product Type']}" (${parity.colors.notes || 'no note'}), the top match for this query. The category calls for a "${reasoning.color_mood}" mood.`
-          : `No palette matched the query, so the neutral defaults were used.`,
+        palettePath === 'category'
+          ? `The palette is the curated set for "${category}" (${parity.colors.notes || 'no note'}), the row colors.csv holds for this product category. The category calls for a "${reasoning.color_mood}" mood.`
+          : palettePath === 'search'
+            ? `"${category}" has no palette of its own, so the closest set by search was used: "${bestColor['Product Type']}" (${parity.colors.notes || 'no note'}).`
+            : `No palette matched the query, so the neutral defaults were used.`,
         'colors.csv',
         { mood: reasoning.color_mood, notes: parity.colors.notes },
       ),
@@ -405,7 +445,9 @@ export function generateDesignSystem(input: GenerateInput): DesignSystemOutput {
         `${parity.typography.heading} / ${parity.typography.body}`,
         bestTypography['Font Pairing Name']
           ? `"${bestTypography['Font Pairing Name']}" was the top-ranked pairing, built for ${parity.typography.best_for || 'this kind of product'}. The category calls for a "${reasoning.typography_mood}" tone.`
-          : `No pairing matched, so Inter was used for both roles.`,
+          : typographyExcluded.length > 0
+            ? `No pairing matched this description, so Inter was used for both roles. ${typographyExcluded.length === 1 ? 'One pairing scored' : `${typographyExcluded.length} pairings scored`} on an incidental word but ${typographyExcluded.length === 1 ? 'is' : 'are'} built for another script (${typographyExcluded.join(', ')}), and cannot render this product's language.`
+            : `No pairing matched, so Inter was used for both roles.`,
         'typography.csv',
         { mood: reasoning.typography_mood, pairing: bestTypography['Font Pairing Name'] ?? '' },
       ),

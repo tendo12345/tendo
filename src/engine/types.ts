@@ -13,6 +13,8 @@ export interface SearchResult {
   scores?: number[];
   /** Best score that did not make the cut, or 0. Used to judge how decisive a match was. */
   runnerUpScore?: number;
+  /** Rows that scored but were refused by a domain rule — the script pairings in typography. */
+  excluded?: string[];
 }
 
 /** How one domain's row was arrived at. Facts about the run, not judgements about it. */
@@ -24,6 +26,12 @@ export interface DomainProvenance {
   /** Best score that lost, for judging how close the call was. */
   runnerUp?: number;
 }
+
+/**
+ * How the palette was arrived at. `category` means it was read from the colours row named
+ * after the product category — the two files share that key — rather than ranked by search.
+ */
+export type PaletteSelectionPath = 'category' | 'search' | 'none';
 
 export type StyleSelectionPath =
   | 'exact-match'
@@ -39,8 +47,11 @@ export type StyleSelectionPath =
  */
 export interface Provenance {
   product: DomainProvenance;
-  colors: DomainProvenance;
-  typography: DomainProvenance;
+  colors: DomainProvenance & { path: PaletteSelectionPath };
+  typography: DomainProvenance & {
+    /** Script-specific pairings that scored on an incidental word and were refused. */
+    excluded?: string[];
+  };
   pattern: DomainProvenance;
   style: DomainProvenance & {
     path: StyleSelectionPath;

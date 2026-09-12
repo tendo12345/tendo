@@ -6,6 +6,7 @@
  */
 
 import { BM25 } from './bm25';
+import { SCRIPT_PAIRING } from './region';
 import type { Domain, Row, SearchResult } from './types';
 
 import colors from '../data/colors.json';
@@ -97,6 +98,67 @@ export const CSV_CONFIG: Record<Domain, DomainConfig> = {
 };
 
 /**
+ * English function words, removed from a query before it picks a FONT.
+ *
+ * The dataset is mostly keyword lists, so a preposition that appears in two rows of prose
+ * scores as if it were a rare, meaningful term: "a recipe app for home cooks" selected
+ * `Neo Brutalism Mobile` on the word "for", and "the and but" selected a Web3 crypto pairing.
+ * A word from this list may still rank a row it genuinely belongs to; it may no longer be the
+ * reason a pairing is chosen.
+ */
+const FUNCTION_WORDS = new Set([
+  'the', 'and', 'but', 'for', 'with', 'from', 'that', 'this', 'into', 'our', 'your', 'their',
+  'its', 'are', 'was', 'were', 'been', 'has', 'have', 'had', 'will', 'would', 'can', 'could',
+  'should', 'about', 'over', 'under', 'than', 'then', 'there', 'here', 'when', 'where', 'how',
+  'why', 'all', 'any', 'some', 'each', 'both', 'not', 'own', 'same', 'very', 'just', 'also',
+  'only',
+]);
+
+const SCRIPT_PAIRINGS = new Set(Object.values(SCRIPT_PAIRING));
+
+/**
+ * Rules that apply to typography and nothing else, because the harm is specific to fonts.
+ *
+ * A palette matched on an incidental word is merely a poor palette. A FONT matched on an
+ * incidental word can be unreadable: "A savings app for market traders in Lagos." resolved to
+ * Noto Sans SC, because "market" appears in Chinese Simplified's Best For — "mainland China
+ * market". Three of the four rows that scored at all were script-specific pairings, each on
+ * that one word, and none of them can render the product's own language.
+ *
+ * So a script-specific pairing is eligible only when the query names its script — which its
+ * own name, category and mood keywords carry, so "chinese simplified site" and "japanese app"
+ * still reach them. The region does NOT open this gate: region never changes selection (see
+ * region.ts), it reports afterwards whether the chosen pairing can render the script.
+ *
+ * Everything else is untouched. "insurance claims clarity" still resolves to Financial Trust
+ * on the word "insurance" in its Best For, which is that pairing's actual audience.
+ */
+const TYPOGRAPHY_RULES: SearchRules = {
+  dropFunctionWords: true,
+  eligible: (row, queryTokens, tokenize) => {
+    const name = String(row['Font Pairing Name'] ?? '');
+    if (!SCRIPT_PAIRINGS.has(name)) return true;
+    const names = tokenize([name, row['Category'], row['Mood/Style Keywords']].map((v) => String(v ?? '')).join(' '));
+    return names.some((token) => queryTokens.has(token));
+  },
+};
+
+export interface SearchRules {
+  /** Columns that name the row, for the corroboration rule. */
+  identityCols?: string[];
+  /** Drop English function words from the query before ranking. */
+  dropFunctionWords?: boolean;
+  /** A row may be returned only if this says so. Ranking is unchanged; eligibility is not. */
+  eligible?: (row: Row, queryTokens: Set<string>, tokenize: (text: string) => string[]) => boolean;
+  /**
+   * Optional sink for the BM25 scores behind the returned rows, the best score that did NOT
+   * make the cut, and any row a rule refused. Purely observational — it never affects ranking
+   * or selection, and exists so the UI can describe how a choice was made without guessing.
+   */
+  scoreSink?: { scores: number[]; runnerUp: number; excluded?: string[] };
+}
+
+/**
  * Rank rows of one domain against a query.
  *
  * Matches `_search_csv`: build one document per row by joining its search columns,
@@ -122,31 +184,56 @@ export function searchCsv(
   outputCols: string[],
   query: string,
   maxResults: number,
-  /** Columns that name the row. Omitted (tests, ad-hoc calls) means every column names it. */
-  identityCols?: string[],
-  /**
-   * Optional sink for the BM25 scores behind the returned rows, plus the best score that
-   * did NOT make the cut. Purely observational — it never affects ranking or selection,
-   * and exists so the UI can describe how decisive a match was without guessing.
-   */
-  scoreSink?: { scores: number[]; runnerUp: number },
+  rules: SearchRules = {},
 ): Row[] {
+  const { identityCols, dropFunctionWords, eligible, scoreSink } = rules;
   const documents = data.map((row) => searchCols.map((col) => String(row[col] ?? '')).join(' '));
 
   const bm25 = new BM25();
   bm25.fit(documents);
-  const scored = bm25.score(query);
+
+  const tokenize = (text: string) => bm25.tokenize(text);
+  const base = dropFunctionWords
+    ? bm25.tokenize(query).filter((token) => !FUNCTION_WORDS.has(token))
+    : bm25.tokenize(query);
+  /*
+    A hyphenated word also asks for its joined form.
+
+    The tokenizer splits on punctuation, so "fin-tech" arrives as `fin` + `tech` — and the
+    dataset spells it `fintech`, as one word, in Fintech/Crypto's keywords. The query matched
+    `tech` against Space Tech / Aerospace instead, which is how a fintech query came back as
+    aerospace. Same for "e-commerce" against `ecommerce` and "non-profit" against `nonprofit`.
+
+    Added, never substituted: the split tokens still count, so nothing that matched before
+    stops matching. Only forms already absent are appended, because a repeated query token
+    would be scored twice — the Python counts query tokens with their multiplicity and so
+    does this.
+  */
+  const joined = [...query.matchAll(/[\p{L}\p{N}]+(?:[-./][\p{L}\p{N}]+)+/gu)]
+    .map((match) => match[0].replace(/[-./]/g, '').toLowerCase())
+    .filter((word) => word.length > 2 && !base.includes(word));
+  const asked = [...base, ...new Set(joined)];
+  const scored = asked.length > 0 ? bm25.score(asked.join(' ')) : [];
 
   const identity = identityCols ?? searchCols;
-  const queryTokens = new Set(bm25.tokenize(query));
+  const queryTokens = new Set(asked);
   const namesIt = (idx: number) => {
     const tokens = bm25.tokenize(identity.map((col) => String(data[idx][col] ?? '')).join(' '));
     return tokens.some((token) => queryTokens.has(token));
   };
 
   const scoring = scored.filter(([, score]) => score > 0);
-  const corroborated = scoring.filter(([idx]) => namesIt(idx));
-  const ranked = corroborated.length > 0 ? corroborated : scoring;
+  const allowed = eligible ? scoring.filter(([idx]) => eligible(data[idx], queryTokens, tokenize)) : scoring;
+  if (scoreSink && eligible) {
+    // Every refusal, not the first `maxResults` of them: this list is reported to the reader
+    // as a count ("2 pairings scored…"), so a truncated one states a wrong number. There are
+    // at most eight script pairings in the dataset, so the list stays short on its own.
+    scoreSink.excluded = scoring
+      .filter(([idx]) => !allowed.some(([kept]) => kept === idx))
+      .map(([idx]) => String(data[idx][searchCols[0]] ?? ''));
+  }
+  const corroborated = allowed.filter(([idx]) => namesIt(idx));
+  const ranked = corroborated.length > 0 ? corroborated : allowed;
 
   const results: Row[] = [];
   for (const [idx, score] of ranked.slice(0, maxResults)) {
@@ -172,16 +259,12 @@ export function searchCsv(
 
 export function search(query: string, domain: Domain, maxResults: number = MAX_RESULTS): SearchResult {
   const config = CSV_CONFIG[domain] ?? CSV_CONFIG.style;
-  const sink = { scores: [] as number[], runnerUp: 0 };
-  const results = searchCsv(
-    config.data,
-    config.search_cols,
-    config.output_cols,
-    query,
-    maxResults,
-    config.identity_cols,
-    sink,
-  );
+  const sink: NonNullable<SearchRules['scoreSink']> = { scores: [], runnerUp: 0 };
+  const results = searchCsv(config.data, config.search_cols, config.output_cols, query, maxResults, {
+    identityCols: config.identity_cols,
+    ...(domain === 'typography' ? TYPOGRAPHY_RULES : {}),
+    scoreSink: sink,
+  });
 
   return {
     domain,
@@ -191,5 +274,19 @@ export function search(query: string, domain: Domain, maxResults: number = MAX_R
     results,
     scores: sink.scores,
     runnerUpScore: sink.runnerUp,
+    ...(sink.excluded && sink.excluded.length > 0 ? { excluded: sink.excluded } : {}),
   };
+}
+
+/**
+ * The row of a domain named exactly `value` in its first search column, projected like a
+ * search result. Used where two files share a key — see the palette in designSystem.ts.
+ */
+export function rowNamed(domain: Domain, value: string): Row | undefined {
+  const config = CSV_CONFIG[domain];
+  const row = config.data.find((candidate) => String(candidate[config.search_cols[0]] ?? '') === value);
+  if (!row) return undefined;
+  const projected: Row = {};
+  for (const col of config.output_cols) if (col in row) projected[col] = row[col] ?? '';
+  return projected;
 }
