@@ -1,4 +1,181 @@
 {
+ "the and but": {
+  "python": "Sketch Hand-Drawn (Mobile)",
+  "ts": "Sketch Hand-Drawn (Mobile)",
+  "why": "The reasoning row gave no usable style priority, so the top-ranked style for the query was used.",
+  "colors": {
+   "python": {
+    "primary": "#2563EB",
+    "on_primary": "",
+    "secondary": "#3B82F6",
+    "accent": "#F97316",
+    "background": "#F8FAFC",
+    "foreground": "#1E293B",
+    "muted": "",
+    "border": "",
+    "destructive": "",
+    "ring": "",
+    "notes": "",
+    "cta": "#F97316",
+    "text": "#1E293B"
+   },
+   "ts": {
+    "primary": "#2563EB",
+    "on_primary": "#FFFFFF",
+    "secondary": "#0891B2",
+    "accent": "#EA580C",
+    "background": "#F8FAFC",
+    "foreground": "#0F172A",
+    "muted": "#F1F5FD",
+    "border": "#E4ECFC",
+    "destructive": "#DC2626",
+    "ring": "#2563EB",
+    "notes": "Global blue + teal + accent orange",
+    "cta": "#EA580C",
+    "text": "#0F172A"
+   },
+   "why": "The palette is the curated set for \"Translator App\" (Global blue + teal + accent orange), the row colors.csv holds for this product category. The category calls for a \"Global blue + neutral grey + language flag accent\" mood."
+  },
+  "typography": {
+   "python": {
+    "heading": "Space Grotesk",
+    "body": "Inter",
+    "mood": "web3, bitcoin, defi, digital gold, fintech, crypto, trustless, luminescent, precision, dark",
+    "best_for": "DeFi protocols and wallets, NFT platforms, metaverse social apps, high-tech brand landing pages",
+    "google_fonts_url": "https://fonts.google.com/share?selection.family=Inter:wght@400;500;600;700|JetBrains+Mono:wght@400;500|Space+Grotesk:wght@500;600;700",
+    "css_import": "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap');"
+   },
+   "ts": {
+    "heading": "Inter",
+    "body": "Inter",
+    "mood": "Bold + Clean + Sans-serif",
+    "best_for": "",
+    "google_fonts_url": "",
+    "css_import": ""
+   },
+   "why": "No pairing matched, so Inter was used for both roles."
+  }
+ },
+ "e-commerce b2b": {
+  "python": "Vibrant & Block-based",
+  "ts": "Vibrant & Block-based",
+  "why": "\"E-commerce\" prioritises Vibrant & Block-based, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#0F172A",
+    "on_primary": "#FFFFFF",
+    "secondary": "#334155",
+    "accent": "#0369A1",
+    "background": "#F8FAFC",
+    "foreground": "#020617",
+    "muted": "#E8ECF1",
+    "border": "#E2E8F0",
+    "destructive": "#DC2626",
+    "ring": "#0F172A",
+    "notes": "Professional navy + blue CTA",
+    "cta": "#0369A1",
+    "text": "#020617"
+   },
+   "ts": {
+    "primary": "#059669",
+    "on_primary": "#FFFFFF",
+    "secondary": "#10B981",
+    "accent": "#EA580C",
+    "background": "#ECFDF5",
+    "foreground": "#064E3B",
+    "muted": "#E8F1F3",
+    "border": "#A7F3D0",
+    "destructive": "#DC2626",
+    "ring": "#059669",
+    "notes": "Success green + urgency orange [Accent adjusted from #F97316 for WCAG 3:1]",
+    "cta": "#EA580C",
+    "text": "#064E3B"
+   },
+   "why": "The palette is the curated set for \"E-commerce\" (Success green + urgency orange [Accent adjusted from #F97316 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Brand primary + Success green\" mood."
+  }
+ },
+ "fin-tech": {
+  "python": "Dark Mode (OLED)",
+  "ts": "Accessible & Ethical",
+  "why": "\"Fintech/Crypto\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking.",
+  "category": {
+   "python": "Space Tech / Aerospace",
+   "ts": "Fintech/Crypto",
+   "why": "The query ranked \"Fintech/Crypto\" as the closest of 161 product types, and its reasoning row matched by exact on \"Fintech/Crypto\"."
+  },
+  "typography": {
+   "python": {
+    "heading": "Space Grotesk",
+    "body": "DM Sans",
+    "mood": "tech, startup, modern, innovative, bold, futuristic",
+    "best_for": "Tech companies, startups, SaaS, developer tools, AI products",
+    "google_fonts_url": "https://fonts.google.com/share?selection.family=DM+Sans:wght@400;500;700|Space+Grotesk:wght@400;500;600;700",
+    "css_import": "@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');"
+   },
+   "ts": {
+    "heading": "Orbitron",
+    "body": "JetBrains Mono",
+    "mood": "cyberpunk, neon, glitch, hud, sci-fi, dark, matrix green, magenta, chamfered, tactical",
+    "best_for": "Gaming companion apps, fintech/crypto, data visualization, dark brand apps, cyberpunk narrative games",
+    "google_fonts_url": "https://fonts.google.com/share?selection.family=JetBrains+Mono:wght@400;500|Orbitron:wght@700;900",
+    "css_import": "@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@700;900&display=swap');"
+   },
+   "why": "\"Cyberpunk Mobile (Orbitron + JetBrains Mono)\" was the top-ranked pairing, built for Gaming companion apps, fintech/crypto, data visualization, dark brand apps, cyberpunk narrative games. The category calls for a \"Professional + Trustworthy\" tone."
+  },
+  "anti_patterns": {
+   "python": "Generic design + No immersion",
+   "ts": "Playful design + Unclear fees + AI purple/pink gradients",
+   "why": "Carried by the category: The query ranked \"Fintech/Crypto\" as the closest of 161 product types, and its reasoning row matched by exact on \"Fintech/Crypto\"."
+  },
+  "decision_rules": {
+   "python": {
+    "must_have": "precision-data"
+   },
+   "ts": {
+    "must_have": "security-first",
+    "if_dashboard": "use-dark-mode"
+   },
+   "why": "Carried by the category: The query ranked \"Fintech/Crypto\" as the closest of 161 product types, and its reasoning row matched by exact on \"Fintech/Crypto\"."
+  }
+ },
+ "SaaS DASHBOARD": {
+  "python": "Motion-Driven",
+  "ts": "Motion-Driven",
+  "why": "\"Micro SaaS\" prioritises Motion-Driven + Vibrant & Block, and \"Motion-Driven\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#0F172A",
+    "on_primary": "#FFFFFF",
+    "secondary": "#1E293B",
+    "accent": "#22C55E",
+    "background": "#020617",
+    "foreground": "#F8FAFC",
+    "muted": "#1A1E2F",
+    "border": "#334155",
+    "destructive": "#EF4444",
+    "ring": "#0F172A",
+    "notes": "Dark bg + green positive indicators",
+    "cta": "#22C55E",
+    "text": "#F8FAFC"
+   },
+   "ts": {
+    "primary": "#6366F1",
+    "on_primary": "#FFFFFF",
+    "secondary": "#818CF8",
+    "accent": "#059669",
+    "background": "#F5F3FF",
+    "foreground": "#1E1B4B",
+    "muted": "#EBEFF9",
+    "border": "#E0E7FF",
+    "destructive": "#DC2626",
+    "ring": "#6366F1",
+    "notes": "Indigo primary + emerald CTA [Accent adjusted from #10B981 for WCAG 3:1]",
+    "cta": "#059669",
+    "text": "#1E1B4B"
+   },
+   "why": "The palette is the curated set for \"Micro SaaS\" (Indigo primary + emerald CTA [Accent adjusted from #10B981 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Bold primaries + Accent contrast\" mood."
+  }
+ },
  "app": {
   "python": "Neumorphism (Mobile)",
   "ts": "Accessible & Ethical",
@@ -7,17 +184,197 @@
  "design": {
   "python": "Exaggerated Minimalism",
   "ts": "Accessible & Ethical",
-  "why": "\"Design System/Component Library\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+  "why": "\"Design System/Component Library\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#78716C",
+    "on_primary": "#FFFFFF",
+    "secondary": "#A8A29E",
+    "accent": "#D97706",
+    "background": "#FAF5F2",
+    "foreground": "#0F172A",
+    "muted": "#F6F6F6",
+    "border": "#EEEDED",
+    "destructive": "#DC2626",
+    "ring": "#78716C",
+    "notes": "Interior warm grey + gold accent",
+    "cta": "#D97706",
+    "text": "#0F172A"
+   },
+   "ts": {
+    "primary": "#4F46E5",
+    "on_primary": "#FFFFFF",
+    "secondary": "#6366F1",
+    "accent": "#EA580C",
+    "background": "#EEF2FF",
+    "foreground": "#312E81",
+    "muted": "#EBEEF8",
+    "border": "#C7D2FE",
+    "destructive": "#DC2626",
+    "ring": "#4F46E5",
+    "notes": "Indigo brand + doc hierarchy [Accent adjusted from #F97316 for WCAG 3:1]",
+    "cta": "#EA580C",
+    "text": "#312E81"
+   },
+   "why": "The palette is the curated set for \"Design System/Component Library\" (Indigo brand + doc hierarchy [Accent adjusted from #F97316 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Clear hierarchy + Code-like structure\" mood."
+  }
  },
  "mobile": {
   "python": "Exaggerated Minimalism",
   "ts": "Accessible & Ethical",
-  "why": "\"Banking/Traditional Finance\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+  "why": "\"Banking/Traditional Finance\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#2563EB",
+    "on_primary": "",
+    "secondary": "#3B82F6",
+    "accent": "#F97316",
+    "background": "#F8FAFC",
+    "foreground": "#1E293B",
+    "muted": "",
+    "border": "",
+    "destructive": "",
+    "ring": "",
+    "notes": "",
+    "cta": "#F97316",
+    "text": "#1E293B"
+   },
+   "ts": {
+    "primary": "#0F172A",
+    "on_primary": "#FFFFFF",
+    "secondary": "#1E3A8A",
+    "accent": "#A16207",
+    "background": "#F8FAFC",
+    "foreground": "#020617",
+    "muted": "#E8ECF1",
+    "border": "#E2E8F0",
+    "destructive": "#DC2626",
+    "ring": "#0F172A",
+    "notes": "Trust navy + premium gold [Accent adjusted from #CA8A04 for WCAG 3:1]",
+    "cta": "#A16207",
+    "text": "#020617"
+   },
+   "why": "The palette is the curated set for \"Banking/Traditional Finance\" (Trust navy + premium gold [Accent adjusted from #CA8A04 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Navy (#0A1628) + Trust Blue + Gold\" mood."
+  }
+ },
+ "dark": {
+  "python": "Cyberpunk UI",
+  "ts": "Cyberpunk UI",
+  "why": "\"Cybersecurity Platform\" prioritises Cyberpunk UI + Dark Mode (OLED), and \"Cyberpunk UI\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#0F172A",
+    "on_primary": "#FFFFFF",
+    "secondary": "#1E293B",
+    "accent": "#22C55E",
+    "background": "#020617",
+    "foreground": "#F8FAFC",
+    "muted": "#1A1E2F",
+    "border": "#334155",
+    "destructive": "#EF4444",
+    "ring": "#0F172A",
+    "notes": "Dark bg + green positive indicators",
+    "cta": "#22C55E",
+    "text": "#F8FAFC"
+   },
+   "ts": {
+    "primary": "#00FF41",
+    "on_primary": "#0F172A",
+    "secondary": "#0D0D0D",
+    "accent": "#FF3333",
+    "background": "#000000",
+    "foreground": "#E0E0E0",
+    "muted": "#181818",
+    "border": "#1F1F1F",
+    "destructive": "#EF4444",
+    "ring": "#00FF41",
+    "notes": "Matrix green + alert red",
+    "cta": "#FF3333",
+    "text": "#E0E0E0"
+   },
+   "why": "The palette is the curated set for \"Cybersecurity Platform\" (Matrix green + alert red), the row colors.csv holds for this product category. The category calls for a \"Matrix Green (#00FF00) + Deep Black\" mood."
+  }
  },
  "crypto": {
   "python": "Exaggerated Minimalism",
   "ts": "Accessible & Ethical",
   "why": "\"Fintech/Crypto\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "health": {
+  "python": "Neumorphism",
+  "ts": "Neumorphism",
+  "why": "\"Mental Health App\" prioritises Neumorphism + Accessible & Ethical, and \"Neumorphism\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#0891B2",
+    "on_primary": "#FFFFFF",
+    "secondary": "#22D3EE",
+    "accent": "#059669",
+    "background": "#ECFEFF",
+    "foreground": "#164E63",
+    "muted": "#E8F1F6",
+    "border": "#A5F3FC",
+    "destructive": "#DC2626",
+    "ring": "#0891B2",
+    "notes": "Calm cyan + health green",
+    "cta": "#059669",
+    "text": "#164E63"
+   },
+   "ts": {
+    "primary": "#8B5CF6",
+    "on_primary": "#FFFFFF",
+    "secondary": "#C4B5FD",
+    "accent": "#059669",
+    "background": "#FAF5FF",
+    "foreground": "#4C1D95",
+    "muted": "#EDEFF9",
+    "border": "#EDE9FE",
+    "destructive": "#DC2626",
+    "ring": "#8B5CF6",
+    "notes": "Calming lavender + wellness green [Accent adjusted from #10B981 for WCAG 3:1]",
+    "cta": "#059669",
+    "text": "#4C1D95"
+   },
+   "why": "The palette is the curated set for \"Mental Health App\" (Calming lavender + wellness green [Accent adjusted from #10B981 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Calm Pastels + Trust colors\" mood."
+  }
+ },
+ "naïve café brand": {
+  "python": "Liquid Glass",
+  "ts": "Liquid Glass",
+  "why": "\"Luxury/Premium Brand\" prioritises Liquid Glass + Glassmorphism, and \"Liquid Glass\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#2563EB",
+    "on_primary": "#FFFFFF",
+    "secondary": "#7C3AED",
+    "accent": "#EC4899",
+    "background": "#FFFFFF",
+    "foreground": "#0F172A",
+    "muted": "#F1F5FD",
+    "border": "#E4ECFC",
+    "destructive": "#DC2626",
+    "ring": "#2563EB",
+    "notes": "Brand blue + creator purple",
+    "cta": "#EC4899",
+    "text": "#0F172A"
+   },
+   "ts": {
+    "primary": "#1C1917",
+    "on_primary": "#FFFFFF",
+    "secondary": "#44403C",
+    "accent": "#A16207",
+    "background": "#FAFAF9",
+    "foreground": "#0C0A09",
+    "muted": "#E8ECF0",
+    "border": "#D6D3D1",
+    "destructive": "#DC2626",
+    "ring": "#1C1917",
+    "notes": "Premium black + gold accent [Accent adjusted from #CA8A04 for WCAG 3:1]",
+    "cta": "#A16207",
+    "text": "#0C0A09"
+   },
+   "why": "The palette is the curated set for \"Luxury/Premium Brand\" (Premium black + gold accent [Accent adjusted from #CA8A04 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Black + Gold (#FFD700) + White\" mood."
+  }
  },
  "emoji 🚀 startup": {
   "python": "Exaggerated Minimalism",
@@ -45,6 +402,39 @@
    },
    "why": "No landing pattern matched, so the reasoning row's recommended pattern (\"Feature-Rich Showcase + Social Proof\") was used."
   },
+  "colors": {
+   "python": {
+    "primary": "#2563EB",
+    "on_primary": "",
+    "secondary": "#3B82F6",
+    "accent": "#F97316",
+    "background": "#F8FAFC",
+    "foreground": "#1E293B",
+    "muted": "",
+    "border": "",
+    "destructive": "",
+    "ring": "",
+    "notes": "",
+    "cta": "#F97316",
+    "text": "#1E293B"
+   },
+   "ts": {
+    "primary": "#EC4899",
+    "on_primary": "#FFFFFF",
+    "secondary": "#F59E0B",
+    "accent": "#2563EB",
+    "background": "#FFFFFF",
+    "foreground": "#0F172A",
+    "muted": "#FDF4F8",
+    "border": "#FCE9F2",
+    "destructive": "#DC2626",
+    "ring": "#EC4899",
+    "notes": "Viral pink + comedy yellow + share blue",
+    "cta": "#2563EB",
+    "text": "#0F172A"
+   },
+   "why": "The palette is the curated set for \"Meme & Sticker Maker\" (Viral pink + comedy yellow + share blue), the row colors.csv holds for this product category. The category calls for a \"Bold primary + comedic yellow + viral red + high saturation accent\" mood."
+  },
   "anti_patterns": {
    "python": "Excessive decoration",
    "ts": "Complex shadows + 3D effects + Muted colors + Low energy",
@@ -61,10 +451,157 @@
    "why": "Carried by the category: The query ranked \"Meme & Sticker Maker\" as the closest of 161 product types, and its reasoning row matched by exact on \"Meme & Sticker Maker\"."
   }
  },
+ "very long query about a fintech mobile banking application for first time users of digital money in emerging markets like nigeria": {
+  "python": "Bitcoin DeFi (Mobile)",
+  "ts": "Bitcoin DeFi (Mobile)",
+  "why": "The reasoning row gave no usable style priority, so the top-ranked style for the query was used.",
+  "colors": {
+   "python": {
+    "primary": "#6366F1",
+    "on_primary": "#FFFFFF",
+    "secondary": "#818CF8",
+    "accent": "#16A34A",
+    "background": "#EEF2FF",
+    "foreground": "#312E81",
+    "muted": "#EBEFF9",
+    "border": "#C7D2FE",
+    "destructive": "#DC2626",
+    "ring": "#6366F1",
+    "notes": "Digital indigo + buy green [Accent adjusted from #22C55E for WCAG 3:1]",
+    "cta": "#16A34A",
+    "text": "#312E81"
+   },
+   "ts": {
+    "primary": "#F59E0B",
+    "on_primary": "#0F172A",
+    "secondary": "#FBBF24",
+    "accent": "#8B5CF6",
+    "background": "#0F172A",
+    "foreground": "#F8FAFC",
+    "muted": "#272F42",
+    "border": "#334155",
+    "destructive": "#EF4444",
+    "ring": "#F59E0B",
+    "notes": "Gold trust + purple tech",
+    "cta": "#8B5CF6",
+    "text": "#F8FAFC"
+   },
+   "why": "The palette is the curated set for \"Fintech/Crypto\" (Gold trust + purple tech), the row colors.csv holds for this product category. The category calls for a \"Navy + Trust Blue + Gold\" mood."
+  }
+ },
+ "AI/ML platform": {
+  "python": "Cyberpunk UI",
+  "ts": "Cyberpunk UI",
+  "why": "\"Cybersecurity Platform\" prioritises Cyberpunk UI + Dark Mode (OLED), and \"Cyberpunk UI\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#1E1B4B",
+    "on_primary": "#FFFFFF",
+    "secondary": "#312E81",
+    "accent": "#F97316",
+    "background": "#0F0F23",
+    "foreground": "#F8FAFC",
+    "muted": "#27273B",
+    "border": "#4338CA",
+    "destructive": "#EF4444",
+    "ring": "#1E1B4B",
+    "notes": "Dark audio + warm accent",
+    "cta": "#F97316",
+    "text": "#F8FAFC"
+   },
+   "ts": {
+    "primary": "#00FF41",
+    "on_primary": "#0F172A",
+    "secondary": "#0D0D0D",
+    "accent": "#FF3333",
+    "background": "#000000",
+    "foreground": "#E0E0E0",
+    "muted": "#181818",
+    "border": "#1F1F1F",
+    "destructive": "#EF4444",
+    "ring": "#00FF41",
+    "notes": "Matrix green + alert red",
+    "cta": "#FF3333",
+    "text": "#E0E0E0"
+   },
+   "why": "The palette is the curated set for \"Cybersecurity Platform\" (Matrix green + alert red), the row colors.csv holds for this product category. The category calls for a \"Matrix Green (#00FF00) + Deep Black\" mood."
+  }
+ },
  "24/7 support portal": {
   "python": "Claymorphism (Mobile)",
   "ts": "Vibrant & Block-based",
-  "why": "\"Childcare/Daycare\" prioritises Claymorphism + Vibrant & Block-based, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking."
+  "why": "\"Childcare/Daycare\" prioritises Claymorphism + Vibrant & Block-based, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#2563EB",
+    "on_primary": "",
+    "secondary": "#3B82F6",
+    "accent": "#F97316",
+    "background": "#F8FAFC",
+    "foreground": "#1E293B",
+    "muted": "",
+    "border": "",
+    "destructive": "",
+    "ring": "",
+    "notes": "",
+    "cta": "#F97316",
+    "text": "#1E293B"
+   },
+   "ts": {
+    "primary": "#F472B6",
+    "on_primary": "#0F172A",
+    "secondary": "#FBCFE8",
+    "accent": "#16A34A",
+    "background": "#FDF2F8",
+    "foreground": "#9D174D",
+    "muted": "#F1F0F6",
+    "border": "#FCE7F3",
+    "destructive": "#DC2626",
+    "ring": "#F472B6",
+    "notes": "Soft pink + safe green [Accent adjusted from #22C55E for WCAG 3:1]",
+    "cta": "#16A34A",
+    "text": "#9D174D"
+   },
+   "why": "The palette is the curated set for \"Childcare/Daycare\" (Soft pink + safe green [Accent adjusted from #22C55E for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Playful pastels + Safe colors + Warm\" mood."
+  }
+ },
+ "user's dashboard": {
+  "python": "Data-Dense Dashboard",
+  "ts": "Data-Dense Dashboard",
+  "why": "\"Analytics Dashboard\" prioritises Data-Dense + Heat Map, and \"Data-Dense Dashboard\" is that style by name (the reasoning data writes it as \"Data-Dense\", which is not a style in the dataset; it is corrected to \"Data-Dense Dashboard\"). It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#0F172A",
+    "on_primary": "#FFFFFF",
+    "secondary": "#1E293B",
+    "accent": "#22C55E",
+    "background": "#020617",
+    "foreground": "#F8FAFC",
+    "muted": "#1A1E2F",
+    "border": "#334155",
+    "destructive": "#EF4444",
+    "ring": "#0F172A",
+    "notes": "Dark bg + green positive indicators",
+    "cta": "#22C55E",
+    "text": "#F8FAFC"
+   },
+   "ts": {
+    "primary": "#1E40AF",
+    "on_primary": "#FFFFFF",
+    "secondary": "#3B82F6",
+    "accent": "#D97706",
+    "background": "#F8FAFC",
+    "foreground": "#1E3A8A",
+    "muted": "#E9EEF6",
+    "border": "#DBEAFE",
+    "destructive": "#DC2626",
+    "ring": "#1E40AF",
+    "notes": "Blue data + amber highlights [Accent adjusted from #F59E0B for WCAG 3:1]",
+    "cta": "#D97706",
+    "text": "#1E3A8A"
+   },
+   "why": "The palette is the curated set for \"Analytics Dashboard\" (Blue data + amber highlights [Accent adjusted from #F59E0B for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Cool→Hot gradients + Neutral grey\" mood."
+  }
  },
  "don't panic app": {
   "python": "Neumorphism (Mobile)",
@@ -81,39 +618,361 @@
   "ts": "Accessible & Ethical",
   "why": "\"Fintech/Crypto\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
  },
+ "ecommerce fashion luxury": {
+  "python": "Liquid Glass",
+  "ts": "Liquid Glass",
+  "why": "\"E-commerce Luxury\" prioritises Liquid Glass + Glassmorphism, and \"Liquid Glass\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#BE185D",
+    "on_primary": "#FFFFFF",
+    "secondary": "#EC4899",
+    "accent": "#D97706",
+    "background": "#FDF2F8",
+    "foreground": "#0F172A",
+    "muted": "#FBF1F5",
+    "border": "#F7E3EB",
+    "destructive": "#DC2626",
+    "ring": "#BE185D",
+    "notes": "Fashion rose + gold accent",
+    "cta": "#D97706",
+    "text": "#0F172A"
+   },
+   "ts": {
+    "primary": "#1C1917",
+    "on_primary": "#FFFFFF",
+    "secondary": "#44403C",
+    "accent": "#A16207",
+    "background": "#FAFAF9",
+    "foreground": "#0C0A09",
+    "muted": "#E8ECF0",
+    "border": "#D6D3D1",
+    "destructive": "#DC2626",
+    "ring": "#1C1917",
+    "notes": "Premium dark + gold accent [Accent adjusted from #CA8A04 for WCAG 3:1]",
+    "cta": "#A16207",
+    "text": "#0C0A09"
+   },
+   "why": "The palette is the curated set for \"E-commerce Luxury\" (Premium dark + gold accent [Accent adjusted from #CA8A04 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Premium colors + Minimal accent\" mood."
+  }
+ },
  "education kids playful": {
   "python": "Claymorphism (Mobile)",
   "ts": "Claymorphism",
-  "why": "\"Kids Learning (ABC & Math)\" prioritises Claymorphism + Vibrant & Block-based, and \"Claymorphism\" is that style by name. It was taken ahead of the raw search ranking."
+  "why": "\"Kids Learning (ABC & Math)\" prioritises Claymorphism + Vibrant & Block-based, and \"Claymorphism\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#F97316",
+    "on_primary": "#0F172A",
+    "secondary": "#FB923C",
+    "accent": "#2563EB",
+    "background": "#FFF7ED",
+    "foreground": "#9A3412",
+    "muted": "#F1F0F0",
+    "border": "#FED7AA",
+    "destructive": "#DC2626",
+    "ring": "#F97316",
+    "notes": "Playful orange + trust blue",
+    "cta": "#2563EB",
+    "text": "#9A3412"
+   },
+   "ts": {
+    "primary": "#2563EB",
+    "on_primary": "#FFFFFF",
+    "secondary": "#F59E0B",
+    "accent": "#EC4899",
+    "background": "#EFF6FF",
+    "foreground": "#0F172A",
+    "muted": "#F1F5FD",
+    "border": "#E4ECFC",
+    "destructive": "#DC2626",
+    "ring": "#2563EB",
+    "notes": "Learning blue + play yellow + fun pink",
+    "cta": "#EC4899",
+    "text": "#0F172A"
+   },
+   "why": "The palette is the curated set for \"Kids Learning (ABC & Math)\" (Learning blue + play yellow + fun pink), the row colors.csv holds for this product category. The category calls for a \"Bright primary + child-safe pastels + reward gold + interactive accent\" mood."
+  }
  },
  "crypto nft marketplace bold": {
   "python": "Exaggerated Minimalism",
   "ts": "Accessible & Ethical",
   "why": "\"Fintech/Crypto\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
  },
+ "nonprofit donation trust": {
+  "python": "Accessible & Ethical",
+  "ts": "Accessible & Ethical",
+  "why": "\"Non-profit/Charity\" prioritises Accessible & Ethical + Organic Biophilic, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#F59E0B",
+    "on_primary": "#0F172A",
+    "secondary": "#FBBF24",
+    "accent": "#8B5CF6",
+    "background": "#0F172A",
+    "foreground": "#F8FAFC",
+    "muted": "#272F42",
+    "border": "#334155",
+    "destructive": "#EF4444",
+    "ring": "#F59E0B",
+    "notes": "Gold trust + purple tech",
+    "cta": "#8B5CF6",
+    "text": "#F8FAFC"
+   },
+   "ts": {
+    "primary": "#0891B2",
+    "on_primary": "#FFFFFF",
+    "secondary": "#22D3EE",
+    "accent": "#EA580C",
+    "background": "#ECFEFF",
+    "foreground": "#164E63",
+    "muted": "#E8F1F6",
+    "border": "#A5F3FC",
+    "destructive": "#DC2626",
+    "ring": "#0891B2",
+    "notes": "Compassion blue + action orange [Accent adjusted from #F97316 for WCAG 3:1]",
+    "cta": "#EA580C",
+    "text": "#164E63"
+   },
+   "why": "The palette is the curated set for \"Non-profit/Charity\" (Compassion blue + action orange [Accent adjusted from #F97316 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Cause-related colors + Trust + Warm\" mood."
+  }
+ },
  "logistics tracking operational": {
   "python": "Exaggerated Minimalism",
   "ts": "Flat Design",
   "why": "\"Logistics/Delivery\" prioritises Minimalism + Flat Design, and \"Flat Design\" is that style by name. It was taken ahead of the raw search ranking."
  },
+ "dating app playful": {
+  "python": "Vibrant & Block-based",
+  "ts": "Vibrant & Block-based",
+  "why": "\"Dating App\" prioritises Vibrant & Block-based + Motion-Driven, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#F97316",
+    "on_primary": "#0F172A",
+    "secondary": "#FB923C",
+    "accent": "#2563EB",
+    "background": "#FFF7ED",
+    "foreground": "#9A3412",
+    "muted": "#F1F0F0",
+    "border": "#FED7AA",
+    "destructive": "#DC2626",
+    "ring": "#F97316",
+    "notes": "Playful orange + trust blue",
+    "cta": "#2563EB",
+    "text": "#9A3412"
+   },
+   "ts": {
+    "primary": "#E11D48",
+    "on_primary": "#FFFFFF",
+    "secondary": "#FB7185",
+    "accent": "#EA580C",
+    "background": "#FFF1F2",
+    "foreground": "#881337",
+    "muted": "#F0ECF2",
+    "border": "#FECDD3",
+    "destructive": "#DC2626",
+    "ring": "#E11D48",
+    "notes": "Romantic rose + warm orange [Accent adjusted from #F97316 for WCAG 3:1]",
+    "cta": "#EA580C",
+    "text": "#881337"
+   },
+   "why": "The palette is the curated set for \"Dating App\" (Romantic rose + warm orange [Accent adjusted from #F97316 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Warm + Romantic (Pink/Red gradients)\" mood."
+  }
+ },
  "banking mobile secure nigeria": {
   "python": "Exaggerated Minimalism",
   "ts": "Accessible & Ethical",
-  "why": "\"Banking/Traditional Finance\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking."
+  "why": "\"Banking/Traditional Finance\" prioritises Minimalism + Accessible & Ethical, and \"Accessible & Ethical\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#1E3A5F",
+    "on_primary": "#FFFFFF",
+    "secondary": "#334155",
+    "accent": "#059669",
+    "background": "#0F172A",
+    "foreground": "#FFFFFF",
+    "muted": "#10192E",
+    "border": "rgba(255,255,255,0.08)",
+    "destructive": "#DC2626",
+    "ring": "#1E3A5F",
+    "notes": "Vault dark blue + secure green",
+    "cta": "#059669",
+    "text": "#FFFFFF"
+   },
+   "ts": {
+    "primary": "#0F172A",
+    "on_primary": "#FFFFFF",
+    "secondary": "#1E3A8A",
+    "accent": "#A16207",
+    "background": "#F8FAFC",
+    "foreground": "#020617",
+    "muted": "#E8ECF1",
+    "border": "#E2E8F0",
+    "destructive": "#DC2626",
+    "ring": "#0F172A",
+    "notes": "Trust navy + premium gold [Accent adjusted from #CA8A04 for WCAG 3:1]",
+    "cta": "#A16207",
+    "text": "#020617"
+   },
+   "why": "The palette is the curated set for \"Banking/Traditional Finance\" (Trust navy + premium gold [Accent adjusted from #CA8A04 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Navy (#0A1628) + Trust Blue + Gold\" mood."
+  }
  },
  "news editorial serif": {
   "python": "Exaggerated Minimalism",
   "ts": "Minimalism & Swiss Style",
-  "why": "\"News/Media Platform\" prioritises Minimalism + Flat Design, and \"Minimalism & Swiss Style\" is that style by name (the reasoning data writes it as \"Minimalism\", which is not a style in the dataset; it is corrected to \"Minimalism & Swiss Style\"). It was taken ahead of the raw search ranking."
+  "why": "\"News/Media Platform\" prioritises Minimalism + Flat Design, and \"Minimalism & Swiss Style\" is that style by name (the reasoning data writes it as \"Minimalism\", which is not a style in the dataset; it is corrected to \"Minimalism & Swiss Style\"). It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#18181B",
+    "on_primary": "#FFFFFF",
+    "secondary": "#3F3F46",
+    "accent": "#EC4899",
+    "background": "#FAFAFA",
+    "foreground": "#09090B",
+    "muted": "#E8ECF0",
+    "border": "#E4E4E7",
+    "destructive": "#DC2626",
+    "ring": "#18181B",
+    "notes": "Editorial black + accent pink",
+    "cta": "#EC4899",
+    "text": "#09090B"
+   },
+   "ts": {
+    "primary": "#DC2626",
+    "on_primary": "#FFFFFF",
+    "secondary": "#EF4444",
+    "accent": "#1E40AF",
+    "background": "#FEF2F2",
+    "foreground": "#450A0A",
+    "muted": "#F0EDF1",
+    "border": "#FECACA",
+    "destructive": "#DC2626",
+    "ring": "#DC2626",
+    "notes": "Breaking red + link blue",
+    "cta": "#1E40AF",
+    "text": "#450A0A"
+   },
+   "why": "The palette is the curated set for \"News/Media Platform\" (Breaking red + link blue), the row colors.csv holds for this product category. The category calls for a \"Brand colors + High contrast\" mood."
+  }
  },
  "agency portfolio brutalist": {
   "python": "Neo Brutalism (Mobile)",
   "ts": "Motion-Driven",
-  "why": "\"Marketing Agency\" prioritises Brutalism + Motion-Driven, and \"Motion-Driven\" is that style by name. It was taken ahead of the raw search ranking."
+  "why": "\"Marketing Agency\" prioritises Brutalism + Motion-Driven, and \"Motion-Driven\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#18181B",
+    "on_primary": "#FFFFFF",
+    "secondary": "#3F3F46",
+    "accent": "#2563EB",
+    "background": "#FAFAFA",
+    "foreground": "#09090B",
+    "muted": "#E8ECF0",
+    "border": "#E4E4E7",
+    "destructive": "#DC2626",
+    "ring": "#18181B",
+    "notes": "Monochrome + blue accent",
+    "cta": "#2563EB",
+    "text": "#09090B"
+   },
+   "ts": {
+    "primary": "#EC4899",
+    "on_primary": "#FFFFFF",
+    "secondary": "#F472B6",
+    "accent": "#0891B2",
+    "background": "#FDF2F8",
+    "foreground": "#831843",
+    "muted": "#F1EEF5",
+    "border": "#FBCFE8",
+    "destructive": "#DC2626",
+    "ring": "#EC4899",
+    "notes": "Bold pink + creative cyan [Accent adjusted from #06B6D4 for WCAG 3:1]",
+    "cta": "#0891B2",
+    "text": "#831843"
+   },
+   "why": "The palette is the curated set for \"Marketing Agency\" (Bold pink + creative cyan [Accent adjusted from #06B6D4 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Bold brand colors + Creative freedom\" mood."
+  }
+ },
+ "invoice saas clean": {
+  "python": "Motion-Driven",
+  "ts": "Motion-Driven",
+  "why": "\"Micro SaaS\" prioritises Motion-Driven + Vibrant & Block, and \"Motion-Driven\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#1E3A5F",
+    "on_primary": "#FFFFFF",
+    "secondary": "#2563EB",
+    "accent": "#059669",
+    "background": "#F8FAFC",
+    "foreground": "#0F172A",
+    "muted": "#F1F3F5",
+    "border": "#E4E7EB",
+    "destructive": "#DC2626",
+    "ring": "#1E3A5F",
+    "notes": "Navy professional + paid green",
+    "cta": "#059669",
+    "text": "#0F172A"
+   },
+   "ts": {
+    "primary": "#6366F1",
+    "on_primary": "#FFFFFF",
+    "secondary": "#818CF8",
+    "accent": "#059669",
+    "background": "#F5F3FF",
+    "foreground": "#1E1B4B",
+    "muted": "#EBEFF9",
+    "border": "#E0E7FF",
+    "destructive": "#DC2626",
+    "ring": "#6366F1",
+    "notes": "Indigo primary + emerald CTA [Accent adjusted from #10B981 for WCAG 3:1]",
+    "cta": "#059669",
+    "text": "#1E1B4B"
+   },
+   "why": "The palette is the curated set for \"Micro SaaS\" (Indigo primary + emerald CTA [Accent adjusted from #10B981 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Bold primaries + Accent contrast\" mood."
+  }
  },
  "kids learning colorful": {
   "python": "Claymorphism (Mobile)",
   "ts": "Vibrant & Block-based",
   "why": "\"Kids Learning (ABC & Math)\" prioritises Claymorphism + Vibrant & Block-based, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking."
+ },
+ "car marketplace sleek": {
+  "python": "Vibrant & Block-based",
+  "ts": "Vibrant & Block-based",
+  "why": "\"Marketplace (P2P)\" prioritises Vibrant & Block-based + Flat Design, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking.",
+  "colors": {
+   "python": {
+    "primary": "#1E293B",
+    "on_primary": "#FFFFFF",
+    "secondary": "#334155",
+    "accent": "#DC2626",
+    "background": "#F8FAFC",
+    "foreground": "#0F172A",
+    "muted": "#E9EDF1",
+    "border": "#E2E8F0",
+    "destructive": "#DC2626",
+    "ring": "#1E293B",
+    "notes": "Premium dark + action red",
+    "cta": "#DC2626",
+    "text": "#0F172A"
+   },
+   "ts": {
+    "primary": "#7C3AED",
+    "on_primary": "#FFFFFF",
+    "secondary": "#A78BFA",
+    "accent": "#16A34A",
+    "background": "#FAF5FF",
+    "foreground": "#4C1D95",
+    "muted": "#ECEEF9",
+    "border": "#DDD6FE",
+    "destructive": "#DC2626",
+    "ring": "#7C3AED",
+    "notes": "Trust purple + transaction green [Accent adjusted from #22C55E for WCAG 3:1]",
+    "cta": "#16A34A",
+    "text": "#4C1D95"
+   },
+   "why": "The palette is the curated set for \"Marketplace (P2P)\" (Trust purple + transaction green [Accent adjusted from #22C55E for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Trust colors + Category colors + Success green\" mood."
+  }
  }
 }

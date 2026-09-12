@@ -109,7 +109,13 @@ const REGIONS: Array<{ match: string[]; script: Script; direction: TextDirection
 ];
 
 /** Which dataset pairing serves each non-Latin script. Names are verbatim from typography.json. */
-const SCRIPT_PAIRING: Partial<Record<Script, string>> = {
+/**
+ * The dataset's script-specific pairings, by script.
+ *
+ * Exported because typography selection needs the same list: a pairing built for Simplified
+ * Chinese must not be handed to a product that never asked for it. See the gate in search.ts.
+ */
+export const SCRIPT_PAIRING: Partial<Record<Script, string>> = {
   Arabic: 'Arabic Elegant',
   Hebrew: 'Hebrew Modern',
   'CJK-JP': 'Japanese Elegant',

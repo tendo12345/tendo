@@ -37,16 +37,18 @@ MASTER.md writer.
 
 ## Parity
 
-The engine was first built as a byte-identical port and validated at 65/65 queries. Three
-deliberate fixes have since been applied (items 1, 2 and 7 below), so parity is now asserted
-per field rather than wholesale:
+The engine was first built as a byte-identical port and validated at 65/65 queries. Four
+deliberate fixes have since been applied (items 1, 2, 7 and 8 below), so parity is now
+asserted per field rather than wholesale:
 
 | Field group                                              | Status vs Python  |
 | -------------------------------------------------------- | ----------------- |
-| colors, typography, severity, project name                | identical, 65/65 |
-| category                                                  | differs on 1/65, reviewed |
-| pattern, anti-patterns, decision rules                    | differs on 1/65, carried by that category |
-| style, key_effects                                        | differs on 16/65, all reviewed |
+| severity, project name                                    | identical, 65/65 |
+| colors                                                    | differs on 22/65, all reviewed |
+| style, key_effects                                        | differs on 17/65, all reviewed |
+| typography                                                | differs on 2/65, reviewed |
+| category                                                  | differs on 2/65, reviewed |
+| pattern, anti-patterns, decision rules                    | differs on 1-2/65, carried by those categories |
 
 Every difference is recorded in `fixtures/intended-divergence.json`, field by field, with the
 Python's value as well as the engine's. The test suite asserts both, so an unreviewed matcher
@@ -240,6 +242,68 @@ alone deliberately, so it is worth knowing about: for that Lagos query the typog
 China market" — and *no* font row's identity matches anything in the query, so there is nothing
 to corroborate. The palette comes from `Educational App`, matched on `app`. Both are presented
 as matches rather than as the noise they are, which is item 5 below.
+
+### 8. The palette and the font were each chosen by a separate search — FIXED
+
+Reported from the live app, on the same query as item 7. **"A savings app for market traders
+in Lagos." produced the `Educational App` palette and `Noto Sans SC`**, under the heading
+Personal Finance Tracker, beside reasoning promising "Calm blue + success green + alert red"
+and a "Modern + Clear hierarchy" tone.
+
+**The palette now follows the product category.** `colors.csv` is keyed by the same 161
+product types as `products.csv` — every category has a row named exactly after it, verified in
+`paletteAndFont.test.ts` — and the engine was running a second BM25 search over the raw query
+instead of reading it. So the palette and the category were decided independently and could
+disagree: the Educational App row won on the word "app" while the row named Personal Finance
+Tracker sat unused, holding the trust blue and profit green the reasoning had just promised.
+Search remains the fallback for a category with no row of its own, which is `General`.
+
+Measured: 22 of the 65 pinned queries change palette, and every one of them changes *to* the
+palette named after the category the result already displays. The one that looked like a
+regression was `fin-tech` — it resolved to `Space Tech / Aerospace`, so the palette followed it
+there — and that turned out to be a tokenizer artifact worth fixing rather than a reason to
+keep the old behaviour, see below.
+
+**A script-specific pairing must be asked for.** Three of the four typography rows that scored
+on that query were script pairings, each on the single word "market": Chinese Simplified
+("mainland China market"), Hebrew Modern, Arabic Elegant. None can render the product's
+language, which is the failure `region.ts` was written to catch after the fact — and the
+engine was walking into it by choice. The eight pairings in `SCRIPT_PAIRING` are now eligible
+only when the query names their script, which their own name, category and mood keywords
+carry: `chinese simplified site` and `japanese app` still reach them. The region does **not**
+open this gate; region never changes selection.
+
+Function words were removed from the typography query for the same reason: "a recipe app for
+home cooks" was choosing `Neo Brutalism Mobile` on the word "for", and "the and but" chose a
+Web3 crypto pairing. Cost: 2 pinned queries. What is deliberately untouched is a prose match
+that is genuinely about the audience — `insurance claims clarity` still resolves to
+`Financial Trust` on "insurance" in its Best For, and a test pins that.
+
+When nothing is eligible the documented default (Inter for both roles) is used and **says
+so, including what it refused**: "3 pairings scored on an incidental word but are built for
+another script (Chinese Simplified, Hebrew Modern, Arabic Elegant), and cannot render this
+product's language." That is item 5 being paid down for one domain.
+
+**A hyphenated word also asks for its joined form.** The tokenizer splits on punctuation, so
+`fin-tech` arrived as `fin` + `tech` and matched Space Tech / Aerospace, while the dataset
+spells it `fintech` in Fintech/Crypto's keywords. The joined form is now added to the query —
+added, never substituted, so nothing that matched before stops matching. One pinned query
+changes: `fin-tech` to `Fintech/Crypto`, which is also what removes the palette regression
+above.
+
+Provenance carries the new facts rather than implying a search happened:
+`provenance.colors.path` is `category` | `search` | `none`, the score is omitted when the
+palette was not ranked, and `provenance.typography.excluded` lists refused pairings.
+`matchQuality` reads both, so the UI never claims "nothing else scored at all" about a row
+that was never in the running.
+
+**Still open, and visible on the landing page.** A generic term in a short row can still
+outrank the product's defining one: for `fintech mobile app, trustworthy, modern, minimal`,
+`SaaS (General)` scores 7.53 on "app" + "modern" against Fintech/Crypto's 7.04 on "fintech"
+itself. Both are corroborated, so item 7's rule does not separate them — this needs term
+weighting, which would move far more than 22 queries and has not been attempted. The
+precomputed landing sample uses that query, so the shop window shows a SaaS palette for a
+fintech description; the palette is now at least coherent with the category shown beside it.
 
 ## The `reasoning` field
 

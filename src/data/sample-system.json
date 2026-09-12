@@ -1,5 +1,5 @@
 {
- "engineVersion": "2026.09.12",
+ "engineVersion": "2026.09.12.2",
  "input": {
   "productType": "fintech mobile app",
   "keywords": [
@@ -30,19 +30,19 @@
    "dark_mode": "✓ Full"
   },
   "colors": {
-   "primary": "#F59E0B",
-   "on_primary": "#0F172A",
-   "secondary": "#FBBF24",
-   "accent": "#8B5CF6",
-   "background": "#0F172A",
-   "foreground": "#F8FAFC",
-   "muted": "#272F42",
-   "border": "#334155",
-   "destructive": "#EF4444",
-   "ring": "#F59E0B",
-   "notes": "Gold trust + purple tech",
-   "cta": "#8B5CF6",
-   "text": "#F8FAFC"
+   "primary": "#2563EB",
+   "on_primary": "#FFFFFF",
+   "secondary": "#3B82F6",
+   "accent": "#EA580C",
+   "background": "#F8FAFC",
+   "foreground": "#1E293B",
+   "muted": "#E9EFF8",
+   "border": "#E2E8F0",
+   "destructive": "#DC2626",
+   "ring": "#2563EB",
+   "notes": "Trust blue + orange CTA contrast [Accent adjusted from #F97316 for WCAG 3:1]",
+   "cta": "#EA580C",
+   "text": "#1E293B"
   },
   "typography": {
    "heading": "IBM Plex Sans",
@@ -76,8 +76,7 @@
    },
    "colors": {
     "matched": true,
-    "score": 5.498968259906437,
-    "runnerUp": 2.4278068330224194
+    "path": "category"
    },
    "typography": {
     "matched": true,
@@ -111,50 +110,50 @@
    }
   },
   "ground": {
-   "css": "radial-gradient(42rem 42rem at 84% -8%, rgba(33, 22, 1, 0.85), transparent 60%),\nradial-gradient(50rem 38rem at 6% 106%, rgba(27, 18, 48, 0.68), transparent 62%),\nlinear-gradient(176deg, #0A0F1B 0%, #312920 46%, #0F172A 72%, #0D1323 100%)",
+   "css": "radial-gradient(42rem 42rem at 84% -8%, rgba(248, 250, 254, 0.7), transparent 60%),\nradial-gradient(50rem 38rem at 6% 106%, rgba(254, 248, 246, 0.56), transparent 62%),\nlinear-gradient(176deg, #F9FBFD 0%, #EAF0FB 46%, #F8FAFC 72%, #E2E4E5 100%)",
    "ramp": [
     {
-     "color": "#0A0F1B",
+     "color": "#F9FBFD",
      "position": 0
     },
     {
-     "color": "#312920",
+     "color": "#EAF0FB",
      "position": 46
     },
     {
-     "color": "#0F172A",
+     "color": "#F8FAFC",
      "position": 72
     },
     {
-     "color": "#0D1323",
+     "color": "#E2E4E5",
      "position": 100
     }
    ],
    "washes": [
     {
      "placement": "top right",
-     "color": "#211601",
-     "alpha": 0.85,
-     "css": "radial-gradient(42rem 42rem at 84% -8%, rgba(33, 22, 1, 0.85), transparent 60%)"
+     "color": "#F8FAFE",
+     "alpha": 0.7,
+     "css": "radial-gradient(42rem 42rem at 84% -8%, rgba(248, 250, 254, 0.7), transparent 60%)"
     },
     {
      "placement": "bottom left",
-     "color": "#1B1230",
-     "alpha": 0.68,
-     "css": "radial-gradient(50rem 38rem at 6% 106%, rgba(27, 18, 48, 0.68), transparent 62%)"
+     "color": "#FEF8F6",
+     "alpha": 0.56,
+     "css": "radial-gradient(50rem 38rem at 6% 106%, rgba(254, 248, 246, 0.56), transparent 62%)"
     }
    ],
    "extremes": {
-    "lightest": "#312920",
-    "darkest": "#0A0F1B"
+    "lightest": "#F9FBFD",
+    "darkest": "#E2E4E5"
    },
    "worstContrast": {
-    "role": "text.muted",
-    "ratio": 7.5,
-    "against": "#231906"
+    "role": "action.primary",
+    "ratio": 4.65,
+    "against": "#F6F2F1"
    },
    "origin": "derived",
-   "note": "Derived from the generated palette — no new hues. The wash strength (0.85) is the strongest value at which every text role still meets its contrast target against the worst point the gradient can produce."
+   "note": "Derived from the generated palette — no new hues. The wash strength (0.7) is the strongest value at which every text role still meets its contrast target against the worst point the gradient can produce."
   },
   "spacing": [
    {
@@ -297,12 +296,12 @@
     }
    },
    "colors": {
-    "decision": "#F59E0B",
-    "why": "The palette is the curated set for \"Fintech/Crypto\" (Gold trust + purple tech), the top match for this query. The category calls for a \"Trust blue + Accent contrast\" mood.",
+    "decision": "#2563EB",
+    "why": "The palette is the curated set for \"SaaS (General)\" (Trust blue + orange CTA contrast [Accent adjusted from #F97316 for WCAG 3:1]), the row colors.csv holds for this product category. The category calls for a \"Trust blue + Accent contrast\" mood.",
     "source": "colors.csv",
     "evidence": {
      "mood": "Trust blue + Accent contrast",
-     "notes": "Gold trust + purple tech"
+     "notes": "Trust blue + orange CTA contrast [Accent adjusted from #F97316 for WCAG 3:1]"
     }
    },
    "typography": {
