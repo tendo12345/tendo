@@ -21,8 +21,45 @@
  },
  "emoji 🚀 startup": {
   "python": "Exaggerated Minimalism",
-  "ts": "Micro-interactions",
-  "why": "\"Chat & Messaging App\" prioritises Minimalism + Micro-interactions, and \"Micro-interactions\" is that style by name. It was taken ahead of the raw search ranking."
+  "ts": "Vibrant & Block-based",
+  "why": "\"Meme & Sticker Maker\" prioritises Vibrant & Block-based + Flat Design, and \"Vibrant & Block-based\" is that style by name. It was taken ahead of the raw search ranking.",
+  "category": {
+   "python": "Chat & Messaging App",
+   "ts": "Meme & Sticker Maker",
+   "why": "The query ranked \"Meme & Sticker Maker\" as the closest of 161 product types, and its reasoning row matched by exact on \"Meme & Sticker Maker\"."
+  },
+  "pattern": {
+   "python": {
+    "name": "Feature-Rich Showcase + Demo",
+    "sections": "Hero > Features > CTA",
+    "cta_placement": "Above fold",
+    "color_strategy": "",
+    "conversion": ""
+   },
+   "ts": {
+    "name": "Feature-Rich Showcase + Social Proof",
+    "sections": "Hero > Features > CTA",
+    "cta_placement": "Above fold",
+    "color_strategy": "",
+    "conversion": ""
+   },
+   "why": "No landing pattern matched, so the reasoning row's recommended pattern (\"Feature-Rich Showcase + Social Proof\") was used."
+  },
+  "anti_patterns": {
+   "python": "Excessive decoration",
+   "ts": "Complex shadows + 3D effects + Muted colors + Low energy",
+   "why": "Carried by the category: The query ranked \"Meme & Sticker Maker\" as the closest of 161 product types, and its reasoning row matched by exact on \"Meme & Sticker Maker\"."
+  },
+  "decision_rules": {
+   "python": {
+    "if_ux_focused": "prioritize-clarity",
+    "if_mobile": "optimize-touch-targets"
+   },
+   "ts": {
+    "if_trust_needed": "add-testimonials"
+   },
+   "why": "Carried by the category: The query ranked \"Meme & Sticker Maker\" as the closest of 161 product types, and its reasoning row matched by exact on \"Meme & Sticker Maker\"."
+  }
  },
  "24/7 support portal": {
   "python": "Claymorphism (Mobile)",

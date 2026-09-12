@@ -37,18 +37,21 @@ MASTER.md writer.
 
 ## Parity
 
-The engine was first built as a byte-identical port and validated at 65/65 queries. Two
-deliberate fixes have since been applied (items 1 and 2 below), so parity is now asserted
+The engine was first built as a byte-identical port and validated at 65/65 queries. Three
+deliberate fixes have since been applied (items 1, 2 and 7 below), so parity is now asserted
 per field rather than wholesale:
 
 | Field group                                              | Status vs Python  |
 | -------------------------------------------------------- | ----------------- |
-| category, colors, typography, pattern, anti-patterns, decision rules, severity, project name | identical, 65/65 |
+| colors, typography, severity, project name                | identical, 65/65 |
+| category                                                  | differs on 1/65, reviewed |
+| pattern, anti-patterns, decision rules                    | differs on 1/65, carried by that category |
 | style, key_effects                                        | differs on 16/65, all reviewed |
 
-Every style difference is recorded in `fixtures/intended-divergence.json` with both values.
-The test suite asserts the new value exactly, so an unreviewed change in the matcher fails
-rather than quietly rewriting the baseline. Regenerate that list with:
+Every difference is recorded in `fixtures/intended-divergence.json`, field by field, with the
+Python's value as well as the engine's. The test suite asserts both, so an unreviewed matcher
+change fails rather than quietly rewriting the baseline — and a record left behind by a
+recaptured Python dump fails too. Regenerate that list with:
 
 ```bash
 npx tsx scripts/capture-divergence.ts
@@ -190,6 +193,53 @@ Category comes from the single top products.csv hit, then the reasoning row is f
 exact → substring → any-word match against that category string. A weak product match
 therefore silently steers style, colour mood, effects and anti-patterns. The
 `reasoning.category.why` records which of the three passes matched so this is visible.
+
+### 7. A category could be named by prose about a row — FIXED, corroboration required
+
+Reported from the live app: **"A savings app for market traders in Lagos." produced
+`Agriculture/Farm Tech`.**
+
+The product domain indexes four columns as one bag of words, and one of them is
+implementation prose (`Key Considerations`). Measured on that query:
+
+| row | score | matched on |
+| --- | ----- | ---------- |
+| Agriculture/Farm Tech    | 5.03 | `market`, in its prose — "market prices" |
+| Podcast Platform         | 4.94 | `for`, a preposition |
+| Personal Finance Tracker | 3.93 | `savings`, its own keyword |
+
+`market` and `savings` each occur in exactly one row of 161, so both are equally rare; the
+prose hit won because BM25 rewards short documents and Agriculture's row is 22 tokens against
+Personal Finance Tracker's 37. `traders` and `lagos` match nothing at all. So the category was
+decided by a passing mention in another row's notes, and the second-place row was decided by
+the word "for".
+
+A row may now only be *named* by a term that appears in the columns that identify it —
+`Product Type` and `Keywords`. Prose still ranks rows, and if nothing is corroborated the
+original ranking stands, so no query loses an answer it used to have. `searchCsv` takes
+`identity_cols` per domain; only products sets it.
+
+**Only products, and that was measured.** Applied to all five domains the rule moved 18 picks
+across the 65 pinned queries, in both directions: the `banking mobile secure nigeria` palette
+improved from `Password Manager` to `Banking/Traditional Finance`, but `fin-tech` degraded from
+`Fintech/Crypto` to `Pet Tech App` — "fin-tech" tokenises to `fin` + `tech`, and `tech` names
+Pet Tech App while nothing in Fintech/Crypto matches `fin`. Style was worse again: `crypto`
+fell from `Cyberpunk UI` to `Terminal CLI (Mobile)`, the mobile-variant crowding item 2 exists
+to prevent. Prose earns its keep in those domains. `corroboration.test.ts` pins the domains
+that must keep the Python's behaviour, with the case that decided each.
+
+Cost: one pinned query diverges. `emoji 🚀 startup` moves from `Chat & Messaging App` — where
+`emoji` appears in the prose, "emoji picker" — to `Meme & Sticker Maker`, which carries `emoji`
+as a keyword. The category drives the reasoning row, so its pattern, anti-patterns and decision
+rules move with it, and the style follows the new row's priorities. All five are recorded in
+`intended-divergence.json`.
+
+**What this does not fix.** The same pathology is visible in the other domains and is left
+alone deliberately, so it is worth knowing about: for that Lagos query the typography pick is
+`Chinese Simplified` (Noto Sans SC), because `market` appears in its `Best For` — "mainland
+China market" — and *no* font row's identity matches anything in the query, so there is nothing
+to corroborate. The palette comes from `Educational App`, matched on `app`. Both are presented
+as matches rather than as the noise they are, which is item 5 below.
 
 ## The `reasoning` field
 

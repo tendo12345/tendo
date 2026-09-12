@@ -24,6 +24,24 @@ describe('precomputed sample system', () => {
     ).toBe(hashOutput(live));
   });
 
+  /*
+    Field for field, not just the decision hash.
+
+    `hashOutput` covers category, style, palette and the rest of the decisions, and
+    deliberately ignores derived views so that saved systems do not report drift a user
+    cannot see. That is right for saved systems and too loose for this file: it is committed
+    output, and every number in it ships. The sample sat in the tree with
+    `ground.worstContrast.ratio` of 5.69 while the engine computed 7.5 — stale since the
+    ground solver changed, and invisible to the hash.
+  */
+  it('matches the engine in every field, not only the decisive ones', () => {
+    const live = generateDesignSystem(SAMPLE_INPUT);
+    expect(
+      JSON.parse(JSON.stringify(SAMPLE_SYSTEM)),
+      'The committed sample differs from live engine output. Run: npm run build:sample',
+    ).toEqual(JSON.parse(JSON.stringify(live)));
+  });
+
   it('records the engine version that produced it', () => {
     expect(
       SAMPLE_ENGINE_VERSION,
