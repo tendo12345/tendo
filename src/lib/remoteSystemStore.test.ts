@@ -206,9 +206,10 @@ describe('uploading local systems', () => {
 describe('unconfigured deployment', () => {
   it('exposes no client when the env vars are absent', async () => {
     // The test env sets neither VITE_SUPABASE_URL nor the anon key.
-    const { supabase, accountsEnabled, accountsDisabledReason } = await import('./supabase');
-    expect(supabase).toBeNull();
+    const { loadSupabase, accountsEnabled, accountsDisabledReason, AUTH_STORAGE_KEY } = await import('./supabase');
+    await expect(loadSupabase()).resolves.toBeNull();
     expect(accountsEnabled()).toBe(false);
+    expect(AUTH_STORAGE_KEY).toBeNull();
     expect(accountsDisabledReason).toMatch(/accounts are unavailable/i);
   });
 });

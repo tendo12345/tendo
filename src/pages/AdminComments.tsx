@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { supabase } from '../lib/supabase';
 import { listModerationQueue, moderateComment, type Comment } from '../lib/comments';
 import { Badge } from '../components/ui/Badge';
 import NotFoundPage from './NotFound';
@@ -15,20 +14,21 @@ import styles from './AdminComments.module.css';
  * gets empty results or a rejected write from Postgres regardless of what this page renders.
  */
 export default function AdminCommentsPage() {
-  const { isAdmin } = useAuth();
+  // `client` is loaded whenever `isAdmin` is true — being an admin means being signed in.
+  const { isAdmin, client } = useAuth();
   const { showToast } = useToast();
   const [queue, setQueue] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
 
   const load = useCallback(() => {
-    if (!supabase) return;
+    if (!client) return;
     setLoading(true);
-    listModerationQueue(supabase)
+    listModerationQueue(client)
       .then(setQueue)
       .catch((err: Error) => showToast(err.message, 'error'))
       .finally(() => setLoading(false));
-  }, [showToast]);
+  }, [client, showToast]);
 
   useEffect(() => {
     if (isAdmin) load();
@@ -39,10 +39,10 @@ export default function AdminCommentsPage() {
   }
 
   const moderate = async (id: string, action: 'approve' | 'remove') => {
-    if (!supabase) return;
+    if (!client) return;
     setBusyId(id);
     try {
-      await moderateComment(supabase, id, action);
+      await moderateComment(client, id, action);
       setQueue((prev) => prev.filter((c) => c.id !== id));
       showToast(action === 'approve' ? 'Comment approved' : 'Comment removed', 'success');
     } catch (err) {

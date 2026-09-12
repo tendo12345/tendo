@@ -102,4 +102,18 @@ describe('first load', () => {
     const generator = files.find((f) => relative(ROOT, f).replace(/\\/g, '/') === 'engine/designSystem.ts');
     expect(generator ? chain(graph, generator) : null).toBeNull();
   });
+
+  /*
+    supabase-js (~52 kB gzipped) loads on demand through lib/supabase.ts's loadSupabase() —
+    a dynamic import — so a signed-out visitor never downloads it. One static value import of
+    the package anywhere on this graph would put it back on every first load. Type-only
+    imports are fine and common (`import type { User }`): they are erased at build time, and
+    staticImports() already skips them.
+  */
+  it('does not statically import supabase-js', () => {
+    const importers = files
+      .filter((f) => staticImports(f).some((spec) => spec === '@supabase/supabase-js' || spec.startsWith('@supabase/')))
+      .map((f) => chain(graph, f));
+    expect(importers).toEqual([]);
+  });
 });

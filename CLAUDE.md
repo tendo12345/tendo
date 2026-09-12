@@ -185,13 +185,12 @@ only the lazy routes import. **Never import the engine from anything mounted in 
 rendered by the landing page.** `src/firstLoad.test.ts` walks the static import graph from
 `main.tsx` and fails with the offending import chain if `src/data` becomes reachable.
 
-Measured like for like (production build with Supabase configured, gzip -9): first load went
-from 257.5 kB to 153.6 kB. What remains is the entry (77.7 kB), supabase-js (51.8 kB), the JSX
-runtime (16.1 kB) and CSS (7.9 kB). supabase-js is there because `AuthProvider` sits at the
-root to decide the nav's signed-in state; deferring it would move it off the critical path but
-not remove it, since every page needs the session. A local build without
-`VITE_SUPABASE_URL` tree-shakes supabase-js away entirely, so measure with the variables set
-or the number understates production by ~52 kB.
+Measured like for like (production build with Supabase configured, gzip -9), first load went
+from 257.5 kB to 102.2 kB in two steps: the dataset came off (-> 153.6 kB), then supabase-js
+(-> 102.2 kB; see "supabase-js loads on demand" below). What remains is the entry (78.1 kB),
+the JSX runtime (16.2 kB) and CSS (7.9 kB). A local build without `VITE_SUPABASE_URL` behaves
+differently — it dead-code-eliminates the Supabase paths — so measure with the variables set
+(placeholders are fine; use a `.invalid` host so nothing reaches a real project).
 
 Two things keep that saving from silently unwinding: `sampleSystem.ts` must import the
 engine **type-only** (a value import drags the dataset back into the landing chunk), and
@@ -207,6 +206,27 @@ instead of offering a sign-in that cannot work.
 
 `SystemStoreProvider` is the only place that chooses between `localSystemStore` and
 `createRemoteSystemStore`. Nothing below it knows which store it got.
+
+**supabase-js loads on demand, and a signed-out visitor never downloads it.** It is ~52 kB
+gzipped and used to be created at module load in `lib/supabase.ts` — so, because the root
+`AuthProvider` imports that file, every visitor paid for it before first paint. But whether a
+visitor is signed out is knowable without the library: supabase-js keeps its session under
+`sb-<project ref>-auth-token` in localStorage, and a sign-in callback arrives as known URL
+parameters (`access_token` / `error*` in the fragment for the implicit flow this app uses,
+`code` for PKCE). `hasPendingAuth()` checks exactly those — verified against the installed
+auth-js, not assumed — and `AuthProvider` starts a visitor with neither as `signed-out` and
+never loads the library. `loadSupabase()` (memoized: ONE client per page) is called for a
+stored session, a callback URL, a sign-in in another tab (the `storage` event — the emailed
+link opens a new tab), and by anything that needs the client while signed out
+(`ensureClient()`: the sign-in form, blog comments). Signed-in-only code reads `client` from
+`useAuth()`, which is always loaded by then because the session came from it.
+
+Rules that keep this working: never import a value from `@supabase/supabase-js` statically
+(`import type` is fine) — `src/firstLoad.test.ts` fails with the chain if you do; never strip
+or rewrite the URL on `/account` before the client has loaded, since that is where it reads
+the magic-link fragment; and keep session tracking in the effect keyed on `client`, not in a
+one-shot callback, or StrictMode's double-mount leaves the nav blind to sign-in.
+`AuthContext.test.tsx` pins when the library loads and when it must not.
 
 Security notes that are not optional:
 
@@ -369,7 +389,6 @@ independently in `ground.test.ts` rather than trusting the solver.
 ## Known gaps
 
 - The dataset still loads in full once someone generates; it is deferred, not reduced.
-- supabase-js (~52 kB gzipped) is on first load for the root `AuthProvider`. See above.
 
 ## Settled, not gaps
 
