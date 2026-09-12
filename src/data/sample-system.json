@@ -1,5 +1,5 @@
 {
- "engineVersion": "2026.08.20",
+ "engineVersion": "2026.09.12",
  "input": {
   "productType": "fintech mobile app",
   "keywords": [
@@ -150,7 +150,7 @@
    },
    "worstContrast": {
     "role": "text.muted",
-    "ratio": 5.69,
+    "ratio": 7.5,
     "against": "#231906"
    },
    "origin": "derived",

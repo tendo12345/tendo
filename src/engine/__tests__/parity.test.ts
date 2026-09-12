@@ -5,9 +5,10 @@
  * `DesignSystemGenerator.generate()` from the ui-ux-pro-max skill at commit 7538cfb, the
  * revision installed on this machine. Regenerate with scripts/capture-ground-truth.py.
  *
- * The engine is a faithful port everywhere except the style matcher, which was
- * deliberately fixed. Palettes, fonts, patterns and categories must still match exactly;
- * style changes are allowed only where `intended-divergence.json` records them.
+ * The engine is a faithful port except where PORTING-NOTES records a deliberate fix: the
+ * style matcher (judgment call 2) and the product matcher's corroboration rule (judgment call
+ * 7). Every field must match the Python exactly unless `intended-divergence.json` records
+ * otherwise, and then it must match the recorded value.
  */
 
 import { describe, expect, it } from 'vitest';

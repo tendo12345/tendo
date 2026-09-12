@@ -20,7 +20,7 @@ import type { DesignSystemOutput, GenerateInput } from './types';
  * Style matching, token derivation, palette or reasoning-data changes all move it.
  * Purely additive output (a new derived view) does not.
  */
-export const ENGINE_VERSION = '2026.08.20';
+export const ENGINE_VERSION = '2026.09.12';
 
 /**
  * FNV-1a over the fields that constitute the design decisions.

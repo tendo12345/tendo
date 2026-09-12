@@ -22,7 +22,13 @@ import products from '../../data/products.json';
 
 type Row = Record<string, string>;
 
-/** Fingerprints captured at ENGINE_VERSION 2026.08.20. */
+/**
+ * Fingerprints captured at ENGINE_VERSION 2026.08.20, and unchanged at 2026.09.12.
+ *
+ * The corroboration rule (PORTING-NOTES judgment call 7) moved output for other inputs — a
+ * category can no longer be named by a word that appears only in a row's notes — but none of
+ * the five queries below, so these hashes are the originals rather than a rebaseline.
+ */
 const PINNED: Record<string, string> = {
   'fintech mobile trustworthy': 'c679d12d',
   'saas dashboard dark': '245d4c5b',

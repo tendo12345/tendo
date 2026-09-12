@@ -106,9 +106,18 @@ Adding a feature almost always means adding another derived view, not editing th
 ### Parity is a contract, not a vibe
 
 The engine is validated field-by-field against captured output from the Python original
-(`src/engine/__tests__/fixtures/python-*.json`). Palettes, fonts, categories and patterns
-must match exactly. Style selection deliberately differs on 16 queries, and each one is
-pinned with both values in `fixtures/intended-divergence.json`.
+(`src/engine/__tests__/fixtures/python-*.json`). Palettes and fonts must match exactly. Style
+selection deliberately differs on 16 queries, and the product category on 1 (carrying that
+query's pattern, anti-patterns and decision rules with it, because the category picks the
+reasoning row). Each is pinned with the Python's value and the engine's in
+`fixtures/intended-divergence.json`, so an unreviewed matcher change fails the suite.
+
+**A category must be corroborated by the row's own name or keywords.** `searchCsv` takes
+`identity_cols`, and only the product domain sets it: prose columns still rank rows but cannot
+name one alone. Without it, "A savings app for market traders in Lagos." resolved to
+Agriculture/Farm Tech, on the word "market" appearing once in that row's implementation notes.
+Applying the same rule to style or colour measurably made those worse — see PORTING-NOTES
+judgment call 7, and `corroboration.test.ts`, which pins the cases that decided the scope.
 
 **Never run `capture-divergence.ts` to make a failing test pass.** A new entry there means
 the matcher changed behaviour on a query that used to agree with the Python. Review the diff,

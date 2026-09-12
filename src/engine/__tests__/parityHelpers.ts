@@ -1,10 +1,14 @@
 /**
  * Shared parity checking.
  *
- * The engine is no longer a byte-identical port: the style matcher was deliberately fixed
- * (see PORTING-NOTES.md). Everything else must still match the Python exactly, so parity
- * is asserted field by field, with `style` and `key_effects` checked against the reviewed
- * divergence list instead.
+ * The engine is no longer a byte-identical port: the style matcher was deliberately fixed,
+ * and the product matcher now requires a category to be corroborated by the row's own name
+ * or keywords (PORTING-NOTES judgment calls 2 and 7). Everything else must still match the
+ * Python exactly, so parity is asserted field by field against the reviewed divergence list.
+ *
+ * A divergence must be RECORDED to pass, and recorded with the Python's value too — so a
+ * matcher change that moves a query nobody reviewed fails the suite instead of quietly
+ * rewriting the baseline, and a stale record fails once the Python dump is recaptured.
  *
  * `key_effects` is derived from the selected style, so it moves with it and is checked the
  * same way.
@@ -15,7 +19,19 @@ import { generateDesignSystem } from '../designSystem';
 import type { PythonParityOutput } from '../types';
 import divergence from './fixtures/intended-divergence.json';
 
-const INTENDED = divergence as Record<string, { python: string; ts: string; why: string }>;
+interface Divergence<T = string> {
+  python: T;
+  ts: T;
+  why: string;
+}
+
+/**
+ * Style divergence sits at the top level (sixteen queries, the original matcher fix); any
+ * other field that diverges is recorded under its own name, as `category` is here.
+ */
+type Record_ = Divergence & Partial<Record<(typeof UNCHANGED_FIELDS)[number], Divergence<unknown>>>;
+
+const INTENDED = divergence as Record<string, Record_>;
 
 /** Fields that must still match the Python engine exactly, for every query. */
 export const UNCHANGED_FIELDS = [
@@ -44,11 +60,20 @@ export function fromQuery(query: string) {
 export function expectParity(query: string, expected: PythonParityOutput): void {
   const actual = generateDesignSystem(fromQuery(query));
 
+  const intended = INTENDED[query];
+
   for (const field of UNCHANGED_FIELDS) {
-    expect(actual[field], `${field} changed for "${query}"`).toEqual(expected[field]);
+    const recorded = intended?.[field];
+    if (recorded) {
+      expect(recorded.python, `${field} divergence baseline stale for "${query}"`).toEqual(expected[field]);
+      expect(actual[field], `unexpected ${field} for "${query}"`).toEqual(recorded.ts);
+    } else {
+      expect(actual[field], `${field} changed for "${query}" without being recorded as intended`).toEqual(
+        expected[field],
+      );
+    }
   }
 
-  const intended = INTENDED[query];
   if (intended) {
     expect(intended.python, `divergence baseline stale for "${query}"`).toBe(expected.style.name);
     expect(actual.style.name, `unexpected style for "${query}"`).toBe(intended.ts);
